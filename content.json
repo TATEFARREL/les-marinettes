@@ -1,8 +1,8 @@
 {
   "hero": {
     "bgImages": [
-      "/images/uploads/photo-2026-02-19-12-51-59.jpg",
-      "/images/uploads/photo-2026-02-19-12-51-55.jpg"
+      "images/uploads/photo-2026-02-19-12-51-59.jpg",
+      "images/uploads/photo-2026-02-19-12-51-55.jpg"
     ],
     "surtitle": "Éducation de Qualité au Cameroun",
     "title": "Groupe Scolaire Bilingue Privé Laïc",
@@ -13,7 +13,7 @@
     ]
   },
   "about": {
-    "image": "/images/uploads/photo-2026-02-19-12-51-55-1-.jpg",
+    "image": "images/uploads/photo-2026-02-19-12-51-55-1-.jpg",
     "title": "Notre vision",
     "description": "Bienvenue à la base de l'enseignement où sont alliées propreté, rigueur, organisation et discipline. Le Groupe Scolaire Bilingue Privé Laïc « LES MARINETTES » est un établissement de référence dédié aux cycles d'enseignements maternel et primaire.",
     "bullets": [
@@ -49,19 +49,19 @@
     "title": "Un personnel dévoué",
     "members": [
       {
-        "image": "/images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
         "name": "Mme BUDA DIBAMI Sydonie",
         "role": "Classe : SIL-CP",
         "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire."
       },
       {
-        "image": "/images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
         "name": "Mme WETE DJEUJIP Agnès",
         "role": "Classe : Maternelle",
         "desc": "Spécialiste de la petite enfance et de l'éveil."
       },
       {
-        "image": "/images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
         "name": "Mme NKEYOUMBEU Calvine",
         "role": "Classe : CE1-CE2",
         "desc": "CAPIEMP, dédiée au renforcement des acquis fondamentaux."
