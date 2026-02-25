@@ -1,16 +1,72 @@
 {
   "hero": {
+    "bgImages": [
+      "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+    ],
+    "surtitle": "Éducation de Qualité au Cameroun",
     "title": "Groupe Scolaire Bilingue Privé Laïc",
     "subtitle": "Les Marinettes",
     "carouselTexts": [
       "Donner du souffle à l'avenir de nos enfants.",
-      "École primaire et maternelle de qualité.",
-      "Inscrivez vos enfants pour la rentrée académique dès maintenant !"
+      "École primaire et maternelle de qualité."
     ]
   },
   "about": {
+    "image": "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "title": "Notre Vision",
-    "description": "Bienvenue à la base de l'enseignement où sont alliées propreté, rigueur, organisation et discipline. Le Groupe Scolaire Bilingue Privé Laïc « LES MARINETTES » est un établissement de référence dédié aux cycles d'enseignements maternel et primaire."
+    "description": "Bienvenue à la base de l'enseignement où sont alliées propreté, rigueur, organisation et discipline. Le Groupe Scolaire Bilingue Privé Laïc « LES MARINETTES » est un établissement de référence dédié aux cycles d'enseignements maternel et primaire.",
+    "bullets": [
+      "Propreté et Rigueur",
+      "Organisation et Discipline",
+      "Bilinguisme d'Excellence"
+    ]
+  },
+  "programs": {
+    "subtitle": "Notre Pédagogie",
+    "title": "Des programmes conçus pour l'avenir",
+    "list": [
+      {
+        "title": "Alphabétisation & Langues",
+        "desc": "Un enseignement bilingue immersif dès le plus jeune âge pour garantir une communication fluide et ouverte sur le monde."
+      },
+      {
+        "title": "Mathématiques & Sciences",
+        "desc": "Développer l'esprit critique, la logique et la curiosité scientifique à travers une méthodologie rigoureuse."
+      },
+      {
+        "title": "Compétences de Vie",
+        "desc": "Éducation civique, arts et savoir-vivre. Nous formons non seulement des élèves brillants, mais aussi des citoyens responsables."
+      }
+    ]
+  },
+  "impact": {
+    "title": "Investissez dans l'Avenir",
+    "description": "Chaque don nous permet d'améliorer nos infrastructures, de fournir du matériel didactique de pointe et de soutenir l'excellence de notre équipe pédagogique."
+  },
+  "team": {
+    "subtitle": "Nos Éducateurs",
+    "title": "Le Personnel Dévoué",
+    "members": [
+      {
+        "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        "name": "Mme BUDA DIBAMI Sydonie",
+        "role": "Classe : SIL-CP",
+        "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire."
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        "name": "Mme WETE DJEUJIP Agnès",
+        "role": "Classe : Maternelle",
+        "desc": "Spécialiste de la petite enfance et de l'éveil."
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        "name": "Mme NKEYOUMBEU Calvine",
+        "role": "Classe : CE1-CE2",
+        "desc": "CAPIEMP, dédiée au renforcement des acquis fondamentaux."
+      }
+    ]
   },
   "contact": {
     "address": "Mfeubath, Arrondissement de Bagangté, Département du Ndé, Région de l'Ouest, Cameroun",

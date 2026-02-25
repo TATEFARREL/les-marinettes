@@ -327,77 +327,95 @@
     </div>
 
     <script>
-        // Menu Mobile
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
-        // Modale de don
+        // Menu Mobile et Modale
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
         function toggleModal(modalID) {
             const modal = document.getElementById(modalID);
             modal.classList.toggle('hidden');
-            // Empêcher le scroll du body quand la modale est ouverte
-            if(!modal.classList.contains('hidden')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
+            document.body.style.overflow = modal.classList.contains('hidden') ? 'auto' : 'hidden';
         }
 
-        // Carrousel images & texte
-        const images = [
-            "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-            "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-            "https://images.unsplash.com/photo-1511629091441-ee46146481b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-        ];
-        
+        // Carrousel
+        let heroImages = ["https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"];
         let carouselTexts = ["Chargement..."];
         let currentIndex = 0;
-        const heroBg = document.getElementById('hero-bg');
-        const heroText = document.getElementById('hero-text');
-
+        
         setInterval(() => {
-            if (carouselTexts.length > 0) {
-                currentIndex = (currentIndex + 1) % Math.max(images.length, carouselTexts.length);
-                
-                // Transition Image
-                heroBg.style.opacity = '0';
-                setTimeout(() => {
-                    heroBg.style.backgroundImage = `url('${images[currentIndex % images.length]}')`;
-                    heroBg.style.opacity = '0.4'; // Retour à l'opacité 40% pour que le texte soit lisible
-                }, 500);
-
-                // Transition Texte
-                heroText.style.opacity = '0';
-                setTimeout(() => {
-                    heroText.innerText = carouselTexts[currentIndex % carouselTexts.length];
-                    heroText.style.opacity = '1';
-                }, 500);
+            if (carouselTexts.length > 0 || heroImages.length > 0) {
+                currentIndex++;
+                if (heroImages.length > 0) {
+                    const heroBg = document.getElementById('hero-bg');
+                    heroBg.style.opacity = '0';
+                    setTimeout(() => { heroBg.style.backgroundImage = `url('${heroImages[currentIndex % heroImages.length]}')`; heroBg.style.opacity = '0.4'; }, 500);
+                }
+                if (carouselTexts.length > 0) {
+                    const heroText = document.getElementById('hero-text');
+                    heroText.style.opacity = '0';
+                    setTimeout(() => { heroText.innerText = carouselTexts[currentIndex % carouselTexts.length]; heroText.style.opacity = '1'; }, 500);
+                }
             }
         }, 5000);
 
-        // Chargement du JSON depuis le CMS
+        // Chargement du JSON (Générateur Dynamique)
         async function loadContent() {
             try {
                 const response = await fetch(`content.json?t=${new Date().getTime()}`);
                 const data = await response.json();
 
-                if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = data.hero.title;
-                if(document.getElementById('hero-subtitle')) document.getElementById('hero-subtitle').innerText = data.hero.subtitle;
-                if(document.getElementById('about-title')) document.getElementById('about-title').innerText = data.about.title;
-                if(document.getElementById('about-description')) document.getElementById('about-description').innerText = data.about.description;
-                if(document.getElementById('contact-address')) document.getElementById('contact-address').innerHTML = data.contact.address.replace(/, /g, '<br>');
-                if(document.getElementById('contact-phones')) document.getElementById('contact-phones').innerText = data.contact.phones;
-                if(document.getElementById('contact-email')) document.getElementById('contact-email').innerText = data.contact.email;
-                if(document.getElementById('top-email')) document.getElementById('top-email').innerText = "📧 " + data.contact.email;
+                // 1. HERO
+                document.querySelector('#hero span.text-brandGold.uppercase').innerText = data.hero.surtitle;
+                document.getElementById('hero-title').innerText = data.hero.title;
+                document.getElementById('hero-subtitle').innerText = data.hero.subtitle;
+                if (data.hero.bgImages) heroImages = data.hero.bgImages;
+                if (data.hero.carouselTexts) carouselTexts = data.hero.carouselTexts;
 
-                if (data.hero.carouselTexts && data.hero.carouselTexts.length > 0) {
-                    carouselTexts = data.hero.carouselTexts;
-                    heroText.innerText = carouselTexts[0];
-                }
-            } catch (error) {
-                console.error('Erreur de chargement du JSON:', error);
-            }
+                // 2. ABOUT
+                document.getElementById('about-title').innerText = data.about.title;
+                document.getElementById('about-description').innerText = data.about.description;
+                document.querySelector('#about img').src = data.about.image;
+                
+                const bulletContainer = document.querySelector('#about ul');
+                bulletContainer.innerHTML = data.about.bullets.map(b => `
+                    <li class="flex items-center gap-3"><svg class="w-6 h-6 text-brandRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> ${b}</li>
+                `).join('');
+
+                // 3. PROGRAMS
+                document.querySelector('#programs h2').innerText = data.programs.subtitle;
+                document.querySelector('#programs h3').innerText = data.programs.title;
+                const progContainer = document.querySelector('#programs .grid');
+                progContainer.innerHTML = data.programs.list.map((p, i) => `
+                    <div class="bg-white p-10 shadow-lg border-t-4 ${i%3===0 ? 'border-brandBlue' : i%3===1 ? 'border-brandGold' : 'border-brandRed'} hover:-translate-y-2 transition-transform duration-300">
+                        <h4 class="text-xl font-bold mb-3 text-gray-900">${p.title}</h4>
+                        <p class="text-gray-600 leading-relaxed">${p.desc}</p>
+                    </div>
+                `).join('');
+
+                // 4. IMPACT
+                document.querySelector('.bg-brandBlue.text-center h2').innerText = data.impact.title;
+                document.querySelector('.bg-brandBlue.text-center p').innerText = data.impact.description;
+
+                // 5. TEAM
+                document.querySelector('#team h2').innerText = data.team.subtitle;
+                document.querySelector('#team h3').innerText = data.team.title;
+                const teamContainer = document.querySelector('#team .grid');
+                teamContainer.innerHTML = data.team.members.map(m => `
+                    <div class="group">
+                        <div class="overflow-hidden bg-brandGray rounded-t-lg aspect-[4/5] mb-4 relative">
+                            <img src="${m.image}" alt="${m.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900">${m.name}</h4>
+                        <p class="text-brandRed font-medium mb-2">${m.role}</p>
+                        <p class="text-gray-600 text-sm">${m.desc}</p>
+                    </div>
+                `).join('');
+
+                // 6. CONTACT
+                document.getElementById('contact-address').innerHTML = data.contact.address.replace(/, /g, '<br>');
+                document.getElementById('contact-phones').innerText = data.contact.phones;
+                document.getElementById('contact-email').innerText = data.contact.email;
+                document.getElementById('top-email').innerText = "📧 " + data.contact.email;
+
+            } catch (error) { console.error('Erreur JSON:', error); }
         }
         document.addEventListener('DOMContentLoaded', loadContent);
     </script>

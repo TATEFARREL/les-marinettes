@@ -6,18 +6,77 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "contenu"
-    label: "Contenu du Site"
+  - name: "pages"
+    label: "Gestion du Site Web"
     files:
-      - label: "Informations Générales"
-        name: "general"
+      - label: "Page d'Accueil (Toutes les sections)"
+        name: "home"
         file: "content.json"
         fields:
-          - {label: "Titre Principal", name: "hero.title", widget: "string"}
-          - {label: "Sous-titre", name: "hero.subtitle", widget: "string"}
-          - {label: "Textes Défilants (Carrousel)", name: "hero.carouselTexts", widget: "list"}
-          - {label: "Titre À Propos", name: "about.title", widget: "string"}
-          - {label: "Texte À Propos", name: "about.description", widget: "text"}
-          - {label: "Adresse", name: "contact.address", widget: "string"}
-          - {label: "Téléphones", name: "contact.phones", widget: "string"}
-          - {label: "Email", name: "contact.email", widget: "string"}
+          - label: "1. Section Héro (Haut de page)"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Images de fond (Carrousel)", name: "bgImages", widget: "list", field: {label: "Image", name: "image", widget: "image"}}
+              - {label: "Surtitre (Petit texte doré)", name: "surtitle", widget: "string"}
+              - {label: "Titre principal", name: "title", widget: "string"}
+              - {label: "Sous-titre", name: "subtitle", widget: "string"}
+              - {label: "Textes défilants", name: "carouselTexts", widget: "list"}
+
+          - label: "2. Section Notre Vision"
+            name: "about"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Image d'illustration", name: "image", widget: "image"}
+              - {label: "Titre de la section", name: "title", widget: "string"}
+              - {label: "Texte de présentation", name: "description", widget: "text"}
+              - {label: "Points forts (Liste)", name: "bullets", widget: "list", field: {label: "Point", name: "text", widget: "string"}}
+
+          - label: "3. Section Programmes"
+            name: "programs"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Surtitre rouge", name: "subtitle", widget: "string"}
+              - {label: "Titre principal", name: "title", widget: "string"}
+              - label: "Liste des programmes"
+                name: "list"
+                widget: "list"
+                fields:
+                  - {label: "Titre du programme", name: "title", widget: "string"}
+                  - {label: "Description", name: "desc", widget: "text"}
+
+          - label: "4. Bannière d'Impact (Dons)"
+            name: "impact"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Titre", name: "title", widget: "string"}
+              - {label: "Texte", name: "description", widget: "text"}
+
+          - label: "5. Section L'Équipe"
+            name: "team"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Surtitre rouge", name: "subtitle", widget: "string"}
+              - {label: "Titre principal", name: "title", widget: "string"}
+              - label: "Membres de l'équipe"
+                name: "members"
+                widget: "list"
+                fields:
+                  - {label: "Photo du professeur", name: "image", widget: "image"}
+                  - {label: "Nom Complet", name: "name", widget: "string"}
+                  - {label: "Classe / Rôle", name: "role", widget: "string"}
+                  - {label: "Description courte", name: "desc", widget: "text"}
+
+          - label: "6. Informations de Contact"
+            name: "contact"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Adresse physique", name: "address", widget: "string"}
+              - {label: "Téléphones", name: "phones", widget: "string"}
+              - {label: "Email principal", name: "email", widget: "string"}
