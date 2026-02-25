@@ -89,8 +89,8 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <button onclick="toggleModal('donationModal')" class="bg-brandRed hover:bg-red-700 text-white font-bold py-4 px-10 rounded shadow-lg transition-transform transform hover:-translate-y-1 text-lg">
-                    Soutenir les Enfants
+                <button onclick="toggleModal('enrollmentModal')" class="bg-brandRed hover:bg-red-700 text-white font-bold py-4 px-10 rounded shadow-lg transition-transform transform hover:-translate-y-1 text-lg">
+                    Inscription 2026-2027
                 </button>
                 <a href="#contact" class="bg-white text-brandBlue hover:bg-gray-100 font-bold py-4 px-10 rounded shadow-lg transition-transform transform hover:-translate-y-1 text-lg text-center">
                     Nous Contacter
@@ -286,7 +286,7 @@
             <p class="text-sm">&copy; 2026 Les Marinettes. Tous droits réservés.</p>
         </div>
     </footer>
-
+    <!--donation form-->
     <div id="donationModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-70 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg overflow-hidden relative">
             <div class="bg-brandBlue p-6 text-white relative">
@@ -325,7 +325,81 @@
             </div>
         </div>
     </div>
+    <!--/donation form-->
 
+    <!--enrolment form-->
+    <div id="enrollmentModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex justify-center items-center p-4">
+        <div class="bg-white rounded-lg w-full max-w-lg overflow-hidden shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            <div class="bg-brandBlue text-white p-5 flex justify-between items-center">
+                <h3 class="text-xl font-bold">Pré-inscription 2026-2027</h3>
+                <button onclick="toggleModal('enrollmentModal')" class="text-white hover:text-brandGold text-2xl leading-none font-bold">&times;</button>
+            </div>
+
+            <div class="p-6">
+                <p class="text-gray-600 mb-6 text-sm">Remplissez ce formulaire pour pré-inscrire votre enfant. Notre équipe vous contactera rapidement pour finaliser le dossier.</p>
+                
+                <form action="https://formsubmit.co/contact@lesmarinettes.com" method="POST" class="space-y-4">
+                    <input type="hidden" name="_subject" value="NOUVELLE INSCRIPTION: Rentrée 2026-2027">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_captcha" value="false">
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nom du Parent / Tuteur *</label>
+                        <input type="text" name="Nom_Parent" required class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone *</label>
+                            <input type="tel" name="Telephone" required class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" name="Email" class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
+                        </div>
+                    </div>
+
+                    <hr class="my-4 border-gray-200">
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nom complet de l'enfant *</label>
+                        <input type="text" name="Nom_Enfant" required class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Âge de l'enfant *</label>
+                            <input type="number" name="Age_Enfant" required min="2" max="15" class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Classe souhaitée *</label>
+                            <select name="Classe_Souhaitee" required class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
+                                <option value="">Sélectionnez...</option>
+                                <option value="Pré-maternelle">Pré-maternelle</option>
+                                <option value="Maternelle (Petite Section)">Maternelle (Petite Section)</option>
+                                <option value="Maternelle (Moyenne Section)">Maternelle (Moyenne Section)</option>
+                                <option value="Maternelle (Grande Section)">Maternelle (Grande Section)</option>
+                                <option value="SIL">SIL</option>
+                                <option value="CP">CP</option>
+                                <option value="CE1">CE1</option>
+                                <option value="CE2">CE2</option>
+                                <option value="CM1">CM1</option>
+                                <option value="CM2">CM2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition-colors text-lg">
+                            Envoyer la demande
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--/enrolment form-->
     <script>
         // Menu Mobile et Modale
         document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
