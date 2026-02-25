@@ -1,0 +1,23 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "contenu"
+    label: "Contenu du Site"
+    files:
+      - label: "Informations Générales"
+        name: "general"
+        file: "content.json"
+        fields:
+          - {label: "Titre Principal", name: "hero.title", widget: "string"}
+          - {label: "Sous-titre", name: "hero.subtitle", widget: "string"}
+          - {label: "Textes Défilants (Carrousel)", name: "hero.carouselTexts", widget: "list"}
+          - {label: "Titre À Propos", name: "about.title", widget: "string"}
+          - {label: "Texte À Propos", name: "about.description", widget: "text"}
+          - {label: "Adresse", name: "contact.address", widget: "string"}
+          - {label: "Téléphones", name: "contact.phones", widget: "string"}
+          - {label: "Email", name: "contact.email", widget: "string"}

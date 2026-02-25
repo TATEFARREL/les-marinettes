@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Marinettes | École Primaire et Maternelle</title>
+    
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#003893',
+                        brandRed: '#EF4135',
+                        brandGold: '#FFCB00',
+                        brandGray: '#F8FAFC',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-transition { transition: opacity 1s ease-in-out; }
+    </style>
+</head>
+<body class="bg-white font-sans antialiased text-gray-800">
+    <!--top banner-->
+    <div class="w-full h-[40px] bg-brandBlue text-white flex justify-between items-center px-4 md:px-8 text-xs sm:text-sm border-b border-blue-800">
+        <span id="top-email" class="hidden sm:inline font-medium tracking-wide">📧 contact@lesmarinettes.com</span>
+        <button onclick="toggleModal('donationModal')" class="bg-brandRed hover:bg-red-600 text-white font-bold py-1.5 px-4 rounded transition-colors flex items-center shadow-sm">
+            Faire un don &rarr;
+        </button>
+    </div>
+    <!--/top banner-->
+
+    <!--header-->
+    <header class="sticky top-0 w-full bg-white shadow-md z-40 transition-all duration-300 border-b-4 border-brandGold">
+        
+        <div class="container mx-auto px-4 md:px-8 h-[80px] flex justify-between items-center">
+            <a href="#" class="text-brandBlue text-2xl md:text-3xl font-extrabold tracking-tight flex items-center gap-2">
+                <span class="bg-brandBlue text-white w-10 h-10 flex items-center justify-center rounded-sm text-xl">LM</span>
+                LES MARINETTES
+            </a>
+
+            <nav class="hidden md:flex space-x-8 font-semibold text-gray-600">
+                <a href="#hero" class="hover:text-brandBlue transition-colors">Accueil</a>
+                <a href="#about" class="hover:text-brandBlue transition-colors">Notre Vision</a>
+                <a href="#programs" class="hover:text-brandBlue transition-colors">Programmes</a>
+                <a href="#team" class="hover:text-brandBlue transition-colors">L'Équipe</a>
+                <a href="#contact" class="hover:text-brandBlue transition-colors">Contact</a>
+            </nav>
+
+            <button id="mobile-menu-btn" class="md:hidden text-brandBlue focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 flex-col px-6 pt-4 pb-6 space-y-4 shadow-lg text-lg font-medium text-gray-700">
+            <a href="#hero" class="block hover:text-brandBlue">Accueil</a>
+            <a href="#about" class="block hover:text-brandBlue">Notre Vision</a>
+            <a href="#programs" class="block hover:text-brandBlue">Programmes</a>
+            <a href="#team" class="block hover:text-brandBlue">L'Équipe</a>
+            <a href="#contact" class="block hover:text-brandBlue">Contact</a>
+        </div>
+    </header>
+    <!--/header-->
+
+
+    <section id="hero" class="relative w-full h-[80vh] bg-gray-900 overflow-hidden flex items-center justify-center">
+        <div id="hero-bg" class="absolute inset-0 bg-cover bg-center fade-transition opacity-40" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
+            <span class="text-brandGold font-bold tracking-widest uppercase mb-4 text-sm md:text-base">Éducation de Qualité a Bangangté</span>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight">
+                <span id="hero-title">Groupe Scolaire Bilingue Privé</span> <br>
+                <span id="hero-subtitle" class="text-brandGold">Les Marinettes</span>
+            </h1>
+            
+            <div id="hero-text-container" class="h-16 flex items-center justify-center mb-10">
+                <p id="hero-text" class="text-xl md:text-2xl text-gray-100 fade-transition font-medium max-w-2xl">
+                    Chargement...
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <button onclick="toggleModal('donationModal')" class="bg-brandRed hover:bg-red-700 text-white font-bold py-4 px-10 rounded shadow-lg transition-transform transform hover:-translate-y-1 text-lg">
+                    Soutenir les Enfants
+                </button>
+                <a href="#contact" class="bg-white text-brandBlue hover:bg-gray-100 font-bold py-4 px-10 rounded shadow-lg transition-transform transform hover:-translate-y-1 text-lg text-center">
+                    Nous Contacter
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2">
+                    <div class="w-20 h-2 bg-brandGold mb-6"></div>
+                    <h2 id="about-title" class="text-4xl md:text-5xl font-extrabold text-brandBlue mb-8 leading-tight">Chargement...</h2>
+                    <p id="about-description" class="text-lg text-gray-600 leading-relaxed mb-8">
+                        Chargement...
+                    </p>
+                    <ul class="space-y-4 text-gray-700 font-medium">
+                        <li class="flex items-center gap-3"><svg class="w-6 h-6 text-brandRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Propreté et Rigueur</li>
+                        <li class="flex items-center gap-3"><svg class="w-6 h-6 text-brandRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Organisation et Discipline</li>
+                        <li class="flex items-center gap-3"><svg class="w-6 h-6 text-brandRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Bilinguisme d'Excellence</li>
+                    </ul>
+                </div>
+                <div class="lg:w-1/2 relative">
+                    <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Enfants à l'école" class="rounded-lg shadow-2xl z-10 relative">
+                    <div class="absolute -bottom-6 -left-6 w-full h-full border-4 border-brandGold rounded-lg -z-0 hidden md:block"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="programs" class="py-20 bg-brandGray">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-bold tracking-widest uppercase text-brandRed mb-2">Notre Pédagogie</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-brandBlue">Des programmes conçus pour l'avenir</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-10 shadow-lg border-t-4 border-brandBlue hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-14 h-14 bg-blue-50 text-brandBlue rounded flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-gray-900">Alphabétisation & Langues</h4>
+                    <p class="text-gray-600 leading-relaxed">Un enseignement bilingue immersif dès le plus jeune âge pour garantir une communication fluide et ouverte sur le monde.</p>
+                </div>
+                <div class="bg-white p-10 shadow-lg border-t-4 border-brandGold hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-14 h-14 bg-yellow-50 text-brandGold rounded flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-gray-900">Mathématiques & Sciences</h4>
+                    <p class="text-gray-600 leading-relaxed">Développer l'esprit critique, la logique et la curiosité scientifique à travers une méthodologie rigoureuse et adaptée.</p>
+                </div>
+                <div class="bg-white p-10 shadow-lg border-t-4 border-brandRed hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-14 h-14 bg-red-50 text-brandRed rounded flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-gray-900">Compétences de Vie</h4>
+                    <p class="text-gray-600 leading-relaxed">Éducation civique, arts et savoir-vivre. Nous formons non seulement des élèves brillants, mais aussi des citoyens responsables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-brandBlue py-16 text-center text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-6">Investissez dans l'Avenir</h2>
+            <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">Chaque don nous permet d'améliorer nos infrastructures, de fournir du matériel didactique de pointe et de soutenir l'excellence de notre équipe pédagogique.</p>
+            <button onclick="toggleModal('donationModal')" class="bg-brandGold text-brandBlue font-extrabold py-4 px-12 rounded-sm shadow-xl hover:bg-yellow-400 transition-colors text-lg">
+                Faire un don maintenant
+            </button>
+        </div>
+    </section>
+
+    <section id="team" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex justify-between items-end mb-12 border-b pb-4">
+                <div>
+                    <h2 class="text-sm font-bold tracking-widest uppercase text-brandRed mb-1">Nos Éducateurs</h2>
+                    <h3 class="text-3xl font-extrabold text-brandBlue">Le Personnel Dévoué</h3>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="group">
+                    <div class="overflow-hidden bg-brandGray rounded-t-lg aspect-[4/5] mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mme BUDA DIBAMI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900">Mme BUDA DIBAMI Sydonie Claire</h4>
+                    <p class="text-brandRed font-medium mb-2">Classe : SIL-CP</p>
+                    <p class="text-gray-600 text-sm">CAPIEMP, experte dans l'encadrement des fondations du primaire.</p>
+                </div>
+                <div class="group">
+                    <div class="overflow-hidden bg-brandGray rounded-t-lg aspect-[4/5] mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mme WETE DJEUJIP" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900">Mme WETE DJEUJIP Agnès</h4>
+                    <p class="text-brandRed font-medium mb-2">Classe : Maternelle</p>
+                    <p class="text-gray-600 text-sm">Spécialiste de la petite enfance et de l'éveil.</p>
+                </div>
+                <div class="group">
+                    <div class="overflow-hidden bg-brandGray rounded-t-lg aspect-[4/5] mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mme NKEYOUMBEU" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900">Mme NKEYOUMBEU Calvine</h4>
+                    <p class="text-brandRed font-medium mb-2">Classe : CE1-CE2</p>
+                    <p class="text-gray-600 text-sm">CAPIEMP, dédiée au renforcement des acquis fondamentaux.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-brandGray">
+        <div class="container mx-auto px-4 md:px-8 lg:flex lg:gap-16">
+            <div class="lg:w-1/3 mb-12 lg:mb-0">
+                <h2 class="text-sm font-bold tracking-widest uppercase text-brandRed mb-2">Contact</h2>
+                <h3 class="text-3xl font-extrabold text-brandBlue mb-8">Parlons de l'avenir de vos enfants.</h3>
+                
+                <div class="space-y-6 text-gray-700">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-brandBlue flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Notre Adresse</h4>
+                            <p id="contact-address" class="text-sm mt-1 leading-relaxed">Chargement...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-brandBlue flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Téléphone</h4>
+                            <p id="contact-phones" class="text-sm mt-1 leading-relaxed">Chargement...</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-brandBlue flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Email</h4>
+                            <p id="contact-email" class="text-sm mt-1 leading-relaxed">Chargement...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:w-2/3 bg-white p-8 md:p-10 shadow-xl rounded-sm">
+                <form action="https://formsubmit.co/contact@lesmarinettes.com" method="POST" class="space-y-6">
+                    <input type="hidden" name="_next" value="https://votre-site.github.io/#contact">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="subject" value="Nouvelle demande de contact via le site">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Nom Complet *</label>
+                            <input type="text" name="name" required class="w-full border-b-2 border-gray-300 px-0 py-2 outline-none focus:border-brandBlue transition-colors bg-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Email ou Téléphone *</label>
+                            <input type="text" name="contact" required class="w-full border-b-2 border-gray-300 px-0 py-2 outline-none focus:border-brandBlue transition-colors bg-transparent">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Sujet</label>
+                        <select name="topic" class="w-full border-b-2 border-gray-300 px-0 py-2 outline-none focus:border-brandBlue transition-colors bg-transparent text-gray-600">
+                            <option value="Inscription">Demande d'inscription</option>
+                            <option value="Information">Demande d'information</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Votre Message *</label>
+                        <textarea name="message" rows="4" required class="w-full border-2 border-gray-300 p-3 rounded-sm outline-none focus:border-brandBlue transition-colors bg-transparent"></textarea>
+                    </div>
+                    <button type="submit" class="bg-brandBlue hover:bg-blue-900 text-white font-bold py-4 px-8 rounded-sm transition-colors w-full md:w-auto shadow-md">
+                        Envoyer le message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-white text-2xl font-bold tracking-wider mb-6">LES MARINETTES</h2>
+            <p class="mb-6 max-w-md mx-auto text-sm">Groupe Scolaire Bilingue Privé Laïc. Établissement dédié aux cycles maternel et primaire.</p>
+            <p class="text-sm">&copy; 2026 Les Marinettes. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <div id="donationModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-70 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg overflow-hidden relative">
+            <div class="bg-brandBlue p-6 text-white relative">
+                <button onclick="toggleModal('donationModal')" class="absolute top-4 right-4 text-gray-300 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <h3 class="text-2xl font-bold mb-2">Soutenir Les Marinettes</h3>
+                <p class="text-sm text-blue-100">Votre soutien fait la différence pour l'éducation de nos enfants.</p>
+            </div>
+            
+            <div class="p-8">
+                <form action="https://formsubmit.co/contact@lesmarinettes.com" method="POST" class="space-y-5">
+                    <input type="hidden" name="_next" value="https://votre-site.github.io/">
+                    <input type="hidden" name="subject" value="Nouveau Don / Promesse de don">
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Nom Complet</label>
+                        <input type="text" name="name" required class="w-full border-2 border-gray-200 px-4 py-2 rounded focus:border-brandBlue outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Email ou Téléphone</label>
+                        <input type="text" name="contact" required class="w-full border-2 border-gray-200 px-4 py-2 rounded focus:border-brandBlue outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Montant de la promesse (FCFA / EUR)</label>
+                        <input type="text" name="amount" placeholder="Ex: 50 000 FCFA" required class="w-full border-2 border-gray-200 px-4 py-2 rounded focus:border-brandBlue outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Message (Optionnel)</label>
+                        <textarea name="message" rows="2" class="w-full border-2 border-gray-200 px-4 py-2 rounded focus:border-brandBlue outline-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-4 rounded transition-colors text-lg shadow-md">
+                        Envoyer ma promesse de don
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Menu Mobile
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Modale de don
+        function toggleModal(modalID) {
+            const modal = document.getElementById(modalID);
+            modal.classList.toggle('hidden');
+            // Empêcher le scroll du body quand la modale est ouverte
+            if(!modal.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Carrousel images & texte
+        const images = [
+            "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+            "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+            "https://images.unsplash.com/photo-1511629091441-ee46146481b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+        ];
+        
+        let carouselTexts = ["Chargement..."];
+        let currentIndex = 0;
+        const heroBg = document.getElementById('hero-bg');
+        const heroText = document.getElementById('hero-text');
+
+        setInterval(() => {
+            if (carouselTexts.length > 0) {
+                currentIndex = (currentIndex + 1) % Math.max(images.length, carouselTexts.length);
+                
+                // Transition Image
+                heroBg.style.opacity = '0';
+                setTimeout(() => {
+                    heroBg.style.backgroundImage = `url('${images[currentIndex % images.length]}')`;
+                    heroBg.style.opacity = '0.4'; // Retour à l'opacité 40% pour que le texte soit lisible
+                }, 500);
+
+                // Transition Texte
+                heroText.style.opacity = '0';
+                setTimeout(() => {
+                    heroText.innerText = carouselTexts[currentIndex % carouselTexts.length];
+                    heroText.style.opacity = '1';
+                }, 500);
+            }
+        }, 5000);
+
+        // Chargement du JSON depuis le CMS
+        async function loadContent() {
+            try {
+                const response = await fetch(`content.json?t=${new Date().getTime()}`);
+                const data = await response.json();
+
+                if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = data.hero.title;
+                if(document.getElementById('hero-subtitle')) document.getElementById('hero-subtitle').innerText = data.hero.subtitle;
+                if(document.getElementById('about-title')) document.getElementById('about-title').innerText = data.about.title;
+                if(document.getElementById('about-description')) document.getElementById('about-description').innerText = data.about.description;
+                if(document.getElementById('contact-address')) document.getElementById('contact-address').innerHTML = data.contact.address.replace(/, /g, '<br>');
+                if(document.getElementById('contact-phones')) document.getElementById('contact-phones').innerText = data.contact.phones;
+                if(document.getElementById('contact-email')) document.getElementById('contact-email').innerText = data.contact.email;
+                if(document.getElementById('top-email')) document.getElementById('top-email').innerText = "📧 " + data.contact.email;
+
+                if (data.hero.carouselTexts && data.hero.carouselTexts.length > 0) {
+                    carouselTexts = data.hero.carouselTexts;
+                    heroText.innerText = carouselTexts[0];
+                }
+            } catch (error) {
+                console.error('Erreur de chargement du JSON:', error);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadContent);
+    </script>
+</body>
+</html>

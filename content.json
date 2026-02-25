@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "title": "Groupe Scolaire Bilingue Privé Laïc",
+    "subtitle": "Les Marinettes",
+    "carouselTexts": [
+      "Donner du souffle à l'avenir de nos enfants.",
+      "École primaire et maternelle de qualité.",
+      "Inscrivez vos enfants pour la rentrée académique dès maintenant !"
+    ]
+  },
+  "about": {
+    "title": "Notre Vision",
+    "description": "Bienvenue à la base de l'enseignement où sont alliées propreté, rigueur, organisation et discipline. Le Groupe Scolaire Bilingue Privé Laïc « LES MARINETTES » est un établissement de référence dédié aux cycles d'enseignements maternel et primaire."
+  },
+  "contact": {
+    "address": "Mfeubath, Arrondissement de Bagangté, Département du Ndé, Région de l'Ouest, Cameroun",
+    "phones": "+237 671 55 12 40 / +237 677 98 34 09",
+    "email": "contact@lesmarinettes.com"
+  }
+}
