@@ -4,7 +4,7 @@ backend:
   branch: main
 
 media_folder: "images/uploads"
-public_folder: "/les-marinettes/images/uploads" # Add the repo name here
+public_folder: "images/uploads" # Add the repo name here
 
 collections:
   - name: "pages"
