@@ -14,7 +14,7 @@
   },
   "about": {
     "image": "/images/uploads/photo-2026-02-19-12-51-55-1-.jpg",
-    "title": "Notre Vision",
+    "title": "Notre vision",
     "description": "Bienvenue à la base de l'enseignement où sont alliées propreté, rigueur, organisation et discipline. Le Groupe Scolaire Bilingue Privé Laïc « LES MARINETTES » est un établissement de référence dédié aux cycles d'enseignements maternel et primaire.",
     "bullets": [
       "Propreté et Rigueur",
@@ -23,7 +23,7 @@
     ]
   },
   "programs": {
-    "subtitle": "Notre Pédagogie",
+    "subtitle": "Notre pédagogie",
     "title": "Des programmes conçus pour l'avenir",
     "list": [
       {
@@ -41,12 +41,12 @@
     ]
   },
   "impact": {
-    "title": "Investissez dans l'Avenir",
+    "title": "Investissez dans l'avenir",
     "description": "Chaque don nous permet d'améliorer nos infrastructures, de fournir du matériel didactique de pointe et de soutenir l'excellence de notre équipe pédagogique."
   },
   "team": {
-    "subtitle": "Nos Éducateurs",
-    "title": "Le Personnel Dévoué",
+    "subtitle": "Nos éducateurs/trices",
+    "title": "Un personnel dévoué",
     "members": [
       {
         "image": "/images/uploads/photo-2026-02-19-12-51-56.jpg",
@@ -65,12 +65,18 @@
         "name": "Mme NKEYOUMBEU Calvine",
         "role": "Classe : CE1-CE2",
         "desc": "CAPIEMP, dédiée au renforcement des acquis fondamentaux."
+      },
+      {
+        "name": "MBAMOU TCOUKEU Christalin",
+        "role": "Comptable",
+        "image": "/images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "desc": "Comptabilité"
       }
     ]
   },
   "contact": {
-    "address": "Mfeubath, Arrondissement de Bagangté, Département du Ndé, Région de l'Ouest, Cameroun",
-    "phones": "+237 671 55 12 40 / +237 677 98 34 09",
-    "email": "contact@lesmarinettes.com"
+    "address": "Quartier Feubat, Arrondissement de Bangangté, Département du Ndé, Région de l'Ouest, Cameroun",
+    "phones": "Orange +237 695 037 296  MTN +237 674 171 618",
+    "email": "lesmarinettes24@gmail.com"
   }
 }
