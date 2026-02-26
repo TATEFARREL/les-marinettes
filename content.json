@@ -50,19 +50,19 @@
     "title": "Un personnel dévoué",
     "members": [
       {
-        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "image": "images/uploads/teacher.png",
         "name": "Mme BUDA DIBAMI Sydonie",
         "role": "Classe : SIL-CP",
         "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire."
       },
       {
-        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "image": "images/uploads/teacher.png",
         "name": "Mme WETE DJEUJIP Agnès",
         "role": "Classe : Maternelle",
         "desc": "Spécialiste de la petite enfance et de l'éveil."
       },
       {
-        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "image": "images/uploads/teacher.png",
         "name": "Mme NKEYOUMBEU Calvine",
         "role": "Classe : CE1-CE2",
         "desc": "CAPIEMP, dédiée au renforcement des acquis fondamentaux."
@@ -70,7 +70,7 @@
       {
         "name": "MBAMOU TCOUKEU Christalin",
         "role": "Comptable",
-        "image": "/images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "image": "/images/uploads/teacher.png",
         "desc": "Comptabilité"
       }
     ]
