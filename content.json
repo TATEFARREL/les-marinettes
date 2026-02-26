@@ -51,21 +51,27 @@
     "members": [
       {
         "image": "images/uploads/teacher.png",
-        "name": "Mme BUDA DIBAMI Sydonie",
-        "role": "Classe : SIL-CP",
-        "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire."
-      },
-      {
-        "image": "images/uploads/teacher.png",
         "name": "Mme WETE DJEUJIP Agnès",
         "role": "Classe : Maternelle",
         "desc": "Spécialiste de la petite enfance et de l'éveil."
       },
       {
         "image": "images/uploads/teacher.png",
+        "name": "Mme BUDA DIBAMI Sydonie",
+        "role": "Classe : SIL-CP",
+        "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire."
+      },
+      {
+        "image": "images/uploads/teacher.png",
         "name": "Mme NKEYOUMBEU Calvine",
         "role": "Classe : CE1-CE2",
         "desc": "CAPIEMP, dédiée au renforcement des acquis fondamentaux."
+      },
+      {
+        "image": "images/uploads/teacher.png",
+        "name": "Mme BUDA DIBAMI Sydonie",
+        "role": "Classe : CM1-CM2",
+        "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire."
       },
       {
         "name": "MBAMOU TCOUKEU Christalin",
