@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="/">
-    <title>Les Marinettes | École Primaire et Maternelle</title>
-    
-    <!--<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>-->
-    
+    <title>Les Marinettes | Complexe Scolaire Bilingue</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -15,486 +11,557 @@
                 extend: {
                     colors: {
                         brandBlue: '#003893',
-                        brandRed: '#EF4135',
-                        brandGold: '#FFCB00',
-                        brandGray: '#F8FAFC',
+                        brandRed: '#e3000f',
+                        brandGold: '#f2a900',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
-        .fade-transition { transition: opacity 1s ease-in-out; }
+        /* 1. Hero Background Slideshow (Smooth Fade) */
+        .hero-bg-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 0;
+        }
+        .hero-bg-slide.active {
+            opacity: 0.4;
+        }
+
+        /* 2. Logo Pop Animation */
+        @keyframes softPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-logo {
+            animation: softPop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        /* 3. Hero Text Entrance (Initial Load) */
+        @keyframes textReveal {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .hero-anim {
+            opacity: 0;
+            animation: textReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        .hero-delay-1 { animation-delay: 0.2s; }
+        .hero-delay-2 { animation-delay: 0.4s; }
+        .hero-delay-3 { animation-delay: 0.6s; }
+        .hero-delay-4 { animation-delay: 0.8s; }
+
+        /* 4. Scroll Reveal Toolkit (Fixed Hierarchy) */
+        .reveal-item {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        /* Directional Starting Points */
+        .fade-up { transform: translateY(40px); }
+        .fade-left { transform: translateX(-40px); }
+        .fade-right { transform: translateX(40px); }
+        .zoom-in { transform: scale(0.8); }
+
+        /* State when the item becomes visible on scroll */
+        .reveal-item.is-visible {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+
+        /* Staggered Delays for lists/grids */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        
+        /* PARALLAX CONTAINER */
+        #hero-bg-container {
+            /* We scale it slightly (1.1) so there is "extra" image 
+            at the top and bottom to show during the scroll */
+            transform: scale(1.1);
+            will-change: transform;
+        }
+
+        /* Ensure the hero section itself clips the overflow 
+        so the scaled images don't bleed out */
+        #accueil {
+            overflow: hidden;
+        }
+
+        #hero-bg-container {
+            /* Zoomed in so we have "room" to move the image */
+            transform: scale(1.2); 
+            transition: transform 0.1s ease-out; /* Makes the parallax feel 'weighty' and smooth */
+        }
+
+        #pedagogie-bg {
+            transform: scale(1.3);
+            will-change: transform;
+        }
     </style>
 </head>
-<body class="bg-white font-sans antialiased text-gray-800">
-    <!--top banner-->
-    <div class="w-full h-[40px] bg-brandBlue text-white flex justify-center items-center px-4 md:px-8 text-xs sm:text-sm border-b border-blue-800">
-        <span id="top-email" class="hidden sm:inline font-medium tracking-wide">📧 contact@lesmarinettes.com</span>
-        <!--<button onclick="toggleModal('donationModal')" class="bg-brandRed hover:bg-red-600 text-white font-bold py-1.5 px-4 rounded transition-colors flex items-center shadow-sm">
-        <button onclick="toggleModal('contact')" class="bg-brandRed hover:bg-red-600 text-white font-bold py-1.5 px-4 rounded transition-colors flex items-center shadow-sm"></button>
-            Faire un don &rarr;
-        </button>-->
+<body class="font-sans antialiased text-gray-700 bg-gray-50">
+    <!--banner-->
+    <div class="bg-brandBlue text-white text-xs md:text-sm py-2 px-4">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex gap-4">
+                <span>📞 +237 697 828 943</span>
+                <span class="hidden md:inline">✉️ info.lesmarinettes23@gmail.com</span>
+            </div>
+            <div><span>📍 SiteWeb en Construction</span></div>
+        </div>
     </div>
-    <!--/top banner-->
+    <!--/banner-->
 
-    <!--header-->
-    <header class="sticky top-0 w-full bg-white shadow-md z-40 transition-all duration-300 border-b-4 border-brandGold">
-        
-        <div class="container mx-auto px-4 md:px-8 h-[80px] flex justify-between items-center">
-            <a href="#" class="text-brandBlue text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-2">
-                <img src="images\uploads\PHOTO-2026-02-25-19-45-08-removebg-preview.png" alt="Logo Les Marinettes" class="h-20 md:h-22 w-auto object-contain">
-                LES MARINETTES
-            </a>
-
-            <nav class="hidden md:flex space-x-8 font-semibold text-gray-600">
-                <a href="#hero" class="hover:text-brandBlue transition-colors">Accueil</a>
-                <a href="#about" class="hover:text-brandBlue transition-colors">Notre Vision</a>
-                <a href="#programs" class="hover:text-brandBlue transition-colors">Programmes</a>
-                <a href="#team" class="hover:text-brandBlue transition-colors">L'Équipe</a>
-                <a href="#contact" class="hover:text-brandBlue transition-colors">Contact</a>
+    <!--header section logo, title & menu-->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            
+            <div class="flex items-center gap-3">
+                <img src="images/uploads/logo.png" alt="Logo" class="h-18 w-16 object-contain animate-logo" onerror="this.src='https://via.placeholder.com/40'">
+                <h1 class="text-xl md:text-2xl font-extrabold text-brandBlue uppercase tracking-tight">Les Marinettes</h1>
+            </div>
+            
+            <nav class="hidden md:flex gap-8 font-semibold text-brandBlue">
+                <a href="#accueil" class="text-brandRed border-b-2 border-brandRed transition">Accueil</a>
+                <a href="apropos.html" class="hover:text-brandGold transition">À Propos</a>
+                <a href="admissions.html" class="hover:text-brandGold transition">Inscription</a>
+                <a href="galerie.html" class="hover:text-brandGold transition">Galerie</a>
             </nav>
 
-            <button id="mobile-menu-btn" class="md:hidden text-brandBlue focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <button id="menu-btn" class="md:hidden text-brandBlue focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
             </button>
+
+            <a href="#contact" class="hidden md:inline-block bg-brandGold text-brandBlue font-bold px-6 py-2 rounded shadow hover:bg-yellow-500 transition">Nous Contacter</a>
         </div>
-        
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 flex-col px-6 pt-4 pb-6 space-y-4 shadow-lg text-lg font-medium text-gray-700">
-            <a href="#hero" class="block hover:text-brandBlue">Accueil</a>
-            <a href="#about" class="block hover:text-brandBlue">Notre Vision</a>
-            <a href="#programs" class="block hover:text-brandBlue">Programmes</a>
-            <a href="#team" class="block hover:text-brandBlue">L'équipe</a>
-            <a href="#contact" class="block hover:text-brandBlue">Contact</a>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 p-6 space-y-4 shadow-xl">
+            <a href="#accueil" class="block text-lg font-bold text-brandRed border-b pb-2">Accueil</a>
+            <a href="apropos.html" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2">À Propos</a>
+            <a href="admissions.html" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2">Inscription</a>
+            <a href="galerie.html" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2">Galerie</a>
+            <a href="#contact" class="block w-full text-center bg-brandGold text-brandBlue font-bold py-3 rounded-lg mt-4">Nous Contacter</a>
         </div>
     </header>
-    <!--/header-->
+    <!--/header section logo, title & menu-->
 
-
-    <section id="hero" class="relative w-full h-[80vh] bg-gray-900 overflow-hidden flex items-center justify-center">
-        <div id="hero-bg" class="absolute inset-0 bg-cover bg-center fade-transition opacity-40" style="background-image: url('images/uploads/bamileke-kuosi-870x516.jpg');"></div>
-        
-        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
-            <span class="text-brandGold font-bold tracking-widest uppercase mb-4 text-sm md:text-base">Éducation de Qualité au Cameroun</span>
-            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight">
-                <span id="hero-title">Groupe Scolaire Bilingue Privé</span> <br>
-                <span id="hero-subtitle" class="text-brandGold">Les Marinettes</span>
-            </h1>
-            
-            <div id="hero-text-container" class="h-16 flex items-center justify-center mb-10">
-                <p id="hero-text" class="text-xl md:text-2xl text-gray-100 fade-transition font-medium max-w-2xl">
-                    Chargement...
-                </p>
+    <!--hero section-->
+    <section id="accueil" class="relative min-h-[85vh] py-20 flex items-center justify-center text-center overflow-hidden bg-gray-900">
+    
+        <div id="hero-bg-container" class="absolute inset-0 z-0 will-change-transform">
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <button onclick="toggleModal('enrollmentModal')" class="bg-brandRed hover:bg-red-700 text-white font-bold py-4 px-10 rounded shadow-lg transition-transform transform hover:-translate-y-1 text-lg">
-                    Inscription 2026-2027
-                </button>
-                <a href="#contact" class="bg-white text-brandBlue hover:bg-gray-100 font-bold py-4 px-10 rounded shadow-lg transition-transform transform hover:-translate-y-1 text-lg text-center">
-                    Nous Contacter
-                </a>
+        <div class="absolute inset-0 bg-black/50 z-10 pointer-events-none"></div>
+        
+        <div class="relative z-20 max-w-4xl px-4 w-full mt-10 md:mt-0">
+            <span id="hero-badge" class="hero-anim hero-delay-1 bg-brandRed text-white px-3 py-1 text-xs sm:text-sm font-bold tracking-widest uppercase rounded mb-4 inline-block"></span>
+            <h2 id="hero-title" class="hero-anim hero-delay-2 text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-4 md:mb-6 leading-tight drop-shadow-lg"></h2>
+            <p id="hero-subtitle" class="hero-anim hero-delay-3 text-base sm:text-lg md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto drop-shadow-md"></p>
+            <div class="hero-anim hero-delay-4 flex flex-col sm:flex-row justify-center gap-4 w-full px-4 sm:px-0">
+                <a id="hero-btn-1" href="apropos.html" class="bg-brandGold text-brandBlue px-8 py-3 rounded font-bold text-base md:text-lg hover:bg-yellow-500 transition w-full sm:w-auto"></a>
+                <a id="hero-btn-2" href="admissions.html" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded font-bold text-base md:text-lg hover:bg-white hover:text-brandBlue transition w-full sm:w-auto"></a>
             </div>
         </div>
     </section>
+    <!--/hero section-->
 
-    <section id="about" class="py-20 md:py-32 bg-white">
+    <!--about section-->
+    <section id="apropos" class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="w-full lg:w-1/2 grid grid-cols-2 gap-4 reveal-item fade-left">
+                    <img id="about-img-1" src="" class="w-full h-64 object-cover rounded-lg shadow-lg" alt="About 1">
+                    <img id="about-img-2" src="" class="w-full h-64 object-cover rounded-lg shadow-lg mt-8" alt="About 2">
+                </div>
+                <div class="w-full lg:w-1/2 reveal-item fade-right">
+                    <h3 id="about-badge" class="text-brandRed font-bold uppercase tracking-wider mb-2"></h3>
+                    <h4 id="about-title" class="text-3xl md:text-4xl font-extrabold text-brandBlue mb-6"></h4>
+                    <p id="about-text" class="text-gray-600 mb-6 leading-relaxed"></p>
+                    <ul id="about-bullets" class="space-y-3 text-gray-700 font-medium mb-8"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/about section-->
+
+    <!--Pedagogie section {I thing i might change it to core values because the school is really a recent one}-->
+    <section id="pedagogie" class="relative py-24 overflow-hidden">
+        
+        <div id="pedagogie-bg" class="absolute inset-0 z-0">
+            <img src="images/uploads/bamileke-kuosi-870x516.jpg" class="w-full h-full object-cover" alt="Background">
+        </div>
+
+        <div class="absolute inset-0 bg-brandBlue/75 z-10 pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 relative z-20 text-white">
+            <div class="text-center mb-16 reveal-item fade-up">
+                <h3 class="text-brandGold font-bold uppercase tracking-widest mb-2">Notre Pédagogie</h3>
+                <h4 class="text-3xl md:text-5xl font-extrabold mb-4">Des programmes conçus pour l'avenir</h4>
+                <div class="w-24 h-1 bg-brandGold mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="reveal-item zoom-in delay-100 bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                    <div class="text-4xl mb-6 group-hover:scale-110 transition-transform inline-block">🌍</div>
+                    <h5 class="text-2xl font-bold mb-4 text-brandGold">Alphabétisation & Langues</h5>
+                    <p class="text-blue-50 leading-relaxed">Un enseignement bilingue immersif dès le plus jeune âge pour garantir une communication fluide et ouverte sur le monde.</p>
+                </div>
+                <div class="reveal-item zoom-in delay-200 bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                    <div class="text-4xl mb-6 group-hover:scale-110 transition-transform inline-block">🔬</div>
+                    <h5 class="text-2xl font-bold mb-4 text-brandGold">Mathématiques & Sciences</h5>
+                    <p class="text-blue-50 leading-relaxed">Développer l'esprit critique, la logique et la curiosité scientifique à travers une méthodologie rigoureuse.</p>
+                </div>
+                <div class="reveal-item zoom-in delay-300 bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                    <div class="text-4xl mb-6 group-hover:scale-110 transition-transform inline-block">💡</div>
+                    <h5 class="text-2xl font-bold mb-4 text-brandGold">Compétences de Vie</h5>
+                    <p class="text-blue-50 leading-relaxed">Éducation civique, arts et savoir-vivre. Nous formons des citoyens brillants et responsables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/pedagogie-->
+
+    <!--team-->
+    <section id="equipe" class="py-20 bg-gray-50 border-t">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 id="team-badge" class="text-brandRed font-bold uppercase tracking-wider mb-2"></h3>
+                <h4 id="team-title" class="text-3xl md:text-4xl font-extrabold text-brandBlue"></h4>
+            </div>
+            <div id="team-container" class="flex flex-col items-center gap-10">
+                </div>
+        </div>
+    </section>
+    <!--/team-->
+
+
+    <!--gallery section-->
+    <section id="galerie" class="py-20 bg-white border-t">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 id="gallery-badge" class="text-brandRed font-bold uppercase tracking-wider mb-2"></h3>
+                <h4 id="gallery-title" class="text-3xl md:text-4xl font-extrabold text-brandBlue"></h4>
+            </div>
+            <div id="gallery-container" class="space-y-16">
+                </div>
+        </div>
+    </section>
+    <!--/gallery-->
+
+    <!--contact section-->
+    <section id="contact" class="py-20 bg-gray-50 border-t border-gray-200">
         <div class="container mx-auto px-4 md:px-8">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
-                <div class="lg:w-1/2">
-                    <div class="w-20 h-2 bg-brandGold mb-6"></div>
-                    <h2 id="about-title" class="text-4xl md:text-5xl font-extrabold text-brandBlue mb-8 leading-tight">Chargement...</h2>
-                    <p id="about-description" class="text-lg text-gray-600 leading-relaxed mb-8">
-                        Chargement...
+            
+            <div class="text-center mb-16 reveal-item fade-up">
+                <h3 class="text-brandRed font-bold uppercase tracking-wider mb-2">CONTACT</h3>
+                <h4 class="text-3xl md:text-4xl font-extrabold text-brandBlue">Parlons de l'avenir de vos enfants.</h4>
+            </div>
+
+            <div class="flex flex-col lg:flex-row bg-white rounded-2xl shadow-xl overflow-hidden reveal-item fade-up delay-100 border border-gray-100">
+                
+                <div class="w-full lg:w-1/2 min-h-[400px] lg:min-h-full relative">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127357.55839446213!2d11.436904603956487!3d3.844119642939806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x108bcf7a309a797f%3A0x7cb3ba3c400407a5!2sYaound%C3%A9%2C%20Cameroon!5e0!3m2!1sen!2sus!4v1710389000000!5m2!1sen!2sus" 
+                        class="absolute inset-0 w-full h-full" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <div class="w-full lg:w-1/2 p-8 md:p-12 lg:p-16">
+                    
+                    <p class="text-gray-600 mb-8 text-sm leading-relaxed">
+                        Appelez-nous à l'un de nos numéros ou remplissez le formulaire ci-contre et nous nous assurerons de vous contacter dans les plus brefs délais.
                     </p>
-                    <ul class="space-y-4 text-gray-700 font-medium">
-                        <li class="flex items-center gap-3"><svg class="w-6 h-6 text-brandRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Propreté et Rigueur</li>
-                        <li class="flex items-center gap-3"><svg class="w-6 h-6 text-brandRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Organisation et Discipline</li>
-                        <li class="flex items-center gap-3"><svg class="w-6 h-6 text-brandRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Bilinguisme d'Excellence</li>
+                    
+                    <h5 class="text-2xl font-bold text-brandRed mb-6 border-b border-gray-100 pb-4">Remplissez le formulaire ci-dessous !</h5>
+                    
+                    <form action="#" method="POST" class="space-y-6">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <input type="text" placeholder="Nom Complet" required
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brandBlue focus:border-transparent transition-all">
+                            <input type="tel" placeholder="Numéro de Téléphone" required
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brandBlue focus:border-transparent transition-all">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <input type="email" placeholder="Adresse e-mail (Optionnel)" 
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brandBlue focus:border-transparent transition-all">
+                            <input type="text" placeholder="Ville ou Quartier" required
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brandBlue focus:border-transparent transition-all">
+                        </div>
+                        
+                        <div>
+                            <textarea rows="4" placeholder="Veuillez entrer votre message ou demande de renseignements ici..." required
+                                class="w-full px-4 py-3 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brandBlue focus:border-transparent transition-all resize-y"></textarea>
+                        </div>
+                        
+                        <div class="text-center pt-2">
+                            <button type="submit" 
+                                class="bg-brandRed text-white font-bold py-3 px-10 rounded-full hover:bg-red-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/30 w-full sm:w-auto">
+                                Envoyer le message
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/contact section-->
+
+    <section class="py-16 bg-white border-t border-gray-200">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+                
+                <div class="fade-up">
+                    <img src="images/uploads/logo.png" alt="Logo" class="h-20 mb-6 object-contain" onerror="this.src='https://via.placeholder.com/80'">
+                    <h4 class="text-xl font-bold text-brandBlue mb-4">À Propos des Marinettes</h4>
+                    <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                        Le Complexe Scolaire Bilingue Les Marinettes a été fondé avec pour mission d'offrir une éducation de haute qualité dans un environnement multiculturel et bienveillant.
+                    </p>
+                    <a href="#apropos" class="text-brandRed font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all w-max">
+                        En savoir plus <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </div>
+
+                <div class="fade-up delay-100">
+                    <h4 class="text-xl font-bold text-brandBlue mb-6">Nos Programmes</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Admissions 2026</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Section Maternelle</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Section Primaire</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Frais de Scolarité</a></li>
+                        <li><a href="#galerie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Événements de l'école</a></li>
                     </ul>
                 </div>
-                <div class="lg:w-1/2 relative">
-                    <img src="images/uploads/PHOTO-2026-02-26-18-44-20.jpg" alt="Enfants à l'école" class="rounded-lg shadow-2xl z-10 relative">
-                    <div class="absolute -bottom-6 -left-6 w-full h-full border-4 border-brandGold rounded-lg -z-0 hidden md:block"></div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="programs" class="py-20 bg-brandGray">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-sm font-bold tracking-widest uppercase text-brandRed mb-2">Notre Pédagogie</h2>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-brandBlue">Des programmes conçus pour l'avenir</h3>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-10 shadow-lg border-t-4 border-brandBlue hover:-translate-y-2 transition-transform duration-300">
-                    <div class="w-14 h-14 bg-blue-50 text-brandBlue rounded flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-900">Alphabétisation & Langues</h4>
-                    <p class="text-gray-600 leading-relaxed">Un enseignement bilingue immersif dès le plus jeune âge pour garantir une communication fluide et ouverte sur le monde.</p>
+                <div class="fade-up delay-200">
+                    <h4 class="text-xl font-bold text-brandBlue mb-6">Liens Rapides</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">FAQ</a></li>
+                        <li><a href="#equipe" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Notre Équipe</a></li>
+                        <li><a href="#apropos" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">À Propos de Nous</a></li>
+                        <li><a href="#contact" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Nous Contacter</a></li>
+                        <li><a href="#galerie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Galerie Photos</a></li>
+                    </ul>
                 </div>
-                <div class="bg-white p-10 shadow-lg border-t-4 border-brandGold hover:-translate-y-2 transition-transform duration-300">
-                    <div class="w-14 h-14 bg-yellow-50 text-brandGold rounded flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-900">Mathématiques & Sciences</h4>
-                    <p class="text-gray-600 leading-relaxed">Développer l'esprit critique, la logique et la curiosité scientifique à travers une méthodologie rigoureuse et adaptée.</p>
-                </div>
-                <div class="bg-white p-10 shadow-lg border-t-4 border-brandRed hover:-translate-y-2 transition-transform duration-300">
-                    <div class="w-14 h-14 bg-red-50 text-brandRed rounded flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-900">Compétences de Vie</h4>
-                    <p class="text-gray-600 leading-relaxed">Éducation civique, arts et savoir-vivre. Nous formons non seulement des élèves brillants, mais aussi des citoyens responsables.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="bg-brandBlue py-16 text-center text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <h2 class="text-3xl md:text-5xl font-extrabold mb-6">Investissez dans l'Avenir</h2>
-            <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">Chaque don nous permet d'améliorer nos infrastructures, de fournir du matériel didactique de pointe et de soutenir l'excellence de notre équipe pédagogique.</p>
-            <!--<button onclick="toggleModal('donationModal')" class="bg-brandGold text-brandBlue font-extrabold py-4 px-12 rounded-sm shadow-xl hover:bg-yellow-400 transition-colors text-lg">
-                Faire un don maintenant
-            </button>-->
-        </div>
-    </section>
-
-    <section id="team" class="py-20 bg-white">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="flex justify-between items-end mb-12 border-b pb-4">
-                <div>
-                    <h2 class="text-sm font-bold tracking-widest uppercase text-brandRed mb-1">Nos Éducateurs</h2>
-                    <h3 class="text-3xl font-extrabold text-brandBlue">Le Personnel Dévoué</h3>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="group">
-                    <div class="overflow-hidden bg-brandGray rounded-t-lg aspect-[4/5] mb-4 relative">
-                        <img src="images/uploads/photo-2026-02-19-12-51-56.jpg" alt="Mme BUDA DIBAMI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900">Mme BUDA DIBAMI Sydonie Claire</h4>
-                    <p class="text-brandRed font-medium mb-2">Classe : SIL-CP</p>
-                    <p class="text-gray-600 text-sm">CAPIEMP, experte dans l'encadrement des fondations du primaire.</p>
-                </div>
-                <div class="group">
-                    <div class="overflow-hidden bg-brandGray rounded-t-lg aspect-[4/5] mb-4 relative">
-                        <img src="images/uploads/photo-2026-02-19-12-51-56.jpg" alt="Mme WETE DJEUJIP" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900">Mme WETE DJEUJIP Agnès</h4>
-                    <p class="text-brandRed font-medium mb-2">Classe : Maternelle</p>
-                    <p class="text-gray-600 text-sm">Spécialiste de la petite enfance et de l'éveil.</p>
-                </div>
-                <div class="group">
-                    <div class="overflow-hidden bg-brandGray rounded-t-lg aspect-[4/5] mb-4 relative">
-                        <img src="images/uploads/photo-2026-02-19-12-51-56.jpg" alt="Mme NKEYOUMBEU" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900">Mme NKEYOUMBEU Calvine</h4>
-                    <p class="text-brandRed font-medium mb-2">Classe : CE1-CE2</p>
-                    <p class="text-gray-600 text-sm">CAPIEMP, dédiée au renforcement des acquis fondamentaux.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-20 bg-brandGray">
-        <div class="container mx-auto px-4 md:px-8 lg:flex lg:gap-16">
-            <div class="lg:w-1/3 mb-12 lg:mb-0">
-                <h2 class="text-sm font-bold tracking-widest uppercase text-brandRed mb-2">Contact</h2>
-                <h3 class="text-3xl font-extrabold text-brandBlue mb-8">Parlons de l'avenir de vos enfants.</h3>
-                
-                <div class="space-y-6 text-gray-700">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-brandBlue flex items-center justify-center flex-shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-900">Notre Adresse</h4>
-                            <p id="contact-address" class="text-sm mt-1 leading-relaxed">Chargement...</p>
-                        </div>
-                    </div>
+                <div class="fade-up delay-300">
+                    <h4 class="text-xl font-bold text-brandBlue mb-6">Comment nous joindre</h4>
+                    <ul class="space-y-4 text-sm text-gray-600 mb-6">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brandRed shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>Quartier Feubat<br>Arrondissement de Bangangté<br>Département du Ndé<br>Region de l'Ouest<br> Cameroun</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-brandRed shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            <span>+237 695 037 296 | +237 674 171 618</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-brandRed shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <span>info.lesmarinettes23@gmail.com</span>
+                        </li>
+                    </ul>
                     
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-brandBlue flex items-center justify-center flex-shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-900">Téléphone</h4>
-                            <p id="contact-phones" class="text-sm mt-1 leading-relaxed">Chargement...</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-brandBlue flex items-center justify-center flex-shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-900">Email</h4>
-                            <p id="contact-email" class="text-sm mt-1 leading-relaxed">Chargement...</p>
-                        </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300">
+                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.016 10.016 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a9.994 9.994 0 004.779 1.217h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.669-1.037-5.176-2.922-7.062A9.935 9.935 0 0012.012 2zM12.015 20.2h-.004a8.283 8.283 0 01-4.226-1.16l-.303-.18-3.14.743.84-3.06-.197-.313a8.254 8.254 0 01-1.265-4.453c0-4.564 3.714-8.274 8.28-8.275 2.213 0 4.293.86 5.857 2.426a8.223 8.223 0 012.423 5.856c-.001 4.566-3.715 8.276-8.28 8.276z"/></svg>
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <div class="lg:w-2/3 bg-white p-8 md:p-10 shadow-xl rounded-sm">
-                <form action="https://formsubmit.co/info.lesmarinettes23@gmail.com" method="POST" class="space-y-6">
-                    <input type="hidden" name="_next" value="https://votre-site.github.io/#contact">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_subject" value="Nouvelle demande de contact via le site">
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Nom Complet *</label>
-                            <input type="text" name="name" required class="w-full border-b-2 border-gray-300 px-0 py-2 outline-none focus:border-brandBlue transition-colors bg-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Email ou Téléphone *</label>
-                            <input type="text" name="contact" required class="w-full border-b-2 border-gray-300 px-0 py-2 outline-none focus:border-brandBlue transition-colors bg-transparent">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Sujet</label>
-                        <select name="topic" class="w-full border-b-2 border-gray-300 px-0 py-2 outline-none focus:border-brandBlue transition-colors bg-transparent text-gray-600">
-                            <option value="Inscription">Demande d'inscription</option>
-                            <option value="Information">Demande d'information</option>
-                            <option value="Autre">Autre</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Votre Message *</label>
-                        <textarea name="message" rows="4" required class="w-full border-2 border-gray-300 p-3 rounded-sm outline-none focus:border-brandBlue transition-colors bg-transparent"></textarea>
-                    </div>
-                    <button type="submit" class="bg-brandBlue hover:bg-blue-900 text-white font-bold py-4 px-8 rounded-sm transition-colors w-full md:w-auto shadow-md">
-                        Envoyer le message
-                    </button>
-                </form>
             </div>
         </div>
     </section>
 
-    <!--footer-->
-    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-white text-2xl font-bold tracking-wider mb-6">LES MARINETTES</h2>
-            <p class="mb-6 max-w-md mx-auto text-sm">Groupe Scolaire Bilingue Privé. Établissement dédié aux cycles maternel et primaire.</p>
-            <p class="text-sm">&copy; 2026 Les Marinettes. Tous droits réservés.</p>
+    <footer class="bg-gray-900 text-gray-300 py-10 text-center">
+        <div class="container mx-auto px-4">
+            <!--<h2 class="text-2xl font-bold text-white mb-4">CSB Les Marinettes</h2>
+            <p class="mb-6">Construisons l'avenir ensemble.</p>-->
+            <p class="text-sm text-gray-500">&copy; 2026 Complexe Scolaire Bilingue Les Marinettes.</p>
         </div>
     </footer>
-    <!--/footer-->
 
-    <!--donation form-->
-    <div id="donationModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-70 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg overflow-hidden relative">
-            <div class="bg-brandBlue p-6 text-white relative">
-                <button onclick="toggleModal('donationModal')" class="absolute top-4 right-4 text-gray-300 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-                <h3 class="text-2xl font-bold mb-2">Soutenir Les Marinettes</h3>
-                <p class="text-sm text-blue-100">Votre soutien fait la différence pour l'éducation de nos enfants.</p>
-            </div>
-            
-            <div class="p-8">
-                <form action="https://formsubmit.co/info.lesmarinettes23@gmail.com" method="POST" class="space-y-5">
-                    <input type="hidden" name="_next" value="https://votre-site.github.io/">
-                    <input type="hidden" name="subject" value="Nouveau Don / Promesse de don">
-                    
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Nom Complet</label>
-                        <input type="text" name="name" required class="w-full border-2 border-gray-200 px-4 py-2 rounded focus:border-brandBlue outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Email ou Téléphone</label>
-                        <input type="text" name="contact" required class="w-full border-2 border-gray-200 px-4 py-2 rounded focus:border-brandBlue outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Montant de la promesse (FCFA / EUR)</label>
-                        <input type="text" name="amount" placeholder="Ex: 50 000 FCFA" required class="w-full border-2 border-gray-200 px-4 py-2 rounded focus:border-brandBlue outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Message (Optionnel)</label>
-                        <textarea name="message" rows="2" class="w-full border-2 border-gray-200 px-4 py-2 rounded focus:border-brandBlue outline-none"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-4 rounded transition-colors text-lg shadow-md">
-                        Envoyer ma promesse de don
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--/donation form-->
-
-    <!--enrolment form-->
-    <div id="enrollmentModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 flex justify-center items-center p-4">
-        <div class="bg-white rounded-lg w-full max-w-lg overflow-hidden shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            
-            <div class="bg-brandBlue text-white p-5 flex justify-between items-center">
-                <h3 class="text-xl font-bold">Pré-inscription 2026-2027</h3>
-                <button onclick="toggleModal('enrollmentModal')" class="text-white hover:text-brandGold text-2xl leading-none font-bold">&times;</button>
-            </div>
-
-            <div class="p-6">
-                <p class="text-gray-600 mb-6 text-sm">Remplissez ce formulaire pour pré-inscrire votre enfant. Notre équipe vous contactera rapidement pour finaliser le dossier.</p>
-                
-                <form action="https://formsubmit.co/info.lesmarinettes23@gmail.com" method="POST" class="space-y-4">
-                    <input type="hidden" name="_subject" value="NOUVELLE INSCRIPTION: Rentrée 2026-2027">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_captcha" value="false">
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nom du Parent / Tuteur *</label>
-                        <input type="text" name="Nom_Parent" required class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone *</label>
-                            <input type="tel" name="Telephone" required class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" name="Email" class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
-                        </div>
-                    </div>
-
-                    <hr class="my-4 border-gray-200">
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nom complet de l'enfant *</label>
-                        <input type="text" name="Nom_Enfant" required class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Âge de l'enfant *</label>
-                            <input type="number" name="Age_Enfant" required min="2" max="15" class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Classe souhaitée *</label>
-                            <select name="Classe_Souhaitee" required class="w-full border border-gray-300 rounded p-2 focus:ring-brandBlue focus:border-brandBlue">
-                                <option value="">Sélectionnez...</option>
-                                <option value="Maternelle (Petite Section)">Maternelle (Petite Section)</option>
-                                <option value="Maternelle (Grande Section)">Maternelle (Grande Section)</option>
-                                <option value="SIL">SIL</option>
-                                <option value="CP">CP</option>
-                                <option value="CE1">CE1</option>
-                                <option value="CE2">CE2</option>
-                                <option value="CM1">CM1</option>
-                                <option value="CM2">CM2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mt-6">
-                        <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition-colors text-lg">
-                            Envoyer la demande
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--/enrolment form-->
     <script>
-        // Menu Mobile et Modale
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
-        function toggleModal(modalID) {
-            const modal = document.getElementById(modalID);
-            modal.classList.toggle('hidden');
-            document.body.style.overflow = modal.classList.contains('hidden') ? 'auto' : 'hidden';
-        }
+        async function loadData() {
+        try {
+            const response = await fetch('content.json?v=' + new Date().getTime());
+            const data = await response.json();
 
-        // Carrousel
-        let heroImages = ["images/uploads/bamileke-kuosi-870x516.jpg"];
-        let carouselTexts = ["Chargement..."];
-        let currentIndex = 0;
-        
-        setInterval(() => {
-            if (carouselTexts.length > 0 || heroImages.length > 0) {
-                currentIndex++;
-                if (heroImages.length > 0) {
-                    const heroBg = document.getElementById('hero-bg');
-                    heroBg.style.opacity = '0';
-                    setTimeout(() => { heroBg.style.backgroundImage = `url('${heroImages[currentIndex % heroImages.length]}')`; heroBg.style.opacity = '0.4'; }, 500);
-                }
-                if (carouselTexts.length > 0) {
-                    const heroText = document.getElementById('hero-text');
-                    heroText.style.opacity = '0';
-                    setTimeout(() => { heroText.innerText = carouselTexts[currentIndex % carouselTexts.length]; heroText.style.opacity = '1'; }, 500);
-                }
-            }
-        }, 5000);
-
-        // Chargement du JSON (Générateur Dynamique)
-        async function loadContent() {
-            try {
-                const response = await fetch(`content.json?t=${new Date().getTime()}`);
-                const data = await response.json();
-
-                // 1. HERO
-                document.querySelector('#hero span.text-brandGold.uppercase').innerText = data.hero.surtitle;
+            // 1. HERO SLIDESHOW
+            if (data.hero) {
+                document.getElementById('hero-badge').innerText = data.hero.badge;
                 document.getElementById('hero-title').innerText = data.hero.title;
                 document.getElementById('hero-subtitle').innerText = data.hero.subtitle;
-                if (data.hero.bgImages) heroImages = data.hero.bgImages;
-                if (data.hero.carouselTexts) carouselTexts = data.hero.carouselTexts;
+                document.getElementById('hero-btn-1').innerText = data.hero.primaryButton;
+                document.getElementById('hero-btn-2').innerText = data.hero.secondaryButton;
 
-                // 2. ABOUT
+                const bgContainer = document.getElementById('hero-bg-container');
+                if (data.hero.images && data.hero.images.length > 0) {
+                    bgContainer.innerHTML = data.hero.images.map((imgUrl, index) => `
+                        <img src="${imgUrl}" class="hero-bg-slide ${index === 0 ? 'active' : ''}" alt="Hero Image ${index + 1}">
+                    `).join('');
+
+                    if (data.hero.images.length > 1) {
+                        let currentSlide = 0;
+                        const slides = bgContainer.querySelectorAll('.hero-bg-slide');
+                        setInterval(() => {
+                            slides[currentSlide].classList.remove('active');
+                            currentSlide = (currentSlide + 1) % slides.length;
+                            slides[currentSlide].classList.add('active');
+                        }, 5000);
+                    }
+                }
+            }
+
+            // 2. ABOUT SECTION
+            const aboutSection = document.getElementById('apropos');
+            if (data.about && aboutSection) {
+                document.getElementById('about-badge').innerText = data.about.badge;
                 document.getElementById('about-title').innerText = data.about.title;
-                document.getElementById('about-description').innerText = data.about.description;
-                document.querySelector('#about img').src = data.about.image;
+                document.getElementById('about-text').innerText = data.about.text;
+                document.getElementById('about-img-1').src = data.about.image1;
+                document.getElementById('about-img-2').src = data.about.image2;
                 
-                const bulletContainer = document.querySelector('#about ul');
-                bulletContainer.innerHTML = data.about.bullets.map(b => `
-                    <li class="flex items-center gap-3"><svg class="w-6 h-6 text-brandRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> ${b}</li>
-                `).join('');
+                const ul = document.getElementById('about-bullets');
+                ul.innerHTML = data.about.bullets.map(bullet => `<li class="flex items-center gap-2">✅ ${bullet}</li>`).join('');
+            }
 
-                // 3. PROGRAMS
-                document.querySelector('#programs h2').innerText = data.programs.subtitle;
-                document.querySelector('#programs h3').innerText = data.programs.title;
-                const progContainer = document.querySelector('#programs .grid');
-                progContainer.innerHTML = data.programs.list.map((p, i) => `
-                    <div class="bg-white p-10 shadow-lg border-t-4 ${i%3===0 ? 'border-brandBlue' : i%3===1 ? 'border-brandGold' : 'border-brandRed'} hover:-translate-y-2 transition-transform duration-300">
-                        <h4 class="text-xl font-bold mb-3 text-gray-900">${p.title}</h4>
-                        <p class="text-gray-600 leading-relaxed">${p.desc}</p>
-                    </div>
-                `).join('');
-
-                // 4. IMPACT
-                document.querySelector('.bg-brandBlue.text-center h2').innerText = data.impact.title;
-                document.querySelector('.bg-brandBlue.text-center p').innerText = data.impact.description;
-
-                // 5. TEAM
-                document.querySelector('#team h2').innerText = data.team.subtitle;
-                document.querySelector('#team h3').innerText = data.team.title;
-                const teamContainer = document.querySelector('#team .grid');
-                teamContainer.innerHTML = data.team.members.map(m => `
-                    <div class="group">
-                        <div class="overflow-hidden bg-brandGray rounded-t-lg aspect-[4/5] mb-4 relative">
-                            <img src="${m.image}" alt="${m.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900">${m.name}</h4>
-                        <p class="text-brandRed font-medium mb-2">${m.role}</p>
+            // 3. TEAM SECTION
+            const teamContainer = document.getElementById('team-container');
+            if (data.team && teamContainer) {
+                document.getElementById('team-badge').innerText = data.team.badge;
+                document.getElementById('team-title').innerText = data.team.title;
+                
+                const createCard = (m, colorClass, delayIndex) => `
+                    <div class="reveal-item fade-up delay-${(delayIndex % 4 + 1) * 100} bg-white p-6 rounded-lg shadow-md border-t-4 ${colorClass} flex flex-col items-center text-center w-full max-w-sm mx-auto transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
+                        <img src="${m.image}" class="w-24 h-24 rounded-full object-cover mb-4 shadow-sm" onerror="this.src='https://via.placeholder.com/150'">
+                        <h5 class="text-xl font-bold text-brandBlue">${m.name}</h5>
+                        <span class="text-sm font-bold text-gray-500 uppercase mb-2">${m.role}</span>
                         <p class="text-gray-600 text-sm">${m.desc}</p>
                     </div>
+                `;
+
+                const level1 = data.team.members.filter(m => m.level === 1);
+                const level2 = data.team.members.filter(m => m.level === 2);
+                const level3 = data.team.members.filter(m => m.level === 3);
+
+                teamContainer.innerHTML = `
+                    <div class="w-full flex justify-center">${level1.map((m, i) => createCard(m, 'border-brandRed', i)).join('')}</div>
+                    <div class="w-full flex flex-wrap justify-center gap-6">${level2.map((m, i) => createCard(m, 'border-brandBlue', i)).join('')}</div>
+                    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
+                        ${level3.map((m, i) => createCard(m, 'border-brandGold', i)).join('')}
+                    </div>
+                `;
+            }
+
+            // 4. GALLERY SECTION
+            const galleryContainer = document.getElementById('gallery-container');
+            if (data.gallery && galleryContainer) {
+                document.getElementById('gallery-badge').innerText = data.gallery.badge;
+                document.getElementById('gallery-title').innerText = data.gallery.title;
+                
+                galleryContainer.innerHTML = data.gallery.events.map((event, index) => `
+                    <div class="reveal-item fade-up bg-gray-50 p-8 rounded-xl shadow-sm border flex flex-col lg:flex-row gap-8 items-center">
+                        <div class="w-full lg:w-1/3">
+                            <h5 class="text-2xl font-bold text-brandBlue mb-3">${event.title}</h5>
+                            <p class="text-gray-600">${event.subtitle}</p>
+                        </div>
+                        <div class="w-full lg:w-2/3 grid grid-cols-2 gap-4">
+                            ${event.media.map(img => `<img src="${img}" class="w-full h-48 object-cover rounded-lg shadow" onerror="this.src='https://via.placeholder.com/400'">`).join('')}
+                        </div>
+                    </div>
                 `).join('');
+            }
 
-                // 6. CONTACT
-                document.getElementById('contact-address').innerHTML = data.contact.address.replace(/, /g, '<br>');
-                document.getElementById('contact-phones').innerText = data.contact.phones;
-                document.getElementById('contact-email').innerText = data.contact.email;
-                document.getElementById('top-email').innerText = "📧 " + data.contact.email;
+            // 5. TRIGGER SCROLL ANIMATIONS
+            setTimeout(() => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
 
-            } catch (error) { console.error('Erreur JSON:', error); }
+                document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
+            }, 200);
+
+        } catch (error) {
+            console.error("Erreur de chargement:", error);
         }
-        document.addEventListener('DOMContentLoaded', loadContent);
+    }
+
+    // 6. MOBILE MENU TOGGLE
+    function initMenu() {
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                menuIcon.setAttribute('d', isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+            });
+        }
+    }
+
+    //paralax hero
+    function initParallax() {
+        const bgContainer = document.getElementById('hero-bg-container');
+        
+        window.addEventListener('scroll', () => {
+            // Get the current scroll position
+            let offset = window.pageYOffset;
+            
+            // Move the background container at 40% of the scroll speed
+            // We use translate3d for hardware acceleration (smoother)
+            bgContainer.style.transform = `scale(1.1) translate3d(0, ${offset * 0.4}px, 0)`;
+        });
+    }
+
+    function initParallax() {
+        const bg = document.getElementById('hero-bg-container');
+        
+        window.addEventListener('scroll', () => {
+            const scrollValue = window.scrollY;
+            // Move the background 30% of the scroll speed
+            // This creates the 3D depth effect
+            bg.style.transform = `scale(1.2) translateY(${scrollValue * 0.3}px)`;
+        });
+    }
+
+    window.onload = () => {
+        loadData();
+        initMenu();
+        initParallax();
+        window.addEventListener('load', initParallax);
+    };
     </script>
 </body>
 </html>

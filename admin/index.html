@@ -1,11 +1,97 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Administration | Les Marinettes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Les Marinettes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<body class="bg-gray-100 min-h-screen">
+
+    <nav class="bg-brandBlue p-4 text-white shadow-md" style="background-color: #003893;">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">LES MARINETTES - Administration</h1>
+            <a href="/" class="text-sm hover:underline">Retour au site</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto py-10 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            
+            <aside class="md:col-span-1 space-y-2">
+                <button class="w-full text-left p-3 bg-white rounded shadow hover:bg-gray-50 font-bold border-l-4 border-blue-600">Galerie</button>
+                <button class="w-full text-left p-3 bg-white rounded shadow hover:bg-gray-50 text-gray-400 cursor-not-allowed">L'Équipe (Bientôt)</button>
+                <button class="w-full text-left p-3 bg-white rounded shadow hover:bg-gray-50 text-gray-400 cursor-not-allowed">Agenda (Bientôt)</button>
+            </aside>
+
+            <section class="md:col-span-3 space-y-6">
+                
+                <div class="bg-white p-6 rounded shadow-md">
+                    <h2 class="text-lg font-bold mb-4">Ajouter une Image à la Galerie</h2>
+                    <div class="space-y-4">
+                        <input id="imgUrl" type="text" placeholder="URL de l'image (ex: images/uploads/photo.jpg)" class="w-full border p-2 rounded">
+                        <input id="imgCaption" type="text" placeholder="Légende" class="w-full border p-2 rounded">
+                        <button onclick="addToGallery()" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded shadow-md">
+                    <h2 class="text-lg font-bold mb-4">Aperçu de la Galerie</h2>
+                    <div id="admin-gallery-grid" class="grid grid-cols-3 gap-4">
+                        </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000/api/cms";
+
+        // Load the gallery items from the backend
+        async function loadGallery() {
+            try {
+                // For simplicity, we fetch the local content.json directly for preview
+                const response = await fetch('../content.json?t=' + Date.now());
+                const data = await response.json();
+                const grid = document.getElementById('admin-gallery-grid');
+                
+                grid.innerHTML = data.gallery.images.map(img => `
+                    <div class="relative group">
+                        <img src="../${img.url}" class="w-full h-32 object-cover rounded border">
+                        <p class="text-xs mt-1 text-gray-500 truncate">${img.caption}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error("Erreur de chargement:", err);
+            }
+        }
+
+        // Send data to our FastAPI Backend
+        async function addToGallery() {
+            const url = document.getElementById('imgUrl').value;
+            const caption = document.getElementById('imgCaption').value;
+
+            if (!url) return alert("Veuillez entrer une URL");
+
+            const response = await fetch(`${API_URL}/gallery`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url, caption, type: "image" })
+            });
+
+            if (response.ok) {
+                alert("Réussite !");
+                document.getElementById('imgUrl').value = '';
+                document.getElementById('imgCaption').value = '';
+                loadGallery(); // Refresh preview
+            } else {
+                alert("Erreur lors de l'ajout.");
+            }
+        }
+
+        // Run on start
+        loadGallery();
+    </script>
 </body>
 </html>
