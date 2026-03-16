@@ -1,89 +1,158 @@
 {
   "hero": {
-    "bgImages": [
-      "images/uploads/photo-2026-02-19-12-51-59.jpg",
-      "images/uploads/photo-2026-02-19-12-51-55.jpg"
-    ],
-    "surtitle": "Éducation de Qualité au Cameroun",
+    "badge": "Éducation de Qualité au Cameroun",
     "title": "Groupe Scolaire Bilingue Privé",
-    "subtitle": "Les Marinettes",
-    "carouselTexts": [
-      "Grandir, apprendre et réussir en deux langues.",
-      "École maternelle et primaire de qualité."
-    ]
+    "subtitle": "Un environnement d'apprentissage en deux langue d'apprentisage, bilingue, stimulant, et bienveillant pour vos enfants au Complexe Scolaire Bilingue Les Marinettes.",
+    "images": [
+      "images/uploads/photo-2026-02-19-12-51-59.jpg",
+      "images/uploads/PHOTO-2026-02-26-18-44-20.jpg",
+      "images/uploads/bamileke-kuosi-870x516.jpg"
+    ],
+    "primaryButton": "Découvrir l'école",
+    "secondaryButton": "Inscriptions 2026"
   },
   "about": {
-    "image": "images/uploads/PHOTO-2026-02-26-18-44-20.jpg",
-    "title": "Notre vision",
-    "description": "Former des élèves des deux sous systèmes francophone et anglophone, en les rendant capables de réussir dans le monde moderne et international Devenir une référence en matière d'éducation bilingue de qualité au Cameroun.",
+    "badge": "Notre vision",
+    "title": "Une éducation de qualité pour un avenir brillant.",
+    "text": "Le Complexe Scolaire Bilingue Les Marinettes est dédié à fournir une éducation exceptionnelle. Nous croyons en un apprentissage holistique qui combine rigueur académique, développement personnel et éveil culturel.",
     "bullets": [
-      "Propreté",
-      "Rigueur",
-      "Organisation",
-      "Discipline"
-    ]
+      "Programme bilingue (Français/Anglais)",
+      "Enseignants qualifiés et passionnés",
+      "Environnement sécurisé et moderne"
+    ],
+    "image1": "images/uploads/photo-2026-02-19-12-51-55.jpg",
+    "image2": "images/uploads/PHOTO-2026-02-26-18-44-20.jpg"
   },
-  "programs": {
-    "subtitle": "Notre pédagogie",
-    "title": "Des programmes conçus pour l'avenir",
-    "list": [
-      {
-        "title": "Alphabétisation & Langues",
-        "desc": "Un enseignement bilingue immersif dès le plus jeune âge pour garantir une communication fluide et ouverte sur le monde."
-      },
-      {
-        "title": "Mathématiques & Sciences",
-        "desc": "Développer l'esprit critique, la logique et la curiosité scientifique à travers une méthodologie rigoureuse."
-      },
-      {
-        "title": "Compétences de Vie",
-        "desc": "Éducation civique, arts et savoir-vivre. Nous formons non seulement des élèves brillants, mais aussi des citoyens responsables."
-      }
-    ]
-  },
-  "impact": {
-    "title": "Investissez dans l'avenir",
-    "description": "Chaque don nous permet d'améliorer nos infrastructures, de fournir du matériel didactique de pointe et de soutenir l'excellence de notre équipe pédagogique."
-  },
+  "stats": [
+    { "value": "2+", "label": "Années d'expérience" },
+    { "value": "8", "label": "Classes Modernes" },
+    { "value": "100%", "label": "Taux de réussite" },
+    { "value": "6+", "label": "Éducateurs" }
+  ],
   "team": {
-    "subtitle": "Nos éducateurs/trices",
-    "title": "Un personnel dévoué",
+    "badge": "Nos Éducateurs",
+    "title": "Notre Organigramme",
     "members": [
+      {
+        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "name": "Mme BUDA DIBAMI Sydonie",
+        "role": "Directrice",
+        "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire.",
+        "level": 1
+      },
+      {
+        "image": "images/uploads/acount.png",
+        "name": "MBAMOU TCOUKEU Christalin",
+        "role": "Comptable",
+        "desc": "Gestion financière et administrative de l'établissement.",
+        "level": 2
+      },
       {
         "image": "images/uploads/Mme Wete Djeujip Agnes.jpg",
         "name": "Mme WETE DJEUJIP Agnès",
-        "role": "Classe : Maternelle",
-        "desc": "Spécialiste de la petite enfance et de l'éveil."
+        "role": "Maternelle",
+        "desc": "Spécialiste de la petite enfance et de l'éveil.",
+        "level": 3
       },
       {
-        "image": "images/uploads/Mme Nkeyoumbeu Calvine.jpg",
-        "name": "Mme Nkeyoumbeu Calvine",
-        "role": "Classe : SIL-CP",
-        "desc": "experte dans l'encadrement des fondations du primaire."
+        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
+        "name": "Mme BUDA DIBAMI Sydonie",
+        "role": "SIL - CP",
+        "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire.",
+        "level": 3
       },
       {
         "image": "images/uploads/MmeYepnouo Nyonkeu Thérance.jpg",
         "name": "Mme Yepnouo Nyonkeu Thérance",
-        "role": "Classe : CE1-CE2",
-        "desc": "CAPIEMP, dédiée au renforcement des acquis fondamentaux."
+        "role": "CE1 - CE2",
+        "desc": "Dédiée au renforcement des acquis fondamentaux.",
+        "level": 3
       },
       {
-        "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
-        "name": "Mme BUDA DIBAMI Sydonie - Directrice",
-        "role": "Classe : CM1-CM2",
-        "desc": "CAPIEMP, experte dans l'encadrement des fondations du primaire."
-      },
-      {
-        "name": "MBAMOU TCOUKEU Christalin",
-        "role": "Comptable",
-        "image": "/images/uploads/acount.png",
-        "desc": "Comptabilité"
+        "image": "images/uploads/Mme Nkeyoumbeu Calvine.jpg",
+        "name": "Mme Nkeyoumbeu Calvine",
+        "role": "CM1 - CM2",
+        "desc": "Experte dans l'encadrement des fondations du primaire.",
+        "level": 3
       }
     ]
   },
-  "contact": {
-    "address": "Quartier Feubat, Arrondissement de Bangangté, Département du Ndé, Région de l'Ouest, Cameroun",
-    "phones": "+237 695 037 296 | +237 674 171 618",
-    "email": "info.lesmarinettes23@gmail.com"
+  "gallery": {
+    "badge": "Notre Quotidien",
+    "title": "Revivez nos événements",
+    "events": [
+      {
+        "title": "Fête de la Journée international des droits de la femme 2026",
+        "subtitle": "Un défilé haut en couleur célébrant le dynamisme de nos enseignantes sous le signe de la culture.",
+        "media": [
+          "images/uploads/PHOTO-2026-02-26-18-44-20.jpg",
+          "images/uploads/bamileke-kuosi-870x516.jpg"
+        ]
+      }
+    ]
+  },
+  "fullGallery": [
+    { "type": "image", "category": "maternelle", "url": "https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?q=80&w=800", "title": "Activité de coloriage" },
+    { "type": "image", "category": "evenements", "url": "https://images.unsplash.com/photo-1511629091441-ee46146481b6?q=80&w=800", "title": "Fête de la Jeunesse" },
+    { "type": "image", "category": "primaire", "url": "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800", "title": "Cours de sciences" },
+    { "type": "video", "category": "sports", "url": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Match de football (Vidéo)" },
+    { "type": "image", "category": "maternelle", "url": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800", "title": "Jeux en plein air" },
+    { "type": "image", "category": "evenements", "url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800", "title": "Kermesse de fin d'année" },
+    { "type": "image", "category": "primaire", "url": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800", "title": "Bibliothèque" },
+    { "type": "image", "category": "sports", "url": "https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=800", "title": "Course de relais" },
+    { "type": "image", "category": "evenements", "url": "https://images.unsplash.com/photo-1523580494112-071d311fa80d?q=80&w=800", "title": "Remise des diplômes" }
+  ],
+  "aboutPage": {
+    "heroTitle": "À Propos de Nous",
+    "heroSubtitle": "Découvrez l'histoire, la mission et les valeurs qui animent notre complexe scolaire.",
+    "directorWord": {
+      "title": "Le Mot de la Directrice",
+      "text": "Chers parents, c'est un honneur de vous accueillir aux Marinettes. Notre mission est simple : offrir un environnement où chaque enfant se sent valorisé, en sécurité et stimulé pour atteindre son plein potentiel bilingue. Nous ne nous contentons pas d'enseigner des matières, nous façonnons des citoyens du monde.",
+      "name": "Mme BUDA DIBAMI Sydonie",
+      "image": "images/uploads/photo-2026-02-19-12-51-56.jpg"
+    },
+    "values": [
+      { "title": "Nos Valeurs", "desc": "Respect, Intégrité, Excellence et Esprit de Communauté.", "icon": "🤝" }
+    ],
+    "coreValues": [
+      {
+        "title": "Propreté",
+        "desc": "Être enthousiaste et célébrer les réussites individuelles et collectives en dédiant notre énergie à l'excellence.",
+        "image": "images/uploads/value.jpeg"
+      },
+      {
+        "title": "Rigueur",
+        "desc": "Dédier notre énergie à atteindre l'excellence dans tout ce que nous entreprenons pour l'avenir de nos élèves.",
+        "image": "images/uploads/value.jpeg"
+      },
+      {
+        "title": "Organisation",
+        "desc": "Dédier notre énergie à atteindre l'excellence dans tout ce que nous entreprenons pour l'avenir de nos élèves.",
+        "image": "images/uploads/value.jpeg"
+      },
+      {
+        "title": "Discipline",
+        "desc": "L'autodiscipline et une image de soi positive sont développées pour s'assurer que les enfants abordent les étapes de la vie avec assurance.",
+        "image": "images/uploads/value.jpeg"
+      }
+    ]
+  },
+
+  "admissionsPage": {
+    "heroTitle": "Admissions & Inscriptions",
+    "heroSubtitle": "Rejoignez la famille des Marinettes pour l'année scolaire 2026-2027.",
+    "steps": [
+      { "title": "1. Visite de l'école", "desc": "Venez découvrir nos installations et rencontrer l'équipe pédagogique." },
+      { "title": "2. Dossier d'inscription", "desc": "Retirez et remplissez le formulaire d'inscription au secrétariat." },
+      { "title": "3. Entretien & Évaluation", "desc": "Une brève rencontre avec l'enfant pour déterminer son niveau." },
+      { "title": "4. Confirmation", "desc": "Paiement des frais d'inscription pour garantir la place de votre enfant." }
+    ],
+    "requirements": [
+      "Actes de naissance (Original + Photocopie)",
+      "Carnet de vaccination à jour",
+      "4 photos d'identité format 4x4",
+      "Bulletins de notes de l'année précédente (pour le primaire)",
+      "Frais de dossier (non remboursables)"
+    ]
   }
 }
