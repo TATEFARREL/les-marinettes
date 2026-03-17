@@ -1,15 +1,15 @@
 {
   "hero": {
-    "badge": "Éducation de Qualité au Cameroun",
+    "badge": "Éducation de Base au Cameroun",
     "title": "Groupe Scolaire Bilingue Privé",
-    "subtitle": "Un environnement d'apprentissage en deux langue d'apprentisage, bilingue, stimulant, et bienveillant pour vos enfants au Complexe Scolaire Bilingue Les Marinettes.",
+    "subtitle": "Un environnement d'apprentissage en deux langues.",
     "images": [
       "images/uploads/photo-2026-02-19-12-51-59.jpg",
-      "images/uploads/PHOTO-2026-02-26-18-44-20.jpg",
-      "images/uploads/bamileke-kuosi-870x516.jpg"
+      "images/uploads/IMG-20260125-WA0029.jpg",
+      "images/uploads/IMG-20251222-WA0024.jpg"
     ],
     "primaryButton": "Découvrir l'école",
-    "secondaryButton": "Inscriptions 2026"
+    "secondaryButton": "Inscriptions 2026-2017"
   },
   "about": {
     "badge": "Notre vision",
@@ -20,7 +20,7 @@
       "Enseignants qualifiés et passionnés",
       "Environnement sécurisé et moderne"
     ],
-    "image1": "images/uploads/photo-2026-02-19-12-51-55.jpg",
+    "image1": "images/uploads/PHOTO-2026-02-26-18-44-20.jpg",
     "image2": "images/uploads/PHOTO-2026-02-26-18-44-20.jpg"
   },
   "stats": [
@@ -30,8 +30,8 @@
     { "value": "6+", "label": "Éducateurs" }
   ],
   "team": {
-    "badge": "Nos Éducateurs",
-    "title": "Notre Organigramme",
+    "badge": "Notre ÉQUIPE",
+    "title": "Organigramme",
     "members": [
       {
         "image": "images/uploads/photo-2026-02-19-12-51-56.jpg",
@@ -41,8 +41,8 @@
         "level": 1
       },
       {
-        "image": "images/uploads/acount.png",
-        "name": "MBAMOU TCOUKEU Christalin",
+        "image": "images/uploads/IMG-20260226-WA0070.jpg",
+        "name": "MBAMOU TCHOUKEU Christalin",
         "role": "Comptable",
         "desc": "Gestion financière et administrative de l'établissement.",
         "level": 2
@@ -85,8 +85,8 @@
         "title": "Fête de la Journée international des droits de la femme 2026",
         "subtitle": "Un défilé haut en couleur célébrant le dynamisme de nos enseignantes sous le signe de la culture.",
         "media": [
-          "images/uploads/PHOTO-2026-02-26-18-44-20.jpg",
-          "images/uploads/bamileke-kuosi-870x516.jpg"
+          "images/uploads/photo-2026-02-19-12-51-59.jpg",
+          "images/uploads/IMG-20251222-WA0024.jpg"
         ]
       }
     ]
@@ -103,16 +103,31 @@
     { "type": "image", "category": "evenements", "url": "https://images.unsplash.com/photo-1523580494112-071d311fa80d?q=80&w=800", "title": "Remise des diplômes" }
   ],
   "aboutPage": {
-    "heroTitle": "À Propos de Nous",
-    "heroSubtitle": "Découvrez l'histoire, la mission et les valeurs qui animent notre complexe scolaire.",
+    "heroTitle": "À propos de nous",
+    "heroSubtitle": "Découvrez nos fondements, nos valeurs, et la mission qui animent notre complexe scolaire.",
     "directorWord": {
-      "title": "Le Mot de la Directrice",
+      "title": "Le Mot de la Fondatrice",
       "text": "Chers parents, c'est un honneur de vous accueillir aux Marinettes. Notre mission est simple : offrir un environnement où chaque enfant se sent valorisé, en sécurité et stimulé pour atteindre son plein potentiel bilingue. Nous ne nous contentons pas d'enseigner des matières, nous façonnons des citoyens du monde.",
-      "name": "Mme BUDA DIBAMI Sydonie",
-      "image": "images/uploads/photo-2026-02-19-12-51-56.jpg"
+      "name": "Mme HENGO-SEYLER Marinette",
+      "image": "images/uploads/FB_IMG_1756843432116.jpg"
     },
     "values": [
-      { "title": "Nos Valeurs", "desc": "Respect, Intégrité, Excellence et Esprit de Communauté.", "icon": "🤝" }
+      { 
+        "title": "Notre Mission", 
+        "desc": "Offrir une éducation bilingue de haute qualité, cultiver l'excellence académique et préparer chaque élève à devenir un citoyen du monde responsable.", 
+        "icon": "🎯" 
+      },
+      { 
+        "title": "Notre Vision", 
+        "desc": "Créer un environnement d'apprentissage innovant, sécurisant et bienveillant où chaque enfant est encouragé à révéler son plein potentiel.", 
+        "icon": "🌟" 
+      },
+      { 
+        "title": "Nos Valeurs", 
+        "desc": "Le respect mutuel, l'intégrité, l'excellence, la discipline et un fort esprit de communauté.", 
+        "icon": "🤝" 
+      }
+
     ],
     "coreValues": [
       {
@@ -140,7 +155,7 @@
 
   "admissionsPage": {
     "heroTitle": "Admissions & Inscriptions",
-    "heroSubtitle": "Rejoignez la famille des Marinettes pour l'année scolaire 2026-2027.",
+    "heroSubtitle": "Rejoignez la famille \"les Marinettes\" pour l'année scolaire 2026-2027.",
     "steps": [
       { "title": "1. Visite de l'école", "desc": "Venez découvrir nos installations et rencontrer l'équipe pédagogique." },
       { "title": "2. Dossier d'inscription", "desc": "Retirez et remplissez le formulaire d'inscription au secrétariat." },
