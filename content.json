@@ -168,6 +168,133 @@
       "4 photos d'identité format 4x4",
       "Bulletins de notes de l'année précédente (pour le primaire)",
       "Frais de dossier (non remboursables)"
-    ]
+    ],
+    "downloadFile": "",
+    "downloadLabel": "Télécharger le dossier d'inscription"
+  },
+  "i18n": {
+    "en": {
+      "hero": {
+        "badge": "Basic education in Cameroon",
+        "title": "Private Bilingual School Group",
+        "subtitle": "A learning environment in two languages.",
+        "primaryButton": "Discover the school",
+        "secondaryButton": "Enrolment 2026–2027"
+      },
+      "about": {
+        "badge": "Our vision",
+        "title": "Quality education for a bright future.",
+        "text": "Les Marinettes Bilingual School is committed to outstanding education. We believe in holistic learning that blends academic rigour, personal growth, and cultural awareness.",
+        "bullets": [
+          "Bilingual programme (French/English)",
+          "Qualified, passionate teachers",
+          "A safe, modern environment"
+        ]
+      },
+      "stats": [
+        { "value": "2+", "label": "Years of experience" },
+        { "value": "8", "label": "Modern classrooms" },
+        { "value": "100%", "label": "Success rate" },
+        { "value": "6+", "label": "Educators" }
+      ],
+      "team": {
+        "badge": "OUR TEAM",
+        "title": "Organisation chart",
+        "members": [
+          {
+            "role": "Headteacher",
+            "desc": "CAPIEMP, expert in primary foundations."
+          },
+          {
+            "role": "Accountant",
+            "desc": "Financial and administrative management."
+          },
+          {
+            "role": "Nursery",
+            "desc": "Early years and developmental specialist."
+          },
+          {
+            "role": "SIL - CP",
+            "desc": "CAPIEMP, expert in primary foundations."
+          },
+          {
+            "role": "CE1 - CE2",
+            "desc": "Focused on strengthening core skills."
+          },
+          {
+            "role": "CM1 - CM2",
+            "desc": "Expert in primary foundations."
+          }
+        ]
+      },
+      "gallery": {
+        "badge": "Our daily life",
+        "title": "Relive our events",
+        "events": [
+          {
+            "title": "International Women's Day celebration 2026",
+            "subtitle": "A colourful parade celebrating our teachers and culture."
+          }
+        ]
+      },
+      "fullGallery": [
+        { "title": "Colouring activity" },
+        { "title": "Youth Day" },
+        { "title": "Science class" },
+        { "title": "Football match (video)" },
+        { "title": "Outdoor play" },
+        { "title": "End-of-year fair" },
+        { "title": "Library" },
+        { "title": "Relay race" },
+        { "title": "Graduation ceremony" }
+      ],
+      "aboutPage": {
+        "heroTitle": "About us",
+        "heroSubtitle": "Discover our foundations, values, and the mission that drives our school.",
+        "directorWord": {
+          "title": "A word from the founder",
+          "text": "Dear parents, it is an honour to welcome you to Les Marinettes. Our mission is simple: provide an environment where every child feels valued, safe, and challenged to reach their full bilingual potential. We do not merely teach subjects — we shape world citizens.",
+          "name": "Mrs HENGO-SEYLER Marinette"
+        },
+        "values": [
+          {
+            "title": "Our mission",
+            "desc": "Deliver high-quality bilingual education, foster academic excellence, and prepare each pupil to become a responsible global citizen."
+          },
+          {
+            "title": "Our vision",
+            "desc": "Create an innovative, safe, caring learning space where every child is encouraged to reach their full potential."
+          },
+          {
+            "title": "Our values",
+            "desc": "Mutual respect, integrity, excellence, discipline, and a strong sense of community."
+          }
+        ],
+        "coreValues": [
+          { "title": "Cleanliness", "desc": "Celebrating individual and collective success with enthusiasm, dedicating our energy to excellence." },
+          { "title": "Rigour", "desc": "Dedicating our energy to excellence in everything we do for our pupils' future." },
+          { "title": "Organisation", "desc": "Dedicating our energy to excellence in everything we do for our pupils' future." },
+          { "title": "Discipline", "desc": "Self-discipline and a positive self-image so children face life's stages with confidence." }
+        ]
+      },
+      "admissionsPage": {
+        "heroTitle": "Admissions & enrolment",
+        "heroSubtitle": "Join the Les Marinettes family for the 2026–2027 school year.",
+        "steps": [
+          { "title": "1. School visit", "desc": "Tour our facilities and meet the teaching team." },
+          { "title": "2. Application file", "desc": "Collect and complete the enrolment form at the office." },
+          { "title": "3. Interview & assessment", "desc": "A short meeting with the child to determine the right level." },
+          { "title": "4. Confirmation", "desc": "Pay registration fees to secure your child's place." }
+        ],
+        "requirements": [
+          "Birth certificates (original + copy)",
+          "Up-to-date vaccination record",
+          "Four ID photos (4×4)",
+          "Previous year's report cards (primary)",
+          "Application fee (non-refundable)"
+        ],
+        "downloadLabel": "Download registration pack"
+      }
+    }
   }
 }

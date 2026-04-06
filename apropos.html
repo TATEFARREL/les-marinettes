@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À Propos | Les Marinettes</title>
+    <title data-i18n="pages.about.title">À Propos | Les Marinettes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -55,26 +55,31 @@
                 <span>📞 +237 674 171 618</span>
                 <span class="hidden md:inline">✉️ info.lesmarinettes23@gmail.com</span>
             </div>
-            <div><span>📍 SiteWeb en Construction</span></div>
+            <div><span data-i18n="bar.construction">📍 Site Web en Construction</span></div>
+
+            <select id="lang-switcher" class="bg-gray-100 text-brandBlue font-bold py-2 px-3 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-brandGold cursor-pointer" onchange="changeLanguage(this.value)" aria-label="Language">
+                <option value="fr">FR</option>
+                <option value="en">EN</option>
+            </select>
         </div>
     </div>
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             
             <a href="index.html" class="flex items-center gap-3 group">
-                <img src="images/uploads/logo.png" alt="Logo" class="h-10 w-10 object-contain group-hover:scale-110 transition-transform duration-300" onerror="this.src='https://via.placeholder.com/40'">
+                <img src="images/uploads/logo.png" alt="Logo" class="h-24 w-20 md:h-28 md:w-24 object-contain group-hover:scale-110 transition-transform duration-300" onerror="this.src='https://via.placeholder.com/100'">
                 <h1 class="text-xl md:text-2xl font-extrabold text-brandBlue uppercase tracking-tight">Les Marinettes</h1>
             </a>
             
             <nav class="hidden md:flex gap-8 font-semibold text-brandBlue">
-                <a href="index.html" class="hover:text-brandGold transition-colors">Accueil</a>
-                <a href="apropos.html" class="text-brandRed border-b-2 border-brandRed">À Propos</a>
-                <a href="admissions.html" class="hover:text-brandGold transition-colors">Inscription</a>
-                <a href="galerie.html" class="hover:text-brandGold transition-colors">Galerie</a>
+                <a href="index.html" class="hover:text-brandGold transition-colors" data-i18n="nav.home">Accueil</a>
+                <a href="apropos.html" class="text-brandRed border-b-2 border-brandRed" data-i18n="nav.about">À Propos</a>
+                <a href="admissions.html" class="hover:text-brandGold transition-colors" data-i18n="nav.admissions">Inscription</a>
+                <a href="galerie.html" class="hover:text-brandGold transition-colors" data-i18n="nav.gallery">Galerie</a>
             </nav>
 
             <div class="flex items-center gap-4">
-                <a href="index.html#contact" class="hidden md:inline-block bg-brandGold text-brandBlue font-bold px-6 py-2 rounded shadow-md hover:bg-yellow-500 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <a href="index.html#contact" class="hidden md:inline-block bg-brandGold text-brandBlue font-bold px-6 py-2 rounded shadow-md hover:bg-yellow-500 hover:shadow-lg hover:-translate-y-0.5 transition-all" data-i18n="nav.contact">
                     Nous Contacter
                 </a>
                 <button id="menu-btn" class="md:hidden text-brandBlue focus:outline-none p-2">
@@ -86,11 +91,11 @@
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 p-6 space-y-4 shadow-xl absolute w-full">
-            <a href="index.html" class="block text-lg font-bold text-brandBlue border-b pb-2">Accueil</a>
-            <a href="apropos.html" class="block text-lg font-bold text-brandRed border-b pb-2">À Propos</a>
-            <a href="admissions.html" class="block text-lg font-bold text-brandBlue border-b pb-2">Inscription</a>
-            <a href="galerie.html" class="block text-lg font-bold text-brandBlue border-b pb-2">Galerie</a>
-            <a href="index.html#contact" class="block w-full text-center bg-brandGold text-brandBlue font-bold py-3 rounded-lg mt-4 shadow-md">Nous Contacter</a>
+            <a href="index.html" class="block text-lg font-bold text-brandBlue border-b pb-2" data-i18n="nav.home">Accueil</a>
+            <a href="apropos.html" class="block text-lg font-bold text-brandRed border-b pb-2" data-i18n="nav.about">À Propos</a>
+            <a href="admissions.html" class="block text-lg font-bold text-brandBlue border-b pb-2" data-i18n="nav.admissions">Inscription</a>
+            <a href="galerie.html" class="block text-lg font-bold text-brandBlue border-b pb-2" data-i18n="nav.gallery">Galerie</a>
+            <a href="index.html#contact" class="block w-full text-center bg-brandGold text-brandBlue font-bold py-3 rounded-lg mt-4 shadow-md" data-i18n="nav.contact">Nous Contacter</a>
         </div>
     </header>
 
@@ -113,11 +118,9 @@
                 
                 <div class="w-full lg:w-2/3 space-y-24">
                     
-                    <!--<div id="values-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>-->
-
                     <div class="space-y-12">
                         <div class="reveal-item">
-                            <h4 class="text-3xl font-extrabold text-brandBlue border-l-4 border-brandRed pl-4">Nos Fondements</h4>
+                            <h4 class="text-3xl font-extrabold text-brandBlue border-l-4 border-brandRed pl-4" data-i18n="apropos.foundations">Nos Fondements</h4>
 
                         </div>
                         <br>
@@ -136,7 +139,7 @@
                             <p id="director-text" class="text-lg italic text-gray-700 mb-6 leading-relaxed"></p>
                             <div>
                                 <h4 id="director-name" class="font-bold text-brandBlue text-xl"></h4>
-                                <p class="text-brandGold text-sm font-bold uppercase tracking-widest mt-1">Fondatrice</p>
+                                <p class="text-brandGold text-sm font-bold uppercase tracking-widest mt-1" data-i18n="apropos.founder_label">Fondatrice</p>
                             </div>
                         </div>
                     </div>
@@ -152,7 +155,7 @@
                             <div class="absolute inset-0 bg-brandBlue/85 z-10 pointer-events-none backdrop-blur-sm"></div>
                             
                             <div class="relative z-20 p-8 text-white">
-                                <h4 class="text-2xl font-bold mb-6 border-b border-white/20 pb-4 tracking-tight">Nous Contacter</h4>
+                                <h4 class="text-2xl font-bold mb-6 border-b border-white/20 pb-4 tracking-tight" data-i18n="apropos.contact_card">Nous Contacter</h4>
                                 <ul class="space-y-6">
                                     <li class="flex items-start gap-4">
                                         <div class="bg-white/10 p-3 rounded-lg text-brandGold border border-white/10">📍</div>
@@ -164,7 +167,7 @@
                                     <li class="flex items-start gap-4">
                                         <div class="bg-white/10 p-3 rounded-lg text-brandGold border border-white/10">📞</div>
                                         <div>
-                                            <p class="font-bold text-brandGold">Téléphone</p>
+                                            <p class="font-bold text-brandGold" data-i18n="apropos.phone_label">Téléphone</p>
                                             <p class="text-blue-50 text-sm">+237 695 037 296 | +237 674 171 618</p>
                                         </div>
                                     </li>
@@ -176,9 +179,10 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <button onclick="window.location.href='index.html#contact'" class="mt-8 w-full bg-brandGold text-brandBlue font-extrabold py-3.5 rounded-xl hover:bg-yellow-500 transition-all active:scale-95 shadow-lg">
+                                <button type="button" id="rdv-open-btn" class="mt-8 w-full bg-brandGold text-brandBlue font-extrabold py-3.5 rounded-xl hover:bg-yellow-500 transition-all active:scale-95 shadow-lg" data-i18n="apropos.book">
                                     Prendre Rendez-vous
                                 </button>
+                                <a href="index.html#contact" class="mt-3 block w-full text-center text-sm text-white/90 underline-offset-2 hover:underline" data-i18n="nav.contact">Nous Contacter</a>
                             </div>
                         </div>
 
@@ -186,7 +190,7 @@
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31789.87576270516!2d10.50674888974002!3d5.146382719167208!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x105ff0a86e25733f%3A0x4582452a39bc6ab!2sBangangte%2C%20Cameroon!5e0!3m2!1sen!2sua!4v1773780663838!5m2!1sen!2sua" class="w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
                         </div>
 
-                        <p class="text-center text-xs text-gray-400 font-bold uppercase tracking-widest">
+                        <p class="text-center text-xs text-gray-400 font-bold uppercase tracking-widest" data-i18n="apropos.hours">
                             Ouvert : 07h30 - 16h00
                         </p>
                     </div>
@@ -196,45 +200,75 @@
         </div>
     </section>
 
+    <div id="rdv-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 p-4" role="dialog" aria-modal="true" aria-labelledby="rdv-modal-title">
+        <div class="relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl" onclick="event.stopPropagation()">
+            <button type="button" id="rdv-close-btn" class="absolute right-3 top-3 rounded-full p-1 text-2xl leading-none text-gray-500 hover:bg-gray-100 hover:text-gray-800" aria-label="Fermer" data-i18n="apropos.rdv_close">×</button>
+            <h3 id="rdv-modal-title" class="pr-8 text-xl font-bold text-brandBlue" data-i18n="apropos.rdv_title">Prendre rendez-vous</h3>
+            <p class="mt-2 text-sm text-gray-600">Le secrétariat vous répondra pour confirmer le créneau.</p>
+            <form id="rdv-form" class="mt-6 space-y-4">
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700" for="rdv-name" data-i18n="apropos.rdv_name">Nom et prénom</label>
+                    <input id="rdv-name" name="name" required class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brandBlue focus:outline-none focus:ring-1 focus:ring-brandBlue" />
+                </div>
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700" for="rdv-phone" data-i18n="apropos.rdv_phone">Téléphone</label>
+                    <input id="rdv-phone" name="phone" type="tel" required class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brandBlue focus:outline-none focus:ring-1 focus:ring-brandBlue" />
+                </div>
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700" for="rdv-email" data-i18n="apropos.rdv_email">E-mail</label>
+                    <input id="rdv-email" name="email" type="email" class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brandBlue focus:outline-none focus:ring-1 focus:ring-brandBlue" />
+                </div>
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700" for="rdv-date" data-i18n="apropos.rdv_date">Date souhaitée (optionnel)</label>
+                    <input id="rdv-date" name="date" type="date" class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brandBlue focus:outline-none focus:ring-1 focus:ring-brandBlue" />
+                </div>
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700" for="rdv-message" data-i18n="apropos.rdv_message">Message</label>
+                    <textarea id="rdv-message" name="message" rows="3" class="w-full resize-y rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brandBlue focus:outline-none focus:ring-1 focus:ring-brandBlue"></textarea>
+                </div>
+                <button type="submit" class="w-full rounded-xl bg-brandGold py-3 font-bold text-brandBlue shadow hover:bg-yellow-500" data-i18n="apropos.rdv_submit">Envoyer la demande</button>
+            </form>
+        </div>
+    </div>
+
     <section class="py-16 bg-white border-t border-gray-200">
         <div class="container mx-auto px-4 md:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
                 
                 <div class="reveal-item fade-up">
-                    <img src="images/uploads/logo.png" alt="Logo" class="h-20 mb-6 object-contain" onerror="this.src='https://via.placeholder.com/80'">
-                    <h4 class="text-xl font-bold text-brandBlue mb-4">À Propos des Marinettes</h4>
-                    <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                    <h4 class="text-xl font-bold text-brandBlue mb-4" data-i18n="footer.about_title">À Propos des Marinettes</h4>
+                    <p class="text-gray-600 text-sm mb-4 leading-relaxed" data-i18n="footer.about_blurb">
                         Le Complexe Scolaire Bilingue Les Marinettes a été fondé avec pour mission d'offrir une éducation de haute qualité dans un environnement multiculturel et bienveillant.
                     </p>
                     <a href="apropos.html" class="text-brandRed font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all w-max">
-                        En savoir plus <span aria-hidden="true">&rarr;</span>
+                        <span data-i18n="footer.learn_more">En savoir plus</span> <span aria-hidden="true">→</span>
                     </a>
                 </div>
 
                 <div class="reveal-item fade-up delay-100">
-                    <h4 class="text-xl font-bold text-brandBlue mb-6">Nos Programmes</h4>
+                    <h4 class="text-xl font-bold text-brandBlue mb-6" data-i18n="footer.programs_title">Nos Programmes</h4>
                     <ul class="space-y-3">
-                        <li><a href="admissions.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Admissions 2026-2027</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Section Maternelle</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Section Primaire</a></li>
-                        <li><a href="admissions.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Frais de Scolarité</a></li>
-                        <li><a href="galerie.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Événements de l'école</a></li>
+                        <li><a href="admissions.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_admissions">Admissions 2026-2027</a></li>
+                        <li><a href="index.html#pedagogie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_nursery">Section Maternelle</a></li>
+                        <li><a href="index.html#pedagogie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_primary">Section Primaire</a></li>
+                        <li><a href="admissions.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_fees">Frais de Scolarité</a></li>
+                        <li><a href="galerie.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_events">Événements de l'école</a></li>
                     </ul>
                 </div>
 
                 <div class="reveal-item fade-up delay-200">
-                    <h4 class="text-xl font-bold text-brandBlue mb-6">Liens Rapides</h4>
+                    <h4 class="text-xl font-bold text-brandBlue mb-6" data-i18n="footer.quick_title">Liens Rapides</h4>
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">FAQ</a></li>
-                        <li><a href="index.html#equipe" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Notre Équipe</a></li>
-                        <li><a href="apropos.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">À Propos de Nous</a></li>
-                        <li><a href="index.html#contact" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Nous Contacter</a></li>
-                        <li><a href="galerie.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium">Galerie Photos</a></li>
+                        <li><a href="admissions.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_faq">FAQ</a></li>
+                        <li><a href="index.html#equipe" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_team">Notre Équipe</a></li>
+                        <li><a href="apropos.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_about">À Propos de Nous</a></li>
+                        <li><a href="index.html#contact" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_contact">Nous Contacter</a></li>
+                        <li><a href="galerie.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_gallery">Galerie Photos</a></li>
                     </ul>
                 </div>
 
                 <div class="reveal-item fade-up delay-300">
-                    <h4 class="text-xl font-bold text-brandBlue mb-6">Comment nous joindre</h4>
+                    <h4 class="text-xl font-bold text-brandBlue mb-6" data-i18n="footer.reach_title">Comment nous joindre</h4>
                     <ul class="space-y-4 text-sm text-gray-600 mb-6">
                         <li class="flex items-start gap-3">
                             <svg class="w-5 h-5 text-brandRed shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -251,13 +285,13 @@
                     </ul>
                     
                     <div class="flex gap-3">
-                        <a href="#" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300">
+                        <a href="mailto:info.lesmarinettes23@gmail.com" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300" aria-label="Email" title="Email">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300" aria-label="Facebook">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                         </a>
-                        <a href="#" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300">
-                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.016 10.016 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                        </a>
-                        <a href="#" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300">
+                        <a href="https://wa.me/237674171618" target="_blank" rel="noopener noreferrer" class="w-8 h-8 bg-brandBlue/10 rounded flex items-center justify-center text-brandBlue hover:bg-brandBlue hover:text-white transition-colors duration-300" aria-label="WhatsApp">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a9.994 9.994 0 004.779 1.217h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.669-1.037-5.176-2.922-7.062A9.935 9.935 0 0012.012 2zM12.015 20.2h-.004a8.283 8.283 0 01-4.226-1.16l-.303-.18-3.14.743.84-3.06-.197-.313a8.254 8.254 0 01-1.265-4.453c0-4.564 3.714-8.274 8.28-8.275 2.213 0 4.293.86 5.857 2.426a8.223 8.223 0 012.423 5.856c-.001 4.566-3.715 8.276-8.28 8.276z"/></svg>
                         </a>
                     </div>
@@ -268,15 +302,17 @@
     </section>
 
     <footer class="bg-gray-900 text-gray-400 py-10 text-center border-t border-gray-800">
-        <p class="text-sm">© 2026 Complexe Scolaire Bilingue Les Marinettes.</p>
+        <p class="text-sm" data-i18n="footer.copyright">© 2026 Complexe Scolaire Bilingue Les Marinettes.</p>
     </footer>
 
+    <script src="site-i18n.js"></script>
     <script>
         // 1. Core Data Loader
         async function loadAbout() {
             try {
-                const response = await fetch('content.json?v=' + new Date().getTime());
-                const data = await response.json();
+                const response = await fetch('/api/public/site-content?v=' + new Date().getTime());
+                const raw = await response.json();
+                const data = mergeLocalizedPayload(raw, getLang());
                 const page = data.aboutPage;
 
                 // Populate Hero
@@ -363,11 +399,53 @@
             }
         }
 
+        function initRdvModal() {
+            var modal = document.getElementById('rdv-modal');
+            var openBtn = document.getElementById('rdv-open-btn');
+            var closeBtn = document.getElementById('rdv-close-btn');
+            var form = document.getElementById('rdv-form');
+            function openM() {
+                if (!modal) return;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeM() {
+                if (!modal) return;
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }
+            if (openBtn) openBtn.addEventListener('click', openM);
+            if (closeBtn) closeBtn.addEventListener('click', closeM);
+            if (modal) modal.addEventListener('click', function (e) { if (e.target === modal) closeM(); });
+            if (form) form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var name = (document.getElementById('rdv-name') || {}).value || '';
+                var phone = (document.getElementById('rdv-phone') || {}).value || '';
+                var email = (document.getElementById('rdv-email') || {}).value || '';
+                var date = (document.getElementById('rdv-date') || {}).value || '';
+                var message = (document.getElementById('rdv-message') || {}).value || '';
+                var body = 'Demande de rendez-vous — Les Marinettes\n\n' +
+                    'Nom : ' + name + '\n' +
+                    'Téléphone : ' + phone + '\n' +
+                    'E-mail : ' + email + '\n' +
+                    'Date souhaitée : ' + (date || '(non précisée)') + '\n\n' +
+                    'Message :\n' + message;
+                window.location.href = 'mailto:info.lesmarinettes23@gmail.com?subject=' +
+                    encodeURIComponent('Rendez-vous — Les Marinettes') + '&body=' + encodeURIComponent(body);
+                closeM();
+            });
+        }
+
         // Initialize Everything
         window.onload = () => {
+            initLangSwitcher();
+            applyDataI18n();
             loadAbout();
             initMenu();
             initParallax();
+            initRdvModal();
         };
     </script>
 </body>
