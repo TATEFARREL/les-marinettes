@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://les-marinettes.local/contracts/http/error-envelope.json",
+  "title": "ErrorEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "request_id": { "type": ["string", "null"] }
+      },
+      "required": ["code", "message"]
+    }
+  },
+  "required": ["error"]
+}
+

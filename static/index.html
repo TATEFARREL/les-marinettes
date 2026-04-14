@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="pages.index.title">Les Marinettes | Complexe Scolaire Bilingue</title>
+    <title data-i18n="pages.index.title">Les Marinettes | Groupe Scolaire Bilingue</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -130,9 +130,9 @@
             
             <nav class="hidden md:flex gap-8 font-semibold text-brandBlue">
                 <a href="#accueil" class="text-brandRed border-b-2 border-brandRed transition" data-i18n="nav.home">Accueil</a>
-                <a href="apropos.html" class="hover:text-brandGold transition" data-i18n="nav.about">À Propos</a>
-                <a href="admissions.html" class="hover:text-brandGold transition" data-i18n="nav.admissions">Inscription</a>
-                <a href="galerie.html" class="hover:text-brandGold transition" data-i18n="nav.gallery">Galerie</a>
+                <a href="/apropos" class="hover:text-brandGold transition" data-i18n="nav.about">À Propos</a>
+                <a href="/admissions" class="hover:text-brandGold transition" data-i18n="nav.admissions">Inscription</a>
+                <a href="/galerie" class="hover:text-brandGold transition" data-i18n="nav.gallery">Galerie</a>
             </nav>
 
             <button id="menu-btn" class="md:hidden text-brandBlue focus:outline-none">
@@ -146,9 +146,9 @@
 
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 p-6 space-y-4 shadow-xl">
             <a href="#accueil" class="block text-lg font-bold text-brandRed border-b pb-2" data-i18n="nav.home">Accueil</a>
-            <a href="apropos.html" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2" data-i18n="nav.about">À Propos</a>
-            <a href="admissions.html" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2" data-i18n="nav.admissions">Inscription</a>
-            <a href="galerie.html" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2" data-i18n="nav.gallery">Galerie</a>
+            <a href="/apropos" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2" data-i18n="nav.about">À Propos</a>
+            <a href="/admissions" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2" data-i18n="nav.admissions">Inscription</a>
+            <a href="/galerie" class="block text-lg font-bold text-brandBlue hover:text-brandGold border-b pb-2" data-i18n="nav.gallery">Galerie</a>
             <a href="#contact" class="block w-full text-center bg-brandGold text-brandBlue font-bold py-3 rounded-lg mt-4" data-i18n="nav.contact">Nous Contacter</a>
         </div>
     </header>
@@ -164,8 +164,8 @@
             <h2 id="hero-title" class="hero-anim hero-delay-2 text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-4 md:mb-6 leading-tight drop-shadow-lg"></h2>
             <p id="hero-subtitle" class="hero-anim hero-delay-3 text-base sm:text-lg md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto drop-shadow-md"></p>
             <div class="hero-anim hero-delay-4 flex flex-col sm:flex-row justify-center gap-4 w-full px-4 sm:px-0">
-                <a id="hero-btn-1" href="apropos.html" class="bg-brandGold text-brandBlue px-8 py-3 rounded font-bold text-base md:text-lg hover:bg-yellow-500 transition w-full sm:w-auto"></a>
-                <a id="hero-btn-2" href="admissions.html" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded font-bold text-base md:text-lg hover:bg-white hover:text-brandBlue transition w-full sm:w-auto"></a>
+                <a id="hero-btn-1" href="/apropos" class="bg-brandGold text-brandBlue px-8 py-3 rounded font-bold text-base md:text-lg hover:bg-yellow-500 transition w-full sm:w-auto"></a>
+                <a id="hero-btn-2" href="/admissions" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded font-bold text-base md:text-lg hover:bg-white hover:text-brandBlue transition w-full sm:w-auto"></a>
             </div>
         </div>
     </section>
@@ -324,22 +324,22 @@
                 <div class="fade-up delay-100">
                     <h4 class="text-xl font-bold text-brandBlue mb-6" data-i18n="footer.programs_title">Nos Programmes</h4>
                     <ul class="space-y-3">
-                        <li><a href="admissions.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_admissions">Admissions 2026-2027</a></li>
+                        <li><a href="/admissions" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_admissions">Admissions 2026-2027</a></li>
                         <li><a href="#pedagogie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_nursery">Section Maternelle</a></li>
                         <li><a href="#pedagogie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_primary">Section Primaire</a></li>
-                        <li><a href="admissions.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_fees">Frais de Scolarité</a></li>
-                        <li><a href="#galerie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_events">Événements de l'école</a></li>
+                        <li><a href="/admissions" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_fees">Frais de Scolarité</a></li>
+                        <li><a href="/galerie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.prog_events">Événements de l'école</a></li>
                     </ul>
                 </div>
 
                 <div class="fade-up delay-200">
                     <h4 class="text-xl font-bold text-brandBlue mb-6" data-i18n="footer.quick_title">Liens Rapides</h4>
                     <ul class="space-y-3">
-                        <li><a href="admissions.html" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_faq">FAQ</a></li>
+                        <li><a href="/admissions" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_faq">FAQ</a></li>
                         <li><a href="#equipe" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_team">Notre Équipe</a></li>
-                        <li><a href="#apropos" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_about">À Propos de Nous</a></li>
+                        <li><a href="/apropos" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_about">À Propos de Nous</a></li>
                         <li><a href="#contact" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_contact">Nous Contacter</a></li>
-                        <li><a href="#galerie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_gallery">Galerie Photos</a></li>
+                        <li><a href="/galerie" class="text-gray-600 hover:text-brandRed transition-colors text-sm font-medium" data-i18n="footer.quick_gallery">Galerie Photos</a></li>
                     </ul>
                 </div>
 

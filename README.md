@@ -25,11 +25,6 @@ uv run alembic upgrade head
 uv run python -m app.seed
 ```
 
-Le seed charge `content.json` dans `site_content` et crée un admin :
-
-- **Email :** `admin@example.com`
-- **Mot de passe :** `changeme`
-
 ## Lancer l’API + site statique
 
 ```bash

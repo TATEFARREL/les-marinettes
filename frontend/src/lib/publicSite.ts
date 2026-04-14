@@ -21,7 +21,7 @@ export function publicPageUrl(path: string): string {
 
 export const PUBLIC_SITE_PAGES = [
   { href: '/', label: 'Accueil' },
-  { href: '/apropos.html', label: 'À propos' },
-  { href: '/admissions.html', label: 'Admissions' },
-  { href: '/galerie.html', label: 'Galerie' },
+  { href: '/apropos', label: 'À propos' },
+  { href: '/admissions', label: 'Admissions' },
+  { href: '/galerie', label: 'Galerie' },
 ] as const

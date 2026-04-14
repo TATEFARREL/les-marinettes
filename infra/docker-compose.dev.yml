@@ -1,0 +1,154 @@
+services:
+  # --- Edge
+  gateway:
+    build:
+      context: ..
+      dockerfile: gateway/Dockerfile
+    environment:
+      GATEWAY_MONOLITH_URL: http://monolith:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - monolith
+
+  # Legacy monolith (kept during migration)
+  monolith:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres-monolith:5432/marinettes
+      SECRET_KEY: change-me
+      CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+    depends_on:
+      - postgres-monolith
+    ports:
+      - "8001:8000"
+
+  postgres-monolith:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: marinettes
+    ports:
+      - "5432:5432"
+    volumes:
+      - lm_pg_monolith:/var/lib/postgresql/data
+
+  # --- Shared infra
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - lm_mongo:/data/db
+
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: innoter
+    ports:
+      - "3306:3306"
+    volumes:
+      - lm_mysql:/var/lib/mysql
+
+  # --- Service DBs (Postgres-per-service)
+  postgres-auth:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: auth
+    ports:
+      - "5433:5432"
+    volumes:
+      - lm_pg_auth:/var/lib/postgresql/data
+
+  postgres-cms:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cms
+    ports:
+      - "5434:5432"
+    volumes:
+      - lm_pg_cms:/var/lib/postgresql/data
+
+  postgres-admissions:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: admissions
+    ports:
+      - "5435:5432"
+    volumes:
+      - lm_pg_admissions:/var/lib/postgresql/data
+
+  postgres-finance:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: finance
+    ports:
+      - "5436:5432"
+    volumes:
+      - lm_pg_finance:/var/lib/postgresql/data
+
+  # --- Services (start with auth-service only; others are skeletons for now)
+  auth-service:
+    build:
+      context: ..
+      dockerfile: services/auth-service/Dockerfile
+    environment:
+      ENVIRONMENT: local
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres-auth:5432/auth
+      JWT_ISSUER: les-marinettes-auth
+      JWT_AUDIENCE: les-marinettes
+      JWT_PRIVATE_KEY_PATH: /run/secrets/jwt_private_key
+      JWT_PUBLIC_KEY_PATH: /run/secrets/jwt_public_key
+      REDIS_URL: redis://redis:6379/0
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/%2F
+    secrets:
+      - jwt_private_key
+      - jwt_public_key
+    depends_on:
+      - postgres-auth
+      - redis
+      - rabbitmq
+    ports:
+      - "8010:8000"
+
+secrets:
+  jwt_private_key:
+    file: ./secrets/jwt-private.pem
+  jwt_public_key:
+    file: ./secrets/jwt-public.pem
+
+volumes:
+  lm_pg_monolith:
+  lm_pg_auth:
+  lm_pg_cms:
+  lm_pg_admissions:
+  lm_pg_finance:
+  lm_mongo:
+  lm_mysql:
+

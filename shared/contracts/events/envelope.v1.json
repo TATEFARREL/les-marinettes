@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://les-marinettes.local/contracts/events/envelope.v1.json",
+  "title": "IntegrationEventEnvelopeV1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "type": "string", "minLength": 1 },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "source": { "type": "string", "minLength": 1 },
+    "data": { "type": "object" }
+  },
+  "required": ["id", "type", "occurred_at", "source", "data"]
+}
+

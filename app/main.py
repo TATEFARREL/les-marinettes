@@ -3,7 +3,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.routes import admissions, auth, cms, finance, public
@@ -47,6 +47,11 @@ images_dir = ROOT / "images"
 if images_dir.is_dir():
     app.mount("/images", StaticFiles(directory=images_dir), name="images")
 
+# --- Static public assets / marketing pages (served from /static)
+static_dir = ROOT / "static"
+if static_dir.is_dir():
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
 
 def _admin_dist() -> Path:
     return ROOT / "frontend" / "dist"
@@ -78,26 +83,46 @@ async def admin_spa_assets(full_path: str) -> FileResponse:
     return FileResponse(ROOT / "admin" / "index.html")
 
 
-# --- Public HTML pages at site root
-def _make_html_handler(filename: str):
+# --- Public HTML marketing pages (stored in /static, exposed as clean URLs)
+def _static_html(filename: str):
     async def _handler() -> FileResponse:
-        return FileResponse(ROOT / filename)
+        return FileResponse(static_dir / filename)
 
     return _handler
 
 
-for _page in ("index.html", "apropos.html", "admissions.html", "galerie.html"):
-    app.add_api_route(
-        f"/{_page}",
-        _make_html_handler(_page),
-        methods=["GET"],
-        name=f"static_{_page}",
-    )
+# Best practice: clean public URLs (no .html)
+app.add_api_route("/apropos", _static_html("apropos.html"), methods=["GET"], name="page_apropos")
+app.add_api_route(
+    "/admissions", _static_html("admissions.html"), methods=["GET"], name="page_admissions"
+)
+app.add_api_route("/galerie", _static_html("galerie.html"), methods=["GET"], name="page_galerie")
+
+
+# Backward-compatible redirects for old .html links (SEO-friendly 301)
+@app.get("/index.html")
+async def legacy_index_html() -> RedirectResponse:
+    return RedirectResponse(url="/", status_code=301)
+
+
+@app.get("/apropos.html")
+async def legacy_apropos_html() -> RedirectResponse:
+    return RedirectResponse(url="/apropos", status_code=301)
+
+
+@app.get("/admissions.html")
+async def legacy_admissions_html() -> RedirectResponse:
+    return RedirectResponse(url="/admissions", status_code=301)
+
+
+@app.get("/galerie.html")
+async def legacy_galerie_html() -> RedirectResponse:
+    return RedirectResponse(url="/galerie", status_code=301)
 
 
 @app.get("/")
 async def root_index() -> FileResponse:
-    return FileResponse(ROOT / "index.html")
+    return FileResponse(static_dir / "index.html")
 
 
 @app.get("/site-i18n.js")

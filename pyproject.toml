@@ -4,16 +4,26 @@ version = "0.1.0"
 description = "Les Marinettes school site + FastAPI CMS, admissions, finance"
 requires-python = ">=3.11"
 dependencies = [
+    # --- Core Web & Server ---
     "fastapi>=0.115.0",
     "uvicorn>=0.32.0",
+    "pydantic-settings>=2.6.0",
+    "python-multipart>=0.0.17",
+    "email-validator>=2.2.0",
+    
+    # --- Database & CRUD (Benavlabs aligned) ---
     "sqlalchemy[asyncio]>=2.0.36",
     "asyncpg>=0.30.0",
     "alembic>=1.14.0",
-    "pydantic-settings>=2.6.0",
-    "python-jose[cryptography]>=3.3.0",
+    "fastcrud>=0.19.0", # Added: Removes boilerplate CRUD code
+    
+    # --- Auth & Security ---
+    "PyJWT[crypto]>=2.8.0", # Fixed: Replaced abandoned python-jose
     "bcrypt>=4.0.0",
-    "python-multipart>=0.0.17",
-    "email-validator>=2.2.0",
+    
+    # --- Background Jobs & Caching (Benavlabs aligned) ---
+    "redis>=5.0.0", # Added: Async Redis client
+    "arq>=0.26.0",  # Added: Redis-backed task queue for emails/finance
 ]
 
 [dependency-groups]
@@ -21,6 +31,7 @@ dev = [
     "ruff>=0.8.0",
     "pytest>=8.0.0",
     "httpx>=0.27.0",
+    "mypy>=1.10.0", # Added: Crucial for FastAPI/Pydantic type checking
 ]
 
 [tool.ruff]
@@ -29,7 +40,8 @@ line-length = 100
 src = ["app"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
+# Added "FAST" to lint for FastAPI specific edge-cases
+select = ["E", "F", "I", "UP", "B", "FAST"]
 
 [tool.ruff.lint.per-file-ignores]
 "app/api/routes/admissions.py" = ["B008"]
@@ -42,9 +54,12 @@ package = true
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.hatch.build.targets.wheel]
-packages = ["app"]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+# Added: Basic mypy config to handle SQLAlchemy/Pydantic
+[tool.mypy]
+strict = true
+plugins = ["pydantic.mypy"]
+exclude = ["alembic"]
