@@ -1,0 +1,31 @@
+# Render Blueprint — set DATABASE_URL (Neon) and SECRET_KEY in the dashboard.
+# Build installs Python deps into .venv and builds the admin SPA; runtime uses .venv/bin/*.
+services:
+  - type: web
+    name: les-marinettes-api
+    runtime: python
+    buildCommand: |
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+      export PATH="$HOME/.local/bin:$PATH"
+      uv sync --frozen
+      cd frontend && npm ci && npm run build
+    # After build; uses the venv from `uv sync` (no `uv` CLI required at runtime).
+    preDeployCommand: .venv/bin/alembic upgrade head
+    startCommand: .venv/bin/uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+    disk:
+      name: user-uploads
+      mountPath: /opt/render/project/src/uploads 
+      sizeGB: 1
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: NODE_VERSION
+        value: "20"
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
