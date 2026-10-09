@@ -6,7 +6,6 @@
 
   var STRINGS = {
     fr: {
-      'bar.construction': 'Site Web en Construction',
       'nav.home': 'Accueil',
       'nav.about': 'À Propos',
       'nav.admissions': 'Inscription',
@@ -90,7 +89,6 @@
       'admissions.contact_secretariat': 'Contacter le secrétariat',
     },
     en: {
-      'bar.construction': 'Website under construction',
       'nav.home': 'Home',
       'nav.about': 'About',
       'nav.admissions': 'Admissions',
