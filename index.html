@@ -425,14 +425,23 @@
                 document.getElementById('about-text').innerText = data.about.text;
                 
                 // Set Image Sources
-                document.getElementById('about-img-1').src = publicAssetUrl(data.about.image1);
-                document.getElementById('about-img-2').src = publicAssetUrl(data.about.image2);
+                const aboutImg1 = document.getElementById('about-img-1');
+                const aboutImg2 = document.getElementById('about-img-2');
+                const aboutImage1Url = publicAssetUrl(data.about.image1);
+                const aboutImage2Url = publicAssetUrl(data.about.image2);
+                aboutImg1.src = aboutImage1Url;
+                aboutImg2.src = aboutImage2Url;
                 
                 // Set Download Button links
                 const btn1 = document.getElementById('download-btn-1');
                 const btn2 = document.getElementById('download-btn-2');
-                if (btn1) btn1.href = publicAssetUrl(data.about.image1);
-                if (btn2) btn2.href = publicAssetUrl(data.about.image2);
+                if (btn1) btn1.href = aboutImage1Url;
+                if (btn2) btn2.href = aboutImage2Url;
+                aboutImg1.onerror = () => {
+                    aboutImg1.onerror = null;
+                    aboutImg1.src = aboutImage2Url;
+                    if (btn1) btn1.href = aboutImage2Url;
+                };
                 
                 const ul = document.getElementById('about-bullets');
                 ul.innerHTML = data.about.bullets.map(bullet => `<li class="flex items-center gap-2">✅ ${escapeHtml(bullet)}</li>`).join('');

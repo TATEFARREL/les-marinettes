@@ -1,3 +1,4 @@
+import shutil
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -15,9 +16,25 @@ ROOT = Path(__file__).resolve().parents[1]
 UPLOAD_ROOT = ROOT / settings.upload_dir
 
 
+def _seed_persistent_uploads() -> None:
+    """Copy bundled legacy media to the persistent disk without overwriting uploads."""
+    legacy_root = ROOT / "images" / "uploads"
+    if not legacy_root.is_dir() or legacy_root.resolve() == UPLOAD_ROOT.resolve():
+        return
+    for source in legacy_root.rglob("*"):
+        if not source.is_file() or source.name == ".gitkeep":
+            continue
+        destination = UPLOAD_ROOT / source.relative_to(legacy_root)
+        if destination.exists():
+            continue
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
+    _seed_persistent_uploads()
     await bootstrap_admin()
     yield
 
