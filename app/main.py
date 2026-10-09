@@ -2,18 +2,19 @@ import shutil
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.routes import admissions, analytics, auth, cms, finance, public
-from app.bootstrap import bootstrap_admin
+from app.bootstrap import bootstrap_admin, ensure_schema
 from app.config import get_settings
 
 settings = get_settings()
 ROOT = Path(__file__).resolve().parents[1]
 UPLOAD_ROOT = ROOT / settings.upload_dir
+JS_MEDIA_TYPE = "application/javascript; charset=utf-8"
 
 
 def _seed_persistent_uploads() -> None:
@@ -35,6 +36,7 @@ def _seed_persistent_uploads() -> None:
 async def lifespan(_app: FastAPI):
     UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
     _seed_persistent_uploads()
+    await ensure_schema()
     await bootstrap_admin()
     yield
 
@@ -55,6 +57,18 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def revalidate_site_files(request: Request, call_next):
+    response = await call_next(request)
+    # Pages and their shared scripts change together; stale cached copies of
+    # one break the other, so browsers must revalidate them on every load.
+    content_type = response.headers.get("content-type", "")
+    if content_type.startswith(("text/html", "application/javascript")):
+        response.headers["Cache-Control"] = "no-cache"
+    return response
+
 
 app.include_router(public.router, prefix="/api")
 app.include_router(analytics.router, prefix="/api")
@@ -137,9 +151,9 @@ async def root_index() -> FileResponse:
 
 @app.get("/site-i18n.js")
 async def site_i18n_js() -> FileResponse:
-    return FileResponse(ROOT / "site-i18n.js", media_type="application/javascript")
+    return FileResponse(ROOT / "site-i18n.js", media_type=JS_MEDIA_TYPE)
 
 
 @app.get("/site-analytics.js")
 async def site_analytics_js() -> FileResponse:
-    return FileResponse(ROOT / "site-analytics.js", media_type="application/javascript")
+    return FileResponse(ROOT / "site-analytics.js", media_type=JS_MEDIA_TYPE)

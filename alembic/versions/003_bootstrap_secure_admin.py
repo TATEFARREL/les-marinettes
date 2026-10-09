@@ -16,7 +16,7 @@ branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 
 ADMIN_EMAIL = "admin@lesmarinettes.org"
-ADMIN_PASSWORD_HASH = "$2b$12$pHkkJ5NpF/DAWjLM6VTdJ.JwgDBCuIMKLP73b1Qv7H9JXcbN.Lu9q"
+ADMIN_PASSWORD_HASH = "$2b$12$FkpUxZtr.fh9WniEzWc57Om8W/A.WYkOPlFJtygzm3F1WrIcj08ti"
 
 
 def upgrade() -> None:
