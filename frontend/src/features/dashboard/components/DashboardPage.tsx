@@ -1,6 +1,7 @@
 import { DashboardWelcome } from '@/features/dashboard/components/DashboardWelcome'
 import { ModuleShortcutGrid } from '@/features/dashboard/components/ModuleShortcutGrid'
 import { PublicSitePreviewCard } from '@/features/dashboard/components/PublicSitePreviewCard'
+import { TrafficOverview } from '@/features/dashboard/components/TrafficOverview'
 import { getModuleShortcuts } from '@/features/dashboard/config/moduleShortcuts'
 import { useDashboardMediaPreviews } from '@/features/dashboard/hooks/useDashboardMediaPreviews'
 import { MediaSpotlightSection } from '@/features/dashboard/media/MediaSpotlightSection'
@@ -24,6 +25,8 @@ export function DashboardPage() {
       <DashboardWelcome email={user?.email} role={user?.role} />
 
       <PublicSitePreviewCard />
+
+      {isAdmin ? <TrafficOverview /> : null}
 
       {isTeacher ? (
         <MediaSpotlightSection items={media.items} loading={media.loading} loadError={media.error} />

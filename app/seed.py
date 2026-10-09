@@ -1,4 +1,4 @@
-"""Load initial site_content from content.json and create default admin user."""
+"""Load initial site content and optionally create the configured admin."""
 
 import asyncio
 import json
@@ -34,20 +34,26 @@ async def run_seed() -> None:
             session.add(row)
             print("Inserted site_content")
         else:
-            row.payload = payload
-            session.add(row)
-            print("Updated site_content")
+            print("Preserved existing site_content")
 
         count = await session.execute(select(func.count()).select_from(User))
         if count.scalar_one() == 0:
-            admin = User(
-                email="admin@example.com",
-                hashed_password=hash_password("changeme"),
-                role=UserRole.admin,
-                is_active=True,
-            )
-            session.add(admin)
-            print("Created admin user admin@example.com / changeme")
+            email = (settings.admin_email or "").strip().lower()
+            password = settings.admin_password or ""
+            if email and len(password) >= 12 and password != "changeme":
+                admin = User(
+                    email=email,
+                    hashed_password=hash_password(password),
+                    role=UserRole.admin,
+                    is_active=True,
+                )
+                session.add(admin)
+                print(f"Created admin user {email}")
+            else:
+                print(
+                    "No admin created; set ADMIN_EMAIL and ADMIN_PASSWORD "
+                    "(at least 12 characters)."
+                )
 
         await session.commit()
 

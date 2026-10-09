@@ -9,17 +9,25 @@ import { useAuth } from '@/auth/useAuth'
 
 export default function Login() {
   const { user, login, loading } = useAuth()
-  const [email, setEmail] = useState('admin@example.com')
-  const [password, setPassword] = useState('changeme')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   if (!loading && user) return <Navigate to="/" replace />
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
+    setSubmitting(true)
     try {
       await login(email, password)
     } catch (ex) {
-      toast.error(ex instanceof Error ? ex.message : 'Erreur de connexion')
+      toast.error(
+        ex instanceof Error && ex.message !== 'Invalid credentials'
+          ? ex.message
+          : 'Adresse e-mail ou mot de passe incorrect.',
+      )
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -40,6 +48,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="username"
                 type="email"
+                placeholder="admin@lesmarinettes.org"
                 required
               />
             </div>
@@ -51,11 +60,12 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
+                placeholder="Votre mot de passe"
                 required
               />
             </div>
-            <Button type="submit" className="w-full" variant="accent" size="lg" disabled={loading}>
-              {loading ? 'Connexion…' : 'Se connecter'}
+            <Button type="submit" className="w-full" variant="accent" size="lg" disabled={loading || submitting}>
+              {submitting ? 'Connexion…' : 'Se connecter'}
             </Button>
           </form>
         </CardContent>

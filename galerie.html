@@ -220,6 +220,7 @@
     </footer>
 
     <script src="site-i18n.js"></script>
+    <script src="site-analytics.js" defer></script>
     <script>
         let galleryData = []; 
         let observer;
@@ -269,9 +270,9 @@
             grid.innerHTML = filteredData.map((item, index) => {
                 const videoLabel = typeof t === 'function' ? t('gallery.badge_video') : 'Vidéo';
                 const mediaHTML = item.type === 'video' 
-                    ? `<video src="${item.url}" class="w-full h-72 object-cover img-zoom-hover" controls playsinline></video>
-                       <div class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg font-bold">🎥 ${videoLabel}</div>`
-                    : `<img src="${item.url}" alt="${item.title}" class="w-full h-72 object-cover img-zoom-hover" loading="lazy">`;
+                    ? `<video src="${escapeHtml(publicAssetUrl(item.url))}" class="w-full h-72 object-cover img-zoom-hover" controls playsinline></video>
+                       <div class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg font-bold">🎥 ${escapeHtml(videoLabel)}</div>`
+                    : `<img src="${escapeHtml(publicAssetUrl(item.url))}" alt="${escapeHtml(item.title)}" class="w-full h-72 object-cover img-zoom-hover" loading="lazy">`;
 
                 return `
                     <div class="reveal-item zoom-in relative group rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-100 cursor-pointer">
@@ -279,7 +280,7 @@
                             ${mediaHTML}
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-brandBlue/95 via-brandBlue/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 pointer-events-none">
-                            <h5 class="text-white font-bold text-xl translate-y-4 group-hover:translate-y-0 transition-transform duration-300 drop-shadow-md">${item.title}</h5>
+                            <h5 class="text-white font-bold text-xl translate-y-4 group-hover:translate-y-0 transition-transform duration-300 drop-shadow-md">${escapeHtml(item.title)}</h5>
                         </div>
                     </div>
                 `;

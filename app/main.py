@@ -6,21 +6,30 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.api.routes import admissions, auth, cms, finance, public
+from app.api.routes import admissions, analytics, auth, cms, finance, public
+from app.bootstrap import bootstrap_admin
 from app.config import get_settings
 
 settings = get_settings()
 ROOT = Path(__file__).resolve().parents[1]
+UPLOAD_ROOT = ROOT / settings.upload_dir
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    upload_dir = ROOT / settings.upload_dir
-    upload_dir.mkdir(parents=True, exist_ok=True)
+    UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
+    await bootstrap_admin()
     yield
 
 
-app = FastAPI(title="Les Marinettes API", lifespan=lifespan)
+production = settings.app_env.lower() == "production"
+app = FastAPI(
+    title="Les Marinettes API",
+    lifespan=lifespan,
+    docs_url=None if production else "/docs",
+    redoc_url=None if production else "/redoc",
+    openapi_url=None if production else "/openapi.json",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,6 +40,7 @@ app.add_middleware(
 )
 
 app.include_router(public.router, prefix="/api")
+app.include_router(analytics.router, prefix="/api")
 app.include_router(auth.router, prefix="/api")
 app.include_router(cms.router, prefix="/api")
 app.include_router(admissions.router, prefix="/api")
@@ -43,6 +53,14 @@ async def health() -> dict[str, str]:
 
 
 # --- Static images (content.json references images/uploads/...)
+# Uploaded files live on a persistent disk, while repository images continue
+# to be served from ROOT/images.
+UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
+app.mount(
+    f"/{settings.upload_url_prefix.strip('/')}",
+    StaticFiles(directory=UPLOAD_ROOT),
+    name="uploads",
+)
 images_dir = ROOT / "images"
 if images_dir.is_dir():
     app.mount("/images", StaticFiles(directory=images_dir), name="images")
@@ -103,3 +121,8 @@ async def root_index() -> FileResponse:
 @app.get("/site-i18n.js")
 async def site_i18n_js() -> FileResponse:
     return FileResponse(ROOT / "site-i18n.js", media_type="application/javascript")
+
+
+@app.get("/site-analytics.js")
+async def site_analytics_js() -> FileResponse:
+    return FileResponse(ROOT / "site-analytics.js", media_type="application/javascript")

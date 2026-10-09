@@ -25,10 +25,9 @@ uv run alembic upgrade head
 uv run python -m app.seed
 ```
 
-Le seed charge `content.json` dans `site_content` et crée un admin :
-
-- **Email :** `admin@example.com`
-- **Mot de passe :** `changeme`
+Le seed charge `content.json` dans `site_content`. Il crée aussi le premier
+administrateur lorsque `ADMIN_EMAIL` et `ADMIN_PASSWORD` (12 caractères
+minimum) sont définis. Aucun identifiant par défaut n'est fourni.
 
 ## Lancer l’API + site statique
 
@@ -77,6 +76,9 @@ Variables d’environnement à définir sur le service Render (voir aussi [.env.
 |----------|------|
 | `DATABASE_URL` | URL Neon (pooler OK). Le préfixe `postgresql://` est converti en `postgresql+asyncpg://` par l’app. |
 | `SECRET_KEY` | Secret JWT — utiliser une valeur aléatoire longue (ex. `openssl rand -hex 32`). |
+| `APP_ENV` | `production` sur Render : exige un secret fort et désactive la documentation API publique. |
+| `ADMIN_EMAIL` | Adresse du premier administrateur. |
+| `ADMIN_PASSWORD` | Mot de passe initial unique (12 caractères minimum). Remplace aussi l'ancien mot de passe de démonstration sans écraser ensuite un mot de passe réel. |
 | `CORS_ORIGINS` | Origines autorisées pour l’admin, séparées par des virgules. Inclure l’URL publique du site (ex. `https://votre-service.onrender.com`) si l’API et l’admin sont servis depuis le même host. |
 
 Le fichier [render.yaml](render.yaml) configure :
@@ -95,11 +97,14 @@ Le fichier [render.yaml](render.yaml) configure :
    uv sync && uv run python -m app.seed
    ```
 
-4. Changer le mot de passe admin par défaut après la première connexion.
+4. Se connecter avec `ADMIN_EMAIL` / `ADMIN_PASSWORD`. `ADMIN_PASSWORD` peut
+   ensuite être retiré de l'environnement.
 
 ### Fichiers uploadés (médias)
 
-Les fichiers vont sous `images/uploads/` sur le disque du conteneur. Sur Render, ce disque est **éphémère** par défaut : un redéploiement peut effacer les uploads. Pour de la persistance, prévoir un disque persistant Render ou du stockage objet (S3, R2, etc.).
+Les fichiers sont écrits sous `uploads/` et publiés à l'URL
+`/images/uploads/...`. Le Blueprint monte un disque Render persistant à cet
+emplacement afin que les médias survivent aux redéploiements.
 
 ### Vérification après déploiement
 

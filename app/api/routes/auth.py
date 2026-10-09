@@ -19,6 +19,10 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/login", response_model=TokenPair)
 async def login(session: SessionDep, body: UserLogin) -> TokenPair:
+    # The original seed credentials were published in the repository. Never
+    # permit that known password, even if an old production database still has it.
+    if body.password == "changeme":
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     result = await session.execute(select(User).where(User.email == body.email))
     user = result.scalar_one_or_none()
     if user is None or not verify_password(body.password, user.hashed_password):

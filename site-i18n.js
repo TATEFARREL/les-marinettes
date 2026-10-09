@@ -281,4 +281,15 @@
     return '/' + p.replace(/^\/+/, '');
   }
   global.publicAssetUrl = publicAssetUrl;
+
+  /** Escape CMS text before inserting it into an HTML template. */
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+  global.escapeHtml = escapeHtml;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -14,6 +14,20 @@ router = APIRouter(prefix="/cms", tags=["cms"])
 settings = get_settings()
 
 TEACHER_ALLOWED_TOP_KEYS = frozenset({"team", "gallery", "fullGallery"})
+MAX_UPLOAD_BYTES = 15 * 1024 * 1024
+ALLOWED_MEDIA_TYPES = {
+    "image/gif": ".gif",
+    "image/heic": ".heic",
+    "image/jpeg": ".jpg",
+    "image/png": ".png",
+    "image/webp": ".webp",
+    "video/mp4": ".mp4",
+    "video/quicktime": ".mov",
+    "video/webm": ".webm",
+    "application/pdf": ".pdf",
+    "application/msword": ".doc",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": ".docx",
+}
 
 
 def _filter_patch_for_role(patch: SiteContentPatch, role: UserRole) -> dict:
@@ -68,17 +82,35 @@ async def upload_media(
     _: TeacherUser,
     file: UploadFile = File(...),
 ) -> dict[str, str]:
+    suffix = ALLOWED_MEDIA_TYPES.get(file.content_type or "")
+    if suffix is None:
+        raise HTTPException(
+            status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+            detail="Unsupported file type",
+        )
+
     root = Path(__file__).resolve().parents[3]
     upload_root = root / settings.upload_dir
     upload_root.mkdir(parents=True, exist_ok=True)
-    suffix = Path(file.filename or "upload").suffix or ".bin"
     safe_name = f"{uuid.uuid4().hex}{suffix}"
     dest = upload_root / safe_name
-    content = await file.read()
-    if len(content) > 15 * 1024 * 1024:
-        raise HTTPException(
-            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="File too large"
-        )
-    dest.write_bytes(content)
-    rel = f"{settings.upload_dir.replace(chr(92), '/')}/{safe_name}"
+
+    size = 0
+    try:
+        with dest.open("wb") as output:
+            while chunk := await file.read(1024 * 1024):
+                size += len(chunk)
+                if size > MAX_UPLOAD_BYTES:
+                    raise HTTPException(
+                        status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                        detail="File too large",
+                    )
+                output.write(chunk)
+    except Exception:
+        dest.unlink(missing_ok=True)
+        raise
+    finally:
+        await file.close()
+
+    rel = f"{settings.upload_url_prefix.strip('/')}/{safe_name}"
     return {"path": rel}

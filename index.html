@@ -383,6 +383,7 @@
     </footer>
 
     <script src="site-i18n.js"></script>
+    <script src="site-analytics.js" defer></script>
     <script>
         async function loadData() {
         try {
@@ -401,7 +402,7 @@
                 const bgContainer = document.getElementById('hero-bg-container');
                 if (data.hero.images && data.hero.images.length > 0) {
                     bgContainer.innerHTML = data.hero.images.map((imgUrl, index) => `
-                        <img src="${imgUrl}" class="hero-bg-slide ${index === 0 ? 'active' : ''}" alt="Hero Image ${index + 1}">
+                        <img src="${escapeHtml(publicAssetUrl(imgUrl))}" class="hero-bg-slide ${index === 0 ? 'active' : ''}" alt="Hero Image ${index + 1}">
                     `).join('');
 
                     if (data.hero.images.length > 1) {
@@ -424,17 +425,17 @@
                 document.getElementById('about-text').innerText = data.about.text;
                 
                 // Set Image Sources
-                document.getElementById('about-img-1').src = data.about.image1;
-                document.getElementById('about-img-2').src = data.about.image2;
+                document.getElementById('about-img-1').src = publicAssetUrl(data.about.image1);
+                document.getElementById('about-img-2').src = publicAssetUrl(data.about.image2);
                 
                 // Set Download Button links
                 const btn1 = document.getElementById('download-btn-1');
                 const btn2 = document.getElementById('download-btn-2');
-                if (btn1) btn1.href = data.about.image1;
-                if (btn2) btn2.href = data.about.image2;
+                if (btn1) btn1.href = publicAssetUrl(data.about.image1);
+                if (btn2) btn2.href = publicAssetUrl(data.about.image2);
                 
                 const ul = document.getElementById('about-bullets');
-                ul.innerHTML = data.about.bullets.map(bullet => `<li class="flex items-center gap-2">✅ ${bullet}</li>`).join('');
+                ul.innerHTML = data.about.bullets.map(bullet => `<li class="flex items-center gap-2">✅ ${escapeHtml(bullet)}</li>`).join('');
             }
 
             // 3. TEAM SECTION
@@ -445,10 +446,10 @@
                 
                 const createCard = (m, colorClass, delayIndex) => `
                     <div class="reveal-item fade-up delay-${(delayIndex % 4 + 1) * 100} bg-white p-6 rounded-lg shadow-md border-t-4 ${colorClass} flex flex-col items-center text-center w-full max-w-sm mx-auto transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                        <img src="${m.image}" class="w-24 h-24 rounded-full object-cover mb-4 shadow-sm" onerror="this.src='https://via.placeholder.com/150'">
-                        <h5 class="text-xl font-bold text-brandBlue">${m.name}</h5>
-                        <span class="text-sm font-bold text-gray-500 uppercase mb-2">${m.role}</span>
-                        <p class="text-gray-600 text-sm">${m.desc}</p>
+                        <img src="${escapeHtml(publicAssetUrl(m.image))}" class="w-24 h-24 rounded-full object-cover mb-4 shadow-sm" onerror="this.src='https://via.placeholder.com/150'">
+                        <h5 class="text-xl font-bold text-brandBlue">${escapeHtml(m.name)}</h5>
+                        <span class="text-sm font-bold text-gray-500 uppercase mb-2">${escapeHtml(m.role)}</span>
+                        <p class="text-gray-600 text-sm">${escapeHtml(m.desc)}</p>
                     </div>
                 `;
 
@@ -474,11 +475,11 @@
                 galleryContainer.innerHTML = data.gallery.events.map((event, index) => `
                     <div class="reveal-item fade-up bg-gray-50 p-8 rounded-xl shadow-sm border flex flex-col lg:flex-row gap-8 items-center">
                         <div class="w-full lg:w-1/3">
-                            <h5 class="text-2xl font-bold text-brandBlue mb-3">${event.title}</h5>
-                            <p class="text-gray-600">${event.subtitle}</p>
+                            <h5 class="text-2xl font-bold text-brandBlue mb-3">${escapeHtml(event.title)}</h5>
+                            <p class="text-gray-600">${escapeHtml(event.subtitle)}</p>
                         </div>
                         <div class="w-full lg:w-2/3 grid grid-cols-2 gap-4">
-                            ${event.media.map(img => `<img src="${img}" class="w-full h-48 object-cover rounded-lg shadow" onerror="this.src='https://via.placeholder.com/400'">`).join('')}
+                            ${event.media.map(img => `<img src="${escapeHtml(publicAssetUrl(img))}" class="w-full h-48 object-cover rounded-lg shadow" onerror="this.src='https://via.placeholder.com/400'">`).join('')}
                         </div>
                     </div>
                 `).join('');

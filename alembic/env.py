@@ -5,6 +5,7 @@ from alembic import context
 from app.config import get_settings
 from app.db_url import normalize_database_url_for_asyncpg
 from app.models.admissions import Applicant, Application  # noqa: F401
+from app.models.analytics import PageView  # noqa: F401
 from app.models.base import Base
 from app.models.finance import FeeSchedule, Invoice, InvoiceLine, Payment, Student  # noqa: F401
 from app.models.site_content import SiteContent  # noqa: F401

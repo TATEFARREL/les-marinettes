@@ -1,4 +1,5 @@
 from app.models.admissions import Applicant, Application, ApplicationStatus
+from app.models.analytics import PageView
 from app.models.base import Base
 from app.models.finance import FeeSchedule, Invoice, InvoiceLine, Payment, Student
 from app.models.site_content import SiteContent
@@ -12,6 +13,7 @@ __all__ = [
     "Applicant",
     "Application",
     "ApplicationStatus",
+    "PageView",
     "Student",
     "FeeSchedule",
     "Invoice",

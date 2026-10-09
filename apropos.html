@@ -304,6 +304,7 @@
     </footer>
 
     <script src="site-i18n.js"></script>
+    <script src="site-analytics.js" defer></script>
     <script>
         // 1. Core Data Loader
         async function loadAbout() {
@@ -321,15 +322,15 @@
                 document.getElementById('director-title').innerText = page.directorWord.title;
                 document.getElementById('director-text').innerText = page.directorWord.text;
                 document.getElementById('director-name').innerText = page.directorWord.name;
-                document.getElementById('director-img').src = page.directorWord.image;
+                document.getElementById('director-img').src = publicAssetUrl(page.directorWord.image);
 
                 // Populate Values (Mission/Vision)
                 if (page.values) {
                     document.getElementById('values-grid').innerHTML = page.values.map((v, i) => `
                         <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-brandGold text-center reveal-item zoom-in delay-${(i % 3 + 1) * 100} hover:-translate-y-2 transition-transform duration-300">
-                            <div class="text-5xl mb-4">${v.icon}</div>
-                            <h5 class="text-xl font-bold text-brandBlue mb-3">${v.title}</h5>
-                            <p class="text-gray-600 leading-relaxed text-sm">${v.desc}</p>
+                            <div class="text-5xl mb-4">${escapeHtml(v.icon)}</div>
+                            <h5 class="text-xl font-bold text-brandBlue mb-3">${escapeHtml(v.title)}</h5>
+                            <p class="text-gray-600 leading-relaxed text-sm">${escapeHtml(v.desc)}</p>
                         </div>
                     `).join('');
                 }
@@ -339,10 +340,10 @@
                     document.getElementById('core-values-grid').innerHTML = page.coreValues.map((v, i) => `
                         <div class="reveal-item fade-up delay-${(i % 2 + 1) * 100} group relative pt-12 pb-8 px-6 bg-brandRed rounded-3xl text-center shadow-lg transition-all duration-500 hover:-translate-y-4 hover:shadow-2xl hover:bg-red-800 border border-red-700/50">
                             <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-md group-hover:scale-110 group-hover:border-brandGold transition-all duration-500 bg-white">
-                                <img src="${v.image}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/100'">
+                                <img src="${escapeHtml(publicAssetUrl(v.image))}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/100'">
                             </div>
-                            <h5 class="text-lg font-bold text-white mb-3 mt-2 uppercase tracking-tight">${v.title}</h5>
-                            <p class="text-red-50 text-sm leading-relaxed opacity-90">${v.desc}</p>
+                            <h5 class="text-lg font-bold text-white mb-3 mt-2 uppercase tracking-tight">${escapeHtml(v.title)}</h5>
+                            <p class="text-red-50 text-sm leading-relaxed opacity-90">${escapeHtml(v.desc)}</p>
                             <div class="mt-6 w-8 h-1 bg-brandGold mx-auto rounded-full group-hover:w-16 transition-all duration-500"></div>
                         </div>
                     `).join('');
