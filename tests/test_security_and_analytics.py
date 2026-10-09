@@ -27,6 +27,11 @@ def test_production_rejects_default_jwt_secret() -> None:
         Settings(app_env="production")
 
 
+def test_render_environment_counts_as_production() -> None:
+    assert Settings(render=True).is_production
+    assert not Settings().is_production
+
+
 def test_shared_scripts_must_be_revalidated() -> None:
     response = client.get("/site-i18n.js")
     assert response.status_code == 200

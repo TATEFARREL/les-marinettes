@@ -7,6 +7,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # Repo root (parent of `app/`) — so `.env` is found even if cwd differs
 _ROOT = Path(__file__).resolve().parent.parent
 
+DEFAULT_SECRET_KEY = "change-me-in-production-use-openssl-rand-hex-32"
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -16,8 +18,10 @@ class Settings(BaseSettings):
     )
 
     database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/marinettes"
-    secret_key: str = "change-me-in-production-use-openssl-rand-hex-32"
+    secret_key: str = DEFAULT_SECRET_KEY
     app_env: str = "development"
+    # Render sets RENDER=true on every service it runs.
+    render: bool = False
     access_token_expire_minutes: int = 60
     refresh_token_expire_days: int = 7
     algorithm: str = "HS256"
@@ -37,6 +41,10 @@ class Settings(BaseSettings):
     admin_password: str | None = None
 
     @property
+    def is_production(self) -> bool:
+        return self.app_env.lower() == "production" or self.render
+
+    @property
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
@@ -50,8 +58,7 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def require_production_secret(self) -> "Settings":
         if self.app_env.lower() == "production" and (
-            self.secret_key == "change-me-in-production-use-openssl-rand-hex-32"
-            or len(self.secret_key) < 32
+            self.secret_key == DEFAULT_SECRET_KEY or len(self.secret_key) < 32
         ):
             raise ValueError("Production requires a unique SECRET_KEY of at least 32 characters")
         return self

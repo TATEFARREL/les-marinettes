@@ -1,10 +1,12 @@
 import logging
+import secrets
 
 from sqlalchemy import select
 
-from app.config import get_settings
+from app.config import DEFAULT_SECRET_KEY, get_settings
 from app.database import AsyncSessionLocal, engine
 from app.models.analytics import PageView
+from app.models.app_secret import AppSecret
 from app.models.user import User, UserRole
 from app.security import hash_password, verify_password
 
@@ -23,8 +25,33 @@ async def ensure_schema() -> None:
     try:
         async with engine.begin() as conn:
             await conn.run_sync(PageView.__table__.create, checkfirst=True)
+            await conn.run_sync(AppSecret.__table__.create, checkfirst=True)
     except Exception:
         logger.exception("Could not ensure database schema")
+
+
+async def ensure_secret_key() -> None:
+    """Replace the public default JWT secret with a random one kept in the database.
+
+    The settings object is shared by every module, so updating it here takes
+    effect before the first token is signed or verified.
+    """
+    settings = get_settings()
+    if settings.secret_key != DEFAULT_SECRET_KEY:
+        return
+    try:
+        async with AsyncSessionLocal() as session:
+            row = await session.get(AppSecret, "jwt_secret")
+            if row is None:
+                row = AppSecret(name="jwt_secret", value=secrets.token_hex(32))
+                session.add(row)
+                await session.commit()
+            settings.secret_key = row.value
+    except Exception:
+        # Without the database, sessions only last until the next restart,
+        # but tokens can never be signed with the published default.
+        logger.exception("Could not load the stored JWT secret; using a temporary one")
+        settings.secret_key = secrets.token_hex(32)
 
 
 async def bootstrap_admin() -> None:

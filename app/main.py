@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.routes import admissions, analytics, auth, cms, finance, public
-from app.bootstrap import bootstrap_admin, ensure_schema
+from app.bootstrap import bootstrap_admin, ensure_schema, ensure_secret_key
 from app.config import get_settings
 
 settings = get_settings()
@@ -37,11 +37,12 @@ async def lifespan(_app: FastAPI):
     UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
     _seed_persistent_uploads()
     await ensure_schema()
+    await ensure_secret_key()
     await bootstrap_admin()
     yield
 
 
-production = settings.app_env.lower() == "production"
+production = settings.is_production
 app = FastAPI(
     title="Les Marinettes API",
     lifespan=lifespan,
