@@ -51,8 +51,7 @@ async def run_seed() -> None:
                 print(f"Created admin user {email}")
             else:
                 print(
-                    "No admin created; set ADMIN_EMAIL and ADMIN_PASSWORD "
-                    "(at least 12 characters)."
+                    "No admin created; set ADMIN_EMAIL and ADMIN_PASSWORD (at least 12 characters)."
                 )
 
         await session.commit()

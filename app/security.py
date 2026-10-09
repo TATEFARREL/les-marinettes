@@ -9,11 +9,15 @@ from app.config import get_settings
 settings = get_settings()
 
 
+BCRYPT_MAX_PASSWORD_BYTES = 72
+
+
 def verify_password(plain: str, hashed: str) -> bool:
-    return bcrypt.checkpw(
-        plain.encode("utf-8"),
-        hashed.encode("utf-8"),
-    )
+    encoded = plain.encode("utf-8")
+    # bcrypt >= 5 raises on longer inputs instead of truncating them.
+    if len(encoded) > BCRYPT_MAX_PASSWORD_BYTES:
+        return False
+    return bcrypt.checkpw(encoded, hashed.encode("utf-8"))
 
 
 def hash_password(password: str) -> str:

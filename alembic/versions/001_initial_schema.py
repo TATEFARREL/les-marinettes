@@ -22,7 +22,11 @@ def upgrade() -> None:
     userrole = postgresql.ENUM("admin", "teacher", "accountant", name="userrole", create_type=True)
     userrole.create(op.get_bind(), checkfirst=True)
     appstatus = postgresql.ENUM(
-        "draft", "submitted", "reviewed", "accepted", "enrolled",
+        "draft",
+        "submitted",
+        "reviewed",
+        "accepted",
+        "enrolled",
         name="applicationstatus",
         create_type=True,
     )
@@ -33,9 +37,18 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("email", sa.String(length=320), nullable=False),
         sa.Column("hashed_password", sa.String(length=255), nullable=False),
-        sa.Column("role", postgresql.ENUM("admin", "teacher", "accountant", name="userrole", create_type=False), nullable=False),
+        sa.Column(
+            "role",
+            postgresql.ENUM("admin", "teacher", "accountant", name="userrole", create_type=False),
+            nullable=False,
+        ),
         sa.Column("is_active", sa.Boolean(), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_users_email"), "users", ["email"], unique=True)
@@ -44,7 +57,12 @@ def upgrade() -> None:
         "site_content",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("payload", postgresql.JSONB(astext_type=sa.Text()), nullable=False),
-        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "updated_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
         sa.PrimaryKeyConstraint("id"),
     )
 
@@ -55,7 +73,12 @@ def upgrade() -> None:
         sa.Column("email", sa.String(length=320), nullable=True),
         sa.Column("phone", sa.String(length=64), nullable=True),
         sa.Column("notes", sa.Text(), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
         sa.PrimaryKeyConstraint("id"),
     )
 
@@ -78,7 +101,12 @@ def upgrade() -> None:
         ),
         sa.Column("school_year", sa.String(length=32), nullable=False),
         sa.Column("notes", sa.Text(), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
         sa.ForeignKeyConstraint(["applicant_id"], ["applicants.id"]),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -89,7 +117,12 @@ def upgrade() -> None:
         sa.Column("application_id", sa.Integer(), nullable=True),
         sa.Column("full_name", sa.String(length=255), nullable=False),
         sa.Column("external_ref", sa.String(length=64), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
         sa.ForeignKeyConstraint(["application_id"], ["applications.id"]),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -102,7 +135,12 @@ def upgrade() -> None:
         sa.Column("currency", sa.String(length=8), nullable=False),
         sa.Column("school_year", sa.String(length=32), nullable=False),
         sa.Column("active", sa.Boolean(), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
         sa.PrimaryKeyConstraint("id"),
     )
 
@@ -114,7 +152,12 @@ def upgrade() -> None:
         sa.Column("due_date", sa.Date(), nullable=True),
         sa.Column("total_cents", sa.Integer(), nullable=False),
         sa.Column("notes", sa.Text(), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
         sa.ForeignKeyConstraint(["student_id"], ["students.id"]),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -137,7 +180,9 @@ def upgrade() -> None:
         sa.Column("amount_cents", sa.Integer(), nullable=False),
         sa.Column("method", sa.String(length=64), nullable=False),
         sa.Column("reference", sa.String(length=128), nullable=True),
-        sa.Column("paid_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "paid_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False
+        ),
         sa.ForeignKeyConstraint(["invoice_id"], ["invoices.id"]),
         sa.ForeignKeyConstraint(["student_id"], ["students.id"]),
         sa.PrimaryKeyConstraint("id"),

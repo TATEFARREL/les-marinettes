@@ -38,6 +38,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       })
+      if (res.status === 429) {
+        const seconds = Number(res.headers.get('Retry-After')) || 900
+        const minutes = Math.max(1, Math.ceil(seconds / 60))
+        throw new Error(
+          `Trop de tentatives de connexion. Réessayez dans ${minutes} minute${minutes > 1 ? 's' : ''}.`,
+        )
+      }
       if (!res.ok) {
         const err = (await res.json().catch(() => ({}))) as {
           detail?: string | Array<{ msg?: string; loc?: unknown }>

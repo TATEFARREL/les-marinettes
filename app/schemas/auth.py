@@ -3,6 +3,7 @@ from typing import Any
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
 from app.models.user import UserRole
+from app.security import BCRYPT_MAX_PASSWORD_BYTES
 
 
 def _email_before_validator(v: Any) -> Any:
@@ -30,6 +31,13 @@ class UserCreate(BaseModel):
     @classmethod
     def normalize_email(cls, v: Any) -> Any:
         return _email_before_validator(v)
+
+    @field_validator("password")
+    @classmethod
+    def password_fits_bcrypt(cls, v: str) -> str:
+        if len(v.encode("utf-8")) > BCRYPT_MAX_PASSWORD_BYTES:
+            raise ValueError(f"Password must be at most {BCRYPT_MAX_PASSWORD_BYTES} bytes")
+        return v
 
 
 class UserRead(BaseModel):

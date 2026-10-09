@@ -68,6 +68,19 @@ Ouvrir http://127.0.0.1:8000/admin/
 
 Création d’utilisateurs : `POST /api/auth/users` (admin), corps JSON aligné sur le schéma OpenAPI.
 
+### Protection de la connexion
+
+`POST /api/auth/login` répond `429` avec un en-tête `Retry-After` pendant
+15 minutes après :
+
+- 5 tentatives en 15 minutes sur un même compte (quelle que soit l’adresse IP) ;
+- 20 tentatives en 15 minutes depuis une même adresse IP (en-tête Cloudflare
+  `CF-Connecting-IP`), tous comptes confondus.
+
+Une connexion réussie remet le compteur du compte à zéro. Les compteurs sont
+gardés en mémoire : ils repartent de zéro à chaque redémarrage et supposent un
+seul processus `uvicorn`.
+
 ## Déploiement (Render + Neon)
 
 Variables d’environnement à définir sur le service Render (voir aussi [.env.example](.env.example)) :
@@ -113,7 +126,7 @@ dans Git sous `images/uploads/` restent servies directement.
 - `GET https://<votre-host>/api/health` → `{"status":"ok"}`
 - Ouvrir `/admin/`, se connecter, tester une section CMS si besoin.
 
-## Tests (smoke)
+## Tests
 
 ```bash
 uv sync --group dev
@@ -123,6 +136,19 @@ uv run pytest
 ## Lint Python
 
 ```bash
-uv run ruff check app
-uv run ruff format app
+uv run ruff check .
+uv run ruff format .
 ```
+
+## Intégration continue
+
+Le workflow [.github/workflows/ci.yml](.github/workflows/ci.yml) s’exécute à
+chaque push et pull request :
+
+- **Backend** : `ruff check`, `ruff format --check`, `alembic upgrade head` sur
+  un PostgreSQL 16 vierge, puis `pytest`.
+- **Frontend** : `npm ci`, `npm run lint`, `npm run build` (vérification des
+  types TypeScript incluse).
+
+Pour que Render ne déploie que les commits validés, régler
+**Settings → Build & Deploy → Auto-Deploy** sur **After CI Checks Pass**.
