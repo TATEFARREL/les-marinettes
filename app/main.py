@@ -1,11 +1,14 @@
+import hashlib
 import logging
+import re
 import shutil
 from contextlib import asynccontextmanager
+from functools import lru_cache
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from app.api.deps import SessionDep
@@ -13,6 +16,7 @@ from app.api.routes import admissions, analytics, auth, cms, finance, public
 from app.bootstrap import bootstrap_admin, ensure_schema, ensure_secret_key
 from app.config import get_settings
 from app.models.media_file import MediaFile
+from app.security_headers import SecurityHeadersMiddleware
 
 settings = get_settings()
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,6 +68,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(SecurityHeadersMiddleware, hsts=production)
 
 
 @app.middleware("http")
@@ -146,9 +151,32 @@ async def admin_spa_assets(full_path: str) -> FileResponse:
 
 
 # --- Public HTML pages at site root
+# Script URLs get a hash of the script's current contents, so a changed script
+# always has a new URL and no manually bumped version number is needed.
+_SITE_SCRIPT_REF = re.compile(r"""(["'])(/?site-(?:i18n|analytics)\.js)(?:\?v=[^"']*)?(["'])""")
+
+
+@lru_cache(maxsize=16)
+def _file_digest(path: Path, _mtime_ns: int) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:12]
+
+
+def _script_version(name: str) -> str:
+    path = ROOT / name.lstrip("/")
+    return _file_digest(path, path.stat().st_mtime_ns)
+
+
+def _versioned_page(filename: str) -> str:
+    html = (ROOT / filename).read_text(encoding="utf-8")
+    return _SITE_SCRIPT_REF.sub(
+        lambda m: f"{m[1]}{m[2]}?v={_script_version(m[2])}{m[3]}",
+        html,
+    )
+
+
 def _make_html_handler(filename: str):
-    async def _handler() -> FileResponse:
-        return FileResponse(ROOT / filename)
+    async def _handler() -> HTMLResponse:
+        return HTMLResponse(_versioned_page(filename))
 
     return _handler
 
@@ -162,9 +190,7 @@ for _page in ("index.html", "apropos.html", "admissions.html", "galerie.html"):
     )
 
 
-@app.get("/")
-async def root_index() -> FileResponse:
-    return FileResponse(ROOT / "index.html")
+app.add_api_route("/", _make_html_handler("index.html"), methods=["GET"], name="root_index")
 
 
 @app.get("/site-i18n.js")

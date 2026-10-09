@@ -1,9 +1,11 @@
 import json
+import re
 import uuid
 from pathlib import Path
+from urllib.parse import unquote
 
-from fastapi import APIRouter, File, HTTPException, UploadFile, status
-from sqlalchemy import select
+from fastapi import APIRouter, File, HTTPException, Response, UploadFile, status
+from sqlalchemy import delete, func, select
 
 from app.api.deps import CurrentUser, SessionDep, TeacherUser
 from app.config import get_settings
@@ -17,6 +19,7 @@ settings = get_settings()
 ROOT = Path(__file__).resolve().parents[3]
 
 TEACHER_ALLOWED_TOP_KEYS = frozenset({"team", "gallery", "fullGallery"})
+MEDIA_DELETED_HEADER = "X-Media-Deleted"
 MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 ALLOWED_MEDIA_TYPES = {
     "image/gif": ".gif",
@@ -44,6 +47,51 @@ def _repository_content() -> dict:
         ) from error
 
 
+def _upload_path(name: str) -> str:
+    return f"{settings.upload_url_prefix.strip('/')}/{name}"
+
+
+_UPLOAD_REF = re.compile(re.escape(settings.upload_url_prefix.strip("/")) + r"/([^/?#\s\"'<>\\]+)")
+
+
+def _referenced_uploads(value: object) -> set[str]:
+    """Names of uploaded files referenced anywhere in a site content payload."""
+    found: set[str] = set()
+    stack = [value]
+    while stack:
+        item = stack.pop()
+        if isinstance(item, str):
+            found.update(unquote(name) for name in _UPLOAD_REF.findall(item))
+        elif isinstance(item, dict):
+            stack.extend(item.values())
+        elif isinstance(item, list):
+            stack.extend(item)
+    return found
+
+
+async def _active_payload(session: SessionDep) -> dict:
+    if settings.public_content_source == "repository":
+        return _repository_content()
+    row = await session.get(SiteContent, settings.site_content_row_id)
+    return row.payload if row is not None else {}
+
+
+async def _delete_media_rows(session: SessionDep, names: set[str]) -> list[str]:
+    """Delete stored uploads by name; files tracked in Git are never touched."""
+    if not names:
+        return []
+    result = await session.execute(
+        delete(MediaFile).where(MediaFile.name.in_(names)).returning(MediaFile.name)
+    )
+    return list(result.scalars())
+
+
+def _remove_disk_copies(names: list[str]) -> None:
+    upload_root = ROOT / settings.upload_dir
+    for name in names:
+        (upload_root / name).unlink(missing_ok=True)
+
+
 def _filter_patch_for_role(patch: SiteContentPatch, role: UserRole) -> dict:
     data = patch.merge_keys()
     if role == UserRole.admin:
@@ -68,7 +116,7 @@ async def cms_get_site_content(session: SessionDep, _: TeacherUser) -> dict:
 
 @router.patch("/site-content")
 async def cms_patch_site_content(
-    session: SessionDep, user: CurrentUser, patch: SiteContentPatch
+    session: SessionDep, user: CurrentUser, patch: SiteContentPatch, response: Response
 ) -> dict:
     if settings.public_content_source == "repository":
         raise HTTPException(
@@ -90,12 +138,60 @@ async def cms_patch_site_content(
     if row is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Site content missing")
 
+    previous_refs = _referenced_uploads(row.payload)
     new_payload = {**row.payload, **updates}
     row.payload = new_payload
     session.add(row)
+    # Uploads that this save replaced or removed are no longer shown anywhere.
+    deleted = await _delete_media_rows(session, previous_refs - _referenced_uploads(new_payload))
     await session.commit()
+    _remove_disk_copies(deleted)
     await session.refresh(row)
+    response.headers[MEDIA_DELETED_HEADER] = str(len(deleted))
     return row.payload
+
+
+@router.get("/media")
+async def list_media(session: SessionDep, _: TeacherUser) -> list[dict]:
+    result = await session.execute(
+        select(
+            MediaFile.name,
+            MediaFile.content_type,
+            func.length(MediaFile.data),
+            MediaFile.created_at,
+        ).order_by(MediaFile.created_at.desc())
+    )
+    in_use = _referenced_uploads(await _active_payload(session))
+    return [
+        {
+            "name": name,
+            "path": _upload_path(name),
+            "content_type": content_type,
+            "size": size,
+            "created_at": created_at,
+            "in_use": name in in_use,
+        }
+        for name, content_type, size, created_at in result.all()
+    ]
+
+
+@router.delete("/media/{name}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_media(name: str, session: SessionDep, _: TeacherUser) -> None:
+    if settings.public_content_source == "repository":
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Public media is temporarily managed in GitHub",
+        )
+    if name in _referenced_uploads(await _active_payload(session)):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Media is still used by the site content",
+        )
+    deleted = await _delete_media_rows(session, {name})
+    if not deleted:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Media not found")
+    await session.commit()
+    _remove_disk_copies(deleted)
 
 
 @router.post("/upload")
@@ -141,5 +237,4 @@ async def upload_media(
     except OSError:
         pass
 
-    rel = f"{settings.upload_url_prefix.strip('/')}/{safe_name}"
-    return {"path": rel}
+    return {"path": _upload_path(safe_name)}

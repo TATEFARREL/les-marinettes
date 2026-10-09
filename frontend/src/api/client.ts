@@ -53,6 +53,13 @@ export async function apiFetch(path: string, init: RequestInit = {}): Promise<Re
   return res
 }
 
+/** Toast suffix for uploads the server deleted because a save replaced or removed them. */
+export function deletedMediaNote(res: Response): string {
+  const count = Number(res.headers.get('X-Media-Deleted') ?? 0)
+  if (!count) return ''
+  return count > 1 ? ` ${count} anciens fichiers supprimés.` : ' 1 ancien fichier supprimé.'
+}
+
 /** Upload a file to `/api/cms/upload`; rebuilds FormData on 401 so upload always works. */
 export async function uploadMediaFile(file: File): Promise<{ path: string }> {
   const post = () => {

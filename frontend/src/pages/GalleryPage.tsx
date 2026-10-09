@@ -8,7 +8,8 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ImageListEditor } from '@/components/media/ImageListEditor'
 import { FullGalleryEditor } from '@/features/gallery/components/FullGalleryEditor'
-import { apiFetch, uploadMediaFile } from '@/api/client'
+import { MediaLibrary } from '@/features/gallery/components/MediaLibrary'
+import { apiFetch, deletedMediaNote, uploadMediaFile } from '@/api/client'
 import { notificationsService } from '@/notifications/notifications-service'
 import {
   defaultGallery,
@@ -23,6 +24,7 @@ export default function GalleryPage() {
   const [gallery, setGallery] = useState<GallerySection>(defaultGallery)
   const [fullItems, setFullItems] = useState<FullGalleryItem[]>([])
   const [loading, setLoading] = useState(false)
+  const [mediaRefresh, setMediaRefresh] = useState(0)
 
   useEffect(() => {
     void (async () => {
@@ -46,7 +48,8 @@ export default function GalleryPage() {
       toast.error('Impossible d’enregistrer la galerie d’accueil.')
       return
     }
-    toast.success('Galerie d’accueil enregistrée.')
+    toast.success(`Galerie d’accueil enregistrée.${deletedMediaNote(res)}`)
+    setMediaRefresh((n) => n + 1)
     notificationsService.push({ title: 'Galerie enregistrée', body: 'Carrousel page d’accueil' })
   }
 
@@ -62,13 +65,15 @@ export default function GalleryPage() {
       toast.error('Impossible d’enregistrer la page galerie.')
       return
     }
-    toast.success('Page galerie enregistrée.')
+    toast.success(`Page galerie enregistrée.${deletedMediaNote(res)}`)
+    setMediaRefresh((n) => n + 1)
     notificationsService.push({ title: 'Galerie enregistrée', body: 'Page galerie (grille)' })
   }
 
   async function onQuickUpload(file: File) {
     try {
       const { path } = await uploadMediaFile(file)
+      setMediaRefresh((n) => n + 1)
       try {
         await navigator.clipboard.writeText(path)
         toast.success('Fichier enregistré. Le chemin a été copié dans le presse-papiers.')
@@ -230,6 +235,8 @@ export default function GalleryPage() {
           />
         </TabsContent>
       </Tabs>
+
+      <MediaLibrary refreshKey={mediaRefresh} />
 
     </div>
   )

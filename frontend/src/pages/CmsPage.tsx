@@ -14,7 +14,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { useAuth } from '@/auth/useAuth'
-import { apiFetch } from '@/api/client'
+import { apiFetch, deletedMediaNote } from '@/api/client'
 import { notificationsService } from '@/notifications/notifications-service'
 import {
   defaultAbout,
@@ -144,7 +144,7 @@ export default function CmsPage() {
     const next = (await res.json()) as Record<string, unknown>
     setFull(next)
     applyExpertJson(s, next[s])
-    toast.success('Section enregistrée.')
+    toast.success(`Section enregistrée.${deletedMediaNote(res)}`)
     notificationsService.push({ title: 'Contenu du site enregistré', body: tabLabel(s) })
   }
 

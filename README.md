@@ -121,6 +121,11 @@ Les fichiers envoyés depuis le dashboard sont enregistrés dans PostgreSQL
 survivre aux redéploiements même sans disque persistant. Les images suivies
 dans Git sous `images/uploads/` restent servies directement.
 
+Un fichier envoyé qui est remplacé ou retiré du contenu est supprimé
+automatiquement à l’enregistrement. La **Médiathèque** (page Galerie) liste les
+fichiers envoyés et permet de supprimer ceux qui ne sont plus utilisés. Les
+fichiers suivis dans Git ne sont jamais supprimés par le tableau de bord.
+
 ### Vérification après déploiement
 
 - `GET https://<votre-host>/api/health` → `{"status":"ok"}`
