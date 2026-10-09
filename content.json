@@ -92,15 +92,9 @@
     ]
   },
   "fullGallery": [
-    { "type": "image", "category": "maternelle", "url": "https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?q=80&w=800", "title": "Activité de coloriage" },
-    { "type": "image", "category": "evenements", "url": "https://images.unsplash.com/photo-1511629091441-ee46146481b6?q=80&w=800", "title": "Fête de la Jeunesse" },
-    { "type": "image", "category": "primaire", "url": "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800", "title": "Cours de sciences" },
-    { "type": "video", "category": "sports", "url": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Match de football (Vidéo)" },
-    { "type": "image", "category": "maternelle", "url": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800", "title": "Jeux en plein air" },
-    { "type": "image", "category": "evenements", "url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800", "title": "Kermesse de fin d'année" },
-    { "type": "image", "category": "primaire", "url": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800", "title": "Bibliothèque" },
-    { "type": "image", "category": "sports", "url": "https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=800", "title": "Course de relais" },
-    { "type": "image", "category": "evenements", "url": "https://images.unsplash.com/photo-1523580494112-071d311fa80d?q=80&w=800", "title": "Remise des diplômes" }
+    { "type": "image", "category": "primaire", "url": "images/uploads/f1181957e9eb4a82a22aa7952946024b.jpg", "title": "Lever des couleurs" },
+    { "type": "image", "category": "evenements", "url": "images/uploads/71989287d1c94930b7634243cd349076.jpg", "title": "Fête de Noël" },
+    { "type": "image", "category": "evenements", "url": "images/uploads/2f3d811593e149d38be95c5761ad781d.jpg", "title": "Fête de Noël" }
   ],
   "aboutPage": {
     "heroTitle": "À propos de nous",

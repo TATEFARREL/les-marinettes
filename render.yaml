@@ -25,6 +25,8 @@ services:
         value: "20"
       - key: APP_ENV
         value: "production"
+      - key: PUBLIC_CONTENT_SOURCE
+        value: "repository"
       - key: DATABASE_URL
         sync: false
       - key: SECRET_KEY

@@ -1,3 +1,4 @@
+import json
 import uuid
 from pathlib import Path
 
@@ -12,6 +13,7 @@ from app.schemas.cms import SiteContentPatch
 
 router = APIRouter(prefix="/cms", tags=["cms"])
 settings = get_settings()
+ROOT = Path(__file__).resolve().parents[3]
 
 TEACHER_ALLOWED_TOP_KEYS = frozenset({"team", "gallery", "fullGallery"})
 MAX_UPLOAD_BYTES = 15 * 1024 * 1024
@@ -30,6 +32,17 @@ ALLOWED_MEDIA_TYPES = {
 }
 
 
+def _repository_content() -> dict:
+    content_path = ROOT / settings.content_json_path
+    try:
+        return json.loads(content_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Repository site content unavailable",
+        ) from error
+
+
 def _filter_patch_for_role(patch: SiteContentPatch, role: UserRole) -> dict:
     data = patch.merge_keys()
     if role == UserRole.admin:
@@ -41,6 +54,8 @@ def _filter_patch_for_role(patch: SiteContentPatch, role: UserRole) -> dict:
 
 @router.get("/site-content")
 async def cms_get_site_content(session: SessionDep, _: TeacherUser) -> dict:
+    if settings.public_content_source == "repository":
+        return _repository_content()
     result = await session.execute(
         select(SiteContent).where(SiteContent.id == settings.site_content_row_id)
     )
@@ -54,6 +69,11 @@ async def cms_get_site_content(session: SessionDep, _: TeacherUser) -> dict:
 async def cms_patch_site_content(
     session: SessionDep, user: CurrentUser, patch: SiteContentPatch
 ) -> dict:
+    if settings.public_content_source == "repository":
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Public content is temporarily managed in GitHub",
+        )
     if user.role not in (UserRole.admin, UserRole.teacher):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     updates = _filter_patch_for_role(patch, user.role)
@@ -82,6 +102,12 @@ async def upload_media(
     _: TeacherUser,
     file: UploadFile = File(...),
 ) -> dict[str, str]:
+    if settings.public_content_source == "repository":
+        await file.close()
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Public media is temporarily managed in GitHub",
+        )
     suffix = ALLOWED_MEDIA_TYPES.get(file.content_type or "")
     if suffix is None:
         raise HTTPException(
@@ -89,8 +115,7 @@ async def upload_media(
             detail="Unsupported file type",
         )
 
-    root = Path(__file__).resolve().parents[3]
-    upload_root = root / settings.upload_dir
+    upload_root = ROOT / settings.upload_dir
     upload_root.mkdir(parents=True, exist_ok=True)
     safe_name = f"{uuid.uuid4().hex}{suffix}"
     dest = upload_root / safe_name
