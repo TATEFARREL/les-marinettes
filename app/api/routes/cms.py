@@ -7,6 +7,7 @@ from sqlalchemy import select
 
 from app.api.deps import CurrentUser, SessionDep, TeacherUser
 from app.config import get_settings
+from app.models.media_file import MediaFile
 from app.models.site_content import SiteContent
 from app.models.user import UserRole
 from app.schemas.cms import SiteContentPatch
@@ -99,6 +100,7 @@ async def cms_patch_site_content(
 
 @router.post("/upload")
 async def upload_media(
+    session: SessionDep,
     _: TeacherUser,
     file: UploadFile = File(...),
 ) -> dict[str, str]:
@@ -115,27 +117,29 @@ async def upload_media(
             detail="Unsupported file type",
         )
 
-    upload_root = ROOT / settings.upload_dir
-    upload_root.mkdir(parents=True, exist_ok=True)
-    safe_name = f"{uuid.uuid4().hex}{suffix}"
-    dest = upload_root / safe_name
-
-    size = 0
+    content = bytearray()
     try:
-        with dest.open("wb") as output:
-            while chunk := await file.read(1024 * 1024):
-                size += len(chunk)
-                if size > MAX_UPLOAD_BYTES:
-                    raise HTTPException(
-                        status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
-                        detail="File too large",
-                    )
-                output.write(chunk)
-    except Exception:
-        dest.unlink(missing_ok=True)
-        raise
+        while chunk := await file.read(1024 * 1024):
+            content.extend(chunk)
+            if len(content) > MAX_UPLOAD_BYTES:
+                raise HTTPException(
+                    status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                    detail="File too large",
+                )
     finally:
         await file.close()
+
+    safe_name = f"{uuid.uuid4().hex}{suffix}"
+    session.add(MediaFile(name=safe_name, content_type=file.content_type, data=bytes(content)))
+    await session.commit()
+
+    # The disk copy only speeds up serving; the database row is authoritative.
+    upload_root = ROOT / settings.upload_dir
+    try:
+        upload_root.mkdir(parents=True, exist_ok=True)
+        (upload_root / safe_name).write_bytes(content)
+    except OSError:
+        pass
 
     rel = f"{settings.upload_url_prefix.strip('/')}/{safe_name}"
     return {"path": rel}

@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
 
     content_json_path: str = "content.json"
-    public_content_source: str = "repository"
+    public_content_source: str = "database"
     # Filesystem storage is separate from the public URL. In production this
     # resolves to Render's persistent disk at /opt/render/project/src/uploads.
     upload_dir: str = "uploads"

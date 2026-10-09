@@ -1,20 +1,26 @@
+import logging
 import shutil
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 
+from app.api.deps import SessionDep
 from app.api.routes import admissions, analytics, auth, cms, finance, public
 from app.bootstrap import bootstrap_admin, ensure_schema, ensure_secret_key
 from app.config import get_settings
+from app.models.media_file import MediaFile
 
 settings = get_settings()
 ROOT = Path(__file__).resolve().parents[1]
 UPLOAD_ROOT = ROOT / settings.upload_dir
 JS_MEDIA_TYPE = "application/javascript; charset=utf-8"
+# Upload names are unique per file, so their content never changes.
+MEDIA_CACHE_HEADERS = {"Cache-Control": "public, max-age=86400"}
+logger = logging.getLogger(__name__)
 
 
 def _seed_persistent_uploads() -> None:
@@ -85,14 +91,25 @@ async def health() -> dict[str, str]:
 
 
 # --- Static images (content.json references images/uploads/...)
-# Uploaded files live on a persistent disk, while repository images continue
-# to be served from ROOT/images.
-UPLOAD_ROOT.mkdir(parents=True, exist_ok=True)
-app.mount(
-    f"/{settings.upload_url_prefix.strip('/')}",
-    StaticFiles(directory=UPLOAD_ROOT),
-    name="uploads",
-)
+# Must be registered before the /images mount so it takes precedence.
+@app.api_route(f"/{settings.upload_url_prefix.strip('/')}/{{name}}", methods=["GET", "HEAD"])
+async def uploaded_media(name: str, session: SessionDep) -> Response:
+    if "/" in name or "\\" in name or name.startswith("."):
+        raise HTTPException(status_code=404)
+    for directory in (UPLOAD_ROOT, ROOT / "images" / "uploads"):
+        candidate = directory / name
+        if candidate.is_file():
+            return FileResponse(candidate, headers=MEDIA_CACHE_HEADERS)
+    try:
+        media = await session.get(MediaFile, name)
+    except Exception:
+        logger.exception("Could not load uploaded media %s", name)
+        media = None
+    if media is None:
+        raise HTTPException(status_code=404)
+    return Response(media.data, media_type=media.content_type, headers=MEDIA_CACHE_HEADERS)
+
+
 images_dir = ROOT / "images"
 if images_dir.is_dir():
     app.mount("/images", StaticFiles(directory=images_dir), name="images")

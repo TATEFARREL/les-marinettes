@@ -1,3 +1,5 @@
+import pytest
+from app.config import get_settings
 from app.main import app
 from fastapi.testclient import TestClient
 
@@ -11,7 +13,13 @@ def test_legacy_media_is_seeded_into_persistent_uploads() -> None:
     assert len(response.content) > 1000
 
 
-def test_public_content_is_served_from_repository() -> None:
+def test_unknown_media_returns_not_found() -> None:
+    response = TestClient(app).get("/images/uploads/does-not-exist.jpg")
+    assert response.status_code == 404
+
+
+def test_public_content_can_be_served_from_repository(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(get_settings(), "public_content_source", "repository")
     response = TestClient(app).get("/api/public/site-content")
 
     assert response.status_code == 200

@@ -7,6 +7,7 @@ from app.config import DEFAULT_SECRET_KEY, get_settings
 from app.database import AsyncSessionLocal, engine
 from app.models.analytics import PageView
 from app.models.app_secret import AppSecret
+from app.models.media_file import MediaFile
 from app.models.user import User, UserRole
 from app.security import hash_password, verify_password
 
@@ -26,6 +27,7 @@ async def ensure_schema() -> None:
         async with engine.begin() as conn:
             await conn.run_sync(PageView.__table__.create, checkfirst=True)
             await conn.run_sync(AppSecret.__table__.create, checkfirst=True)
+            await conn.run_sync(MediaFile.__table__.create, checkfirst=True)
     except Exception:
         logger.exception("Could not ensure database schema")
 

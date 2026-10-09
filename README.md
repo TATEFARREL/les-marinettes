@@ -77,7 +77,7 @@ Variables d’environnement à définir sur le service Render (voir aussi [.env.
 | `DATABASE_URL` | URL Neon (pooler OK). Le préfixe `postgresql://` est converti en `postgresql+asyncpg://` par l’app. |
 | `SECRET_KEY` | Secret JWT — utiliser une valeur aléatoire longue (ex. `openssl rand -hex 32`). |
 | `APP_ENV` | `production` sur Render : exige un secret fort et désactive la documentation API publique. |
-| `PUBLIC_CONTENT_SOURCE` | `repository` sert temporairement le texte depuis `content.json` et rend le CMS public en lecture seule. Utiliser `database` pour réactiver les modifications du dashboard. |
+| `PUBLIC_CONTENT_SOURCE` | `database` (par défaut) : le dashboard modifie le contenu. `repository` sert le texte depuis `content.json` et rend le CMS en lecture seule. |
 | `ADMIN_EMAIL` | Adresse du premier administrateur. |
 | `ADMIN_PASSWORD` | Mot de passe initial unique (12 caractères minimum). Remplace aussi l'ancien mot de passe de démonstration sans écraser ensuite un mot de passe réel. |
 | `CORS_ORIGINS` | Origines autorisées pour l’admin, séparées par des virgules. Inclure l’URL publique du site (ex. `https://votre-service.onrender.com`) si l’API et l’admin sont servis depuis le même host. |
@@ -103,9 +103,10 @@ Le fichier [render.yaml](render.yaml) configure :
 
 ### Fichiers uploadés (médias)
 
-Les fichiers sont écrits sous `uploads/` et publiés à l'URL
-`/images/uploads/...`. Le Blueprint monte un disque Render persistant à cet
-emplacement afin que les médias survivent aux redéploiements.
+Les fichiers envoyés depuis le dashboard sont enregistrés dans PostgreSQL
+(table `media_files`) et publiés à l'URL `/images/uploads/...`, afin de
+survivre aux redéploiements même sans disque persistant. Les images suivies
+dans Git sous `images/uploads/` restent servies directement.
 
 ### Vérification après déploiement
 
